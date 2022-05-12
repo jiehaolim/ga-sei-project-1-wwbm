@@ -1,0 +1,54 @@
+body {
+  text-align: center;
+  background-color: rgb(4, 4, 68);
+  color: white;
+  font-family: Copperplate, "Copperplate Gothic Light";
+}
+
+#header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  
+}
+
+h1 {
+  font-size: 2em;
+}
+
+#logo {
+  max-width: 400px;
+  width: 50%;
+  margin: 20px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+  flex-wrap: wrap;
+}
+
+#question, .option, .prizeladder, .prize, .menu {
+  height: 50px;
+  width: 310px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  text-align: center;
+  margin-top: 10px;
+  color: white;
+  border-radius: 9999px;
+  padding-left: 10px;
+  outline-style: groove;
+
+}
+
+.menu, .prize {
+  justify-content: center;
+}
+
+#question {
+  height: 75px;
+  width: 650px;
+  justify-content: center;
+}
