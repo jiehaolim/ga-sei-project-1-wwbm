@@ -21,11 +21,13 @@ const $generateHTMLElement = (htmlElement, numOfDiv, attrName, attrValue, parent
 }
 
 // display the prize ladder
-const $displayPrizeLadder = (prizeLadder,userProgress) => {
+const $displayPrizeLadder = (prizeLadder, userProgress) => {
   // hide header, logo and menu div
   $("#header").hide()
   $("#logo").hide()
   $(".startmenu").hide()
+  $(".timerbank").remove()
+  $(".lifeline").remove()
   // create the divs for the ladder
   $generateHTMLElement("div",15,"class","ladder container","#footer","append")
   $generateHTMLElement("div",1,"class","prize",".ladder","append")
@@ -37,8 +39,7 @@ const $displayPrizeLadder = (prizeLadder,userProgress) => {
   }
   // change the css of current level
   let prizeQuestionIndex = prizeLadder.length - userProgress - 1
-  console.log($(".prize"))
-  $(".prize").eq(prizeQuestionIndex).css("background-color","#FF8326")
+  $(".prize").eq(prizeQuestionIndex).css("background-color","#FF8326").addClass("blink")
 };
 
 // display question
@@ -48,8 +49,10 @@ const $displayQuestion = (index) => {
   $(".ladder").remove()
   $("#logo").show()
   // create the divs for timer and current prize value
-  $generateHTMLElement("div",1,"class","timerbank container","#body","prepend")
+  $generateHTMLElement("div",1,"class","timerbank container",".overall-body","prepend")
   $generateHTMLElement("div",2,"class","button",".timerbank","append")
+  // $(".button").eq(0).text(`Current Winnings: $${userScore}`)
+  $(".button").eq(1).text(`Current Winnings: $${userScore}`)
   // create divs for the three life lines
   $generateHTMLElement("div",1,"class","lifeline container","#body","append")
   $generateHTMLElement("div",3,"class","button",".lifeline","append")
@@ -67,40 +70,63 @@ const $displayQuestion = (index) => {
     $(".option").eq(i).text(`${options[i]}. ${questionsList[index][objKey]}`)
   }
   // add event listener
-  $(".option").on("click", (event) => {checkAnswer($(event.currentTarget).attr("id"));});
+  const $answerSelected = (event) => {suspenseAndReflectAns($(event.currentTarget).attr("id"));}
+  $(".option").on("click", $answerSelected);
 };
+
+const $enableOrDisableDiv = (id, addClassOrRemove, enabledOrDisabled) => {
+  // identify the rest of the button
+  const optionsNotChosen = options.filter(element => element !== id)
+  // disable all other options button via loop
+  for (const element of optionsNotChosen) {
+    $(`#${element}`)[addClassOrRemove]("disabled-div").prop(enabledOrDisabled, true);
+  }
+}
+
+// function to set delay to create suspense then turn the answer green
+const suspenseAndReflectAns = (id) => {
+  // disable button
+  $enableOrDisableDiv(id,"addClass","enabled")
+  // selected answer as orange
+  $(`#${id}`).css("background-color","#FF8326")
+  // show correct answer as green after 5s
+  setTimeout(() => {$(`#${questionsList[userProgress].key}`).css("background-color","#37CD3B")},1000)
+  // check answer after 10s
+  setTimeout(() => {checkAnswer(id)},2000)
+  // enable button
+  $enableOrDisableDiv(id,"remove","Disabled")
+}
 
 // function to check the user's input
 const checkAnswer = (id) => {
   if ((userProgress + 1) === prizeLadder.length && id === questionsList[userProgress].key){
-    alert("Congrats!") //To change this.
+    alert("Congrats!") // To change this.
   } else if (id === questionsList[userProgress].key) {
     updateScore()
   } else {
-    alert("GO TO HIGHSCORE BOARD"); //To change this.
+    alert("GO TO HIGHSCORE BOARD"); // To change this.
   }
 };
 
-//function to update the user's score
+// function to update the user's score
 const updateScore = () => {
   // Update progress
   userProgress += 1
   userScore = prizeLadder[userProgress - 1]
-  //Hide the question div
+  // Hide the question div
   $(".qn").remove()
   $(".opt").remove()
   $displayPrizeLadder(prizeLadder,userProgress)
-  setTimeout(() => {$displayQuestion(userProgress)},5000)
+  setTimeout(() => {$displayQuestion(userProgress)},1000)
 }
 
 // function for the main game
 const startGame = () => {
   $displayPrizeLadder(prizeLadder,userProgress)
-  setTimeout(() => {$displayQuestion(userProgress)},5000)
+  setTimeout(() => {$displayQuestion(userProgress)},1000)
 }
 
 // document ready
 $(() => {
   $(".menu").eq(0).on("click", startGame)
-  // $displayPrizeLadder(prizeLadder,userProgress)
 });

@@ -4,10 +4,13 @@ body {
   color: white;
   font-family: Copperplate, "Copperplate Gothic Light";
 }
+/* disabled-div for events */
+.disabled-div {
+  pointer-events: none;
+}
 
 #header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  
 }
 
 h1 {
@@ -26,6 +29,10 @@ h1 {
   align-items: center;
   column-gap: 20px;
   flex-wrap: wrap;
+}
+
+.menu:hover, .option:hover {
+  background-color: #FF8326;
 }
 
 #question, .option, .prizeladder, .prize, .menu {
@@ -52,3 +59,15 @@ h1 {
   width: 650px;
   justify-content: center;
 }
+
+/* blinking button https://www.codegrepper.com/code-examples/css/how+to+make+a+box+blink+in+css */
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
