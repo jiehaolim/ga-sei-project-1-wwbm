@@ -76,14 +76,15 @@ h1 {
 
 .timerbank,
 .lifeline {
-  display: inline;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .display,
 .lifelineimg {
-  width: 50%;
+  width: 5rem;
   display: block;
   justify-content: center;
   align-items: center;
