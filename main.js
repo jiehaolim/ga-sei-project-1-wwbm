@@ -8,11 +8,13 @@ import questionsList from "./questions";
 const gameObject = {
   prizeLadder: ["100","200","300","500","1,000","2,000","4,000","8,000","16,000","32,000","64,000","125,000","250,000","500,000","1,000,000"],
   options: ["A", "B", "C", "D"],
-  time: 5,
+  time: 30,
   roundTimer: null,
-  display: {timer: "img/timer.svg", moneybag: "img/money-bag.svg"},
+  display: {moneybag: "img/money-bag.svg",timer: "img/timer.svg"},
   lifelinesImg: ["img/audience.png","img/friend.png","img/50-50.png"],
-  lifelinesId: ["audience","friend","fifty-fifty"]
+  lifelinesId: ["audience","friend","fifty-fifty"],
+  friend: ["Dad", "Mum","Brother","Sister","Girlfriend","Boyfriend","Tom","Dick","Harry","Lucas"],
+  friendResponse: ["I think it is", "I read it on the internet, it is", "I read this on the newspaper yesterday, it is", "I know this one. It is","I am guessing it is"]
 }
 
 // User profile
@@ -82,12 +84,12 @@ const $displayQuestion = (index) => {
   $generateHTMLElement("div",1,"id","question",".qn","append")
   $generateHTMLElement("div",2,"class","opt container","#overall-footer-container","append")
   $generateHTMLElement("div",2,"class","option",".opt","append")
-  // reset timer, start timer and user current winnings
-  gameObject.time = 5
-  gameObject.roundTimer = setInterval(timer,1000)
   // current winnings text
-  $(".display").eq(1).attr("src",`${gameObject.display.moneybag}`)
-  $(".text").eq(1).text(`$${userProfile.score}`)
+  $(".display").eq(0).attr("src",`${gameObject.display.moneybag}`)
+  $(".text").eq(0).text(`$${userProfile.score}`)
+  // reset timer, start timer and user current winnings
+  gameObject.time = 30
+  gameObject.roundTimer = setInterval(timer,1000)
   // insert 3 life lines images
   for (let i = 0; i < gameObject.lifelinesId.length; i++){
       $(".lifelineimg").eq(i).attr("src",gameObject.lifelinesImg[i]).attr("id",gameObject.lifelinesId[i])
@@ -121,8 +123,8 @@ const $displayQuestion = (index) => {
 const timer = () => {
   if (gameObject.time > -1) {
     // 
-    $(".display").eq(0).attr("src",`${gameObject.display.timer}`).text(`${gameObject.time}`)
-    $(".text").eq(0).text(`${gameObject.time}`)
+    $(".display").eq(1).attr("src",`${gameObject.display.timer}`).text(`${gameObject.time}`)
+    $(".text").eq(1).text(`${gameObject.time}`)
     gameObject.time--
   } else if (gameObject.time === -1) {
     gameObject.time = -2
@@ -135,11 +137,61 @@ const timer = () => {
 // function for audience lifeline
 const audienceLifeline = () => {
 
+  
+
+  //Canvas Chart https://www.w3schools.com/js/tryit.asp?filename=tryai_chartjs_bars_horizontal
+  var xValues = ["A", "B", "C", "D"];
+  var yValues = [55, 49, 44, 24];
+  var barColors = ["red", "green","blue","orange"];
+
+  new Chart("myChart", {
+    type: "horizontalBar",
+    data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+    options: {
+      legend: {display: false},
+      title: {
+        display: true,
+        text: "Audience"
+      },
+      scales: {
+        xAxes: [{ticks: {min: 10, max:60}}]
+      }
+    }
+  });
 }
 
 // function for friend lifeline
 const friendLifeline = () => {
-  
+    // turn on modal
+    $(".modal").css("display","block")
+    // insert random friend into modal header
+    let randomIndex = Math.floor(Math.random() * gameObject.friend.length)
+    $(".modalheader").text(gameObject.friend[randomIndex])
+    // generate 80% chance of getting getting the right answer
+    let randomIndex1 = Math.random()
+    let friendAnswer = null
+    if (randomIndex1 <= 0.2){
+      const wrongAnswer = gameObject.options.filter(element => element !== questionsList[userProfile.Progress].key)
+      let randomIndex2 = Math.floor(Math.random() * wrongAnswer.length)
+      friendAnswer = wrongAnswer[randomIndex2]
+    } else {
+      friendAnswer = questionsList[userProfile.Progress].key
+    }
+    // insert random response into modal body
+    let randomIndex3 = Math.floor(Math.random() * gameObject.friendResponse.length)
+    $(".modalresponse").text(`${gameObject.friendResponse[randomIndex3]} ${friendAnswer}.`)
+    // turn off modal
+    $(".modal").on("click",()=>{$('.modal').css("display","none")})
+    // remove the fifty life lines
+    $("#friend").css("opacity","0.3").addClass("disabled-div").prop("enabled", true);
+    // update user profile
+    userProfile.lifelines[1] = 0
 }
 
 // function for 50-50 lifeline
