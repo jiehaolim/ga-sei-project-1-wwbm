@@ -10,13 +10,16 @@ const gameObject = {
   options: ["A", "B", "C", "D"],
   time: 5,
   roundTimer: null,
-  lifelines: ["img/audience.png","img/friend.png","img/50-50.png"]
+  display: {timer: "img/timer.svg", moneybag: "img/money-bag.svg"},
+  lifelinesImg: ["img/audience.png","img/friend.png","img/50-50.png"],
+  lifelinesId: ["audience","friend","fifty-fifty"]
 }
 
 // User profile
 const userProfile = {
-  Progress: 0, // might need to change it to object to keep track of life line
+  Progress: 0,
   score: 0,
+  lifelines: [1,1,1] //correspond to the game object lifelines Id
 }
 
 // General functions to shorten the code!
@@ -28,12 +31,10 @@ const $generateHTMLElement = (htmlElement, numOfDiv, attrName, attrValue, parent
   }
 } 
 
-// function to enable or disable buttons
-const $enableOrDisableDiv = (id, addClassOrRemove, enabledOrDisabled) => {
-  // identify the rest of the button
-  const optionsNotChosen = gameObject.options.filter(element => element !== id)
+// function to enable or disable buttons for an array of buttons
+const $enableOrDisableDiv = (arrayOfButtonsId, addClassOrRemove, enabledOrDisabled) => {
   // disable all other options button via loop
-  for (const element of optionsNotChosen) {
+  for (const element of arrayOfButtonsId) {
     $(`#${element}`)[addClassOrRemove]("disabled-div").prop(enabledOrDisabled, true);
   }
 }
@@ -70,7 +71,9 @@ const $displayQuestion = (index) => {
   $("#logo").show()
   // create the divs for timer and current prize value
   $generateHTMLElement("div",1,"class","timerbank container","#overall-body-container","prepend")
-  $generateHTMLElement("div",2,"class","display",".timerbank","append")
+  $generateHTMLElement("div",2,"class","displaytimebank container",".timerbank","append")
+  $generateHTMLElement("img",1,"class","display",".displaytimebank","append")
+  $generateHTMLElement("div",1,"class","text",".displaytimebank","append")
   // create divs for the three life lines
   $generateHTMLElement("div",1,"class","lifeline container","#overall-body-container","append")
   $generateHTMLElement("img",3,"class","lifelineimg",".lifeline","append")
@@ -83,11 +86,23 @@ const $displayQuestion = (index) => {
   gameObject.time = 5
   gameObject.roundTimer = setInterval(timer,1000)
   // current winnings text
-  $(".display").eq(1).text(`Winnings: $${userProfile.score}`)
-  // insert 3 life lines
-  for (let i = 0; i < gameObject.lifelines.length; i++){
-    $(".lifelineimg").eq(i).attr("src",gameObject.lifelines[i])
+  $(".display").eq(1).attr("src",`${gameObject.display.moneybag}`)
+  $(".text").eq(1).text(`$${userProfile.score}`)
+  // insert 3 life lines images
+  for (let i = 0; i < gameObject.lifelinesId.length; i++){
+      $(".lifelineimg").eq(i).attr("src",gameObject.lifelinesImg[i]).attr("id",gameObject.lifelinesId[i])
   }
+  // disabled life lines that are used up
+  for (let i = 0; i < userProfile.lifelines.length; i++) {
+    if (userProfile.lifelines[i] === 0)
+    $(".lifelineimg").eq(i).attr("src",gameObject.lifelinesImg[i]).attr("id",gameObject.lifelinesId[i]).css("opacity","0.3").addClass("disabled-div").prop("enabled", true);
+  }
+  // add life line event listener for audience lifeline
+  $(".lifelineimg").eq(0).on("click", audienceLifeline);
+  // add life line event listener for friend lifeline
+  $(".lifelineimg").eq(1).on("click", friendLifeline);
+  // add life line event listener for 50-50 lifeline
+  $(".lifelineimg").eq(2).on("click", fiftyfiftyLifeline);
   // insert question into div
   $("#question").text(`${questionsList[index].question}`)
   // loop the ids into the options and text
@@ -96,7 +111,7 @@ const $displayQuestion = (index) => {
     $(".option").eq(i).attr("id",gameObject.options[i])
     $(".option").eq(i).text(`${gameObject.options[i]}. ${questionsList[index][objKey]}`)
   }
-  // add event listener
+  // add event listener for the options
   const $answerSelected = (event) => {$suspenseAndReflectAns($(event.currentTarget).attr("id"));}
   $(".option").on("click", $answerSelected);
 };
@@ -106,7 +121,8 @@ const $displayQuestion = (index) => {
 const timer = () => {
   if (gameObject.time > -1) {
     // 
-    $(".display").eq(0).text(`${gameObject.time}`)
+    $(".display").eq(0).attr("src",`${gameObject.display.timer}`).text(`${gameObject.time}`)
+    $(".text").eq(0).text(`${gameObject.time}`)
     gameObject.time--
   } else if (gameObject.time === -1) {
     gameObject.time = -2
@@ -115,13 +131,52 @@ const timer = () => {
   }
 }
 
+// Game life line function!
+// function for audience lifeline
+const audienceLifeline = () => {
+
+}
+
+// function for friend lifeline
+const friendLifeline = () => {
+  
+}
+
+// function for 50-50 lifeline
+const fiftyfiftyLifeline = () => {
+  // create an array that does not contains the answer
+  const wrongAnswer = gameObject.options.filter(element => element !== questionsList[userProfile.Progress].key)
+  // to randomly generate 2 different wrong answers to be eliminated
+  const answerToBeEliminated = []
+  while(answerToBeEliminated.length < 2){
+    let randomIndex = Math.floor(Math.random() * wrongAnswer.length)
+    // only pushes the random index if it does not exist
+    if (answerToBeEliminated.indexOf(wrongAnswer[randomIndex]) === -1) {
+      answerToBeEliminated.push(wrongAnswer[randomIndex])
+    }
+  }
+  // remove the text of the 2 eliminated options
+  for (const element of answerToBeEliminated) {
+    $(`#${element}`).text("")
+  }
+  // disable the 2 options eliminated options button
+  $enableOrDisableDiv(answerToBeEliminated,"addClass","enabled")
+  // remove the fifty life lines
+  $("#fifty-fifty").css("opacity","0.3").addClass("disabled-div").prop("enabled", true);
+  // update user profile
+  userProfile.lifelines[2] = 0
+}
+
 // Game animation function!
 // function to set delay to create suspense then turn the answer green
 const $suspenseAndReflectAns = (id) => {
   // stop timer
   clearInterval(gameObject.roundTimer)
+  // identify the rest of the button
+  const optionsNotChosen = gameObject.options.filter(element => element !== id)
   // disable button
-  $enableOrDisableDiv(id,"addClass","enabled")
+  $enableOrDisableDiv(optionsNotChosen,"addClass","enabled")
+  $enableOrDisableDiv(gameObject.lifelinesId,"addClass","enabled")
   // selected answer as orange
   $(`#${id}`).css("background-color","#FF8326")
   // show correct answer as green after 5s
@@ -129,18 +184,23 @@ const $suspenseAndReflectAns = (id) => {
   // check answer after 10s
   setTimeout(() => {checkAnswer(id)},2000)
   // enable button
-  $enableOrDisableDiv(id,"remove","Disabled")
+  $enableOrDisableDiv(optionsNotChosen,"remove","Disabled")
+  $enableOrDisableDiv(gameObject.lifelinesId,"remove","Disabled")
 }
 
 const reflectAnsAfterTimeOut = () => {
   // stop timer
   clearInterval(gameObject.roundTimer)
-  // disable button
-  $enableOrDisableDiv($(".option"),"addClass","enabled")
+  // identify the all of the button
+  const allOptions = gameObject.options
+  // disable all button
+  $enableOrDisableDiv(allOptions,"addClass","enabled")
+  $enableOrDisableDiv(gameObject.lifelinesId,"addClass","enabled")
   // show correct answer as green after 5s
   setTimeout(() => {$(`#${questionsList[userProfile.Progress].key}`).css("background-color","#37CD3B")},1000)
-  // enable button
-  $enableOrDisableDiv($(".option"),"remove","Disabled")
+  // enable all button
+  $enableOrDisableDiv(allOptions,"remove","Disabled")
+  $enableOrDisableDiv(gameObject.lifelinesId,"remove","Disabled")
 }
 
 // Game logic function!
