@@ -95,6 +95,10 @@ h1 {
   justify-content: center;
 }
 
+.qn, .opt {
+  width: 100%;
+}
+
 /* blinking button https://www.codegrepper.com/code-examples/css/how+to+make+a+box+blink+in+css */
 .blink {
   animation: blinker 1s linear infinite;
