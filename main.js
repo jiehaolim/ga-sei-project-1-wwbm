@@ -4,10 +4,13 @@ import questionsList from "./questions";
 
 // Game and user objects!
 // Game object
+// line lifes picture - https://imgur.com/sQvoOhJ
 const gameObject = {
   prizeLadder: ["100","200","300","500","1,000","2,000","4,000","8,000","16,000","32,000","64,000","125,000","250,000","500,000","1,000,000"],
   options: ["A", "B", "C", "D"],
-  timeLeft: 12,
+  time: 5,
+  roundTimer: null,
+  lifelines: ["img/audience.png","img/friend.png","img/50-50.png"]
 }
 
 // User profile
@@ -46,8 +49,8 @@ const $displayPrizeLadder = (prizeLadder, Progress) => {
   $(".timerbank").remove()
   $(".lifeline").remove()
   // create the divs for the ladder
-  $generateHTMLElement("div",15,"class","ladder container","#footer","append")
-  $generateHTMLElement("div",1,"class","prize",".ladder","append")
+  $generateHTMLElement("div",1,"class","ladder container","#overall-footer-container","append")
+  $generateHTMLElement("div",15,"class","prize",".ladder","append")
   // insert prize ladder text into divs
   for (let i = 0; i < gameObject.prizeLadder.length; i++){
     let prizeNum = gameObject.prizeLadder.length - 1 - i
@@ -67,28 +70,24 @@ const $displayQuestion = (index) => {
   $("#logo").show()
   // create the divs for timer and current prize value
   $generateHTMLElement("div",1,"class","timerbank container","#overall-body-container","prepend")
-  $generateHTMLElement("div",2,"class","button",".timerbank","append")
+  $generateHTMLElement("div",2,"class","display",".timerbank","append")
   // create divs for the three life lines
   $generateHTMLElement("div",1,"class","lifeline container","#overall-body-container","append")
-  $generateHTMLElement("div",3,"class","button",".lifeline","append")
+  $generateHTMLElement("img",3,"class","lifelineimg",".lifeline","append")
   // create the divs
-  $generateHTMLElement("div",1,"class","qn container","#footer","append")
+  $generateHTMLElement("div",1,"class","qn container","#overall-footer-container","append")
   $generateHTMLElement("div",1,"id","question",".qn","append")
-  $generateHTMLElement("div",2,"class","opt container","#footer","append")
+  $generateHTMLElement("div",2,"class","opt container","#overall-footer-container","append")
   $generateHTMLElement("div",2,"class","option",".opt","append")
-  // add timer and user current winnings
-  
-
-
-
-
+  // reset timer, start timer and user current winnings
+  gameObject.time = 5
+  gameObject.roundTimer = setInterval(timer,1000)
   // current winnings text
-  $(".button").eq(1).text(`Winnings: $${userProfile.score}`)
+  $(".display").eq(1).text(`Winnings: $${userProfile.score}`)
   // insert 3 life lines
-
-
-
-  
+  for (let i = 0; i < gameObject.lifelines.length; i++){
+    $(".lifelineimg").eq(i).attr("src",gameObject.lifelines[i])
+  }
   // insert question into div
   $("#question").text(`${questionsList[index].question}`)
   // loop the ids into the options and text
@@ -100,21 +99,27 @@ const $displayQuestion = (index) => {
   // add event listener
   const $answerSelected = (event) => {$suspenseAndReflectAns($(event.currentTarget).attr("id"));}
   $(".option").on("click", $answerSelected);
-
 };
 
-// Game timer function!
-// function to start timer
-// function for reflecting the count down per question
-
-// function to alert user game is over
-const timeUp = () => {
-  alert("Your time is up! Have a better luck tomorrow.")
+// Game round timer function!
+// function to run and stop the round timer
+const timer = () => {
+  if (gameObject.time > -1) {
+    // 
+    $(".display").eq(0).text(`${gameObject.time}`)
+    gameObject.time--
+  } else if (gameObject.time === -1) {
+    gameObject.time = -2
+    clearInterval(gameObject.roundTimer)
+    reflectAnsAfterTimeOut()
+  }
 }
 
 // Game animation function!
 // function to set delay to create suspense then turn the answer green
 const $suspenseAndReflectAns = (id) => {
+  // stop timer
+  clearInterval(gameObject.roundTimer)
   // disable button
   $enableOrDisableDiv(id,"addClass","enabled")
   // selected answer as orange
@@ -125,6 +130,17 @@ const $suspenseAndReflectAns = (id) => {
   setTimeout(() => {checkAnswer(id)},2000)
   // enable button
   $enableOrDisableDiv(id,"remove","Disabled")
+}
+
+const reflectAnsAfterTimeOut = () => {
+  // stop timer
+  clearInterval(gameObject.roundTimer)
+  // disable button
+  $enableOrDisableDiv($(".option"),"addClass","enabled")
+  // show correct answer as green after 5s
+  setTimeout(() => {$(`#${questionsList[userProfile.Progress].key}`).css("background-color","#37CD3B")},1000)
+  // enable button
+  $enableOrDisableDiv($(".option"),"remove","Disabled")
 }
 
 // Game logic function!

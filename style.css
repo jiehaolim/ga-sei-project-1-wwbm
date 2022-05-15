@@ -15,51 +15,83 @@ h1 {
 
 #logo {
   max-width: 400px;
-  width: 50%;
-  margin: 20px;
+  width: 90%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-#overall-body-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
+#overall-body-container,
+#overall-footer-container,
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 20px;
   flex-wrap: wrap;
+  row-gap: 20px;
+  column-gap: 20px;
 }
 
-.menu:hover, .option:hover {
-  background-color: #FF8326;
+.startmenu {
+  display: block;
+  justify-content: center;
+  align-items: center;
 }
 
-#question, .option, .prizeladder, .prize, .menu {
+.menu:hover,
+.option:hover {
+  background-color: #ff8326;
+}
+
+#question,
+.option,
+.prize,
+.menu {
   height: 50px;
-  width: 310px;
+  width: 290px;
   display: flex;
   align-items: center;
   justify-content: left;
   text-align: center;
-  margin-top: 10px;
   color: white;
   border-radius: 9999px;
-  padding-left: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
   outline-style: groove;
-
 }
 
-.menu, .prize {
+.menu,
+.prize {
   justify-content: center;
+  margin-bottom: 10px;
+}
+
+.prize {
+  margin: 8px;
+  height: 40px;
+}
+
+.ladder {
+  display: block;
+}
+
+.timerbank,
+.lifeline {
+  display: inline;
+  justify-content: center;
+  align-items: center;
+}
+
+.display,
+.lifelineimg {
+  width: 50%;
+  display: block;
+  justify-content: center;
+  align-items: center;
 }
 
 #question {
   height: 75px;
-  width: 650px;
+  width: 630px;
   justify-content: center;
 }
 
@@ -78,5 +110,3 @@ h1 {
 .disabled-div {
   pointer-events: none;
 }
-
-
