@@ -1,6 +1,11 @@
 import "./style.css";
 import $ from "jquery";
 import questionsList from "./questions";
+import moneybagSvg from "./img/money-bag.svg";
+import timerSvg from "./img/timer.svg";
+import audienceImg from "./img/audience.png";
+import friendImg from "./img/friend.png" ;
+import fiftyfiftyImg from "./img/50-50.png";
 
 // Game and user objects!
 // Game object
@@ -26,8 +31,8 @@ const gameObject = {
   options: ["A", "B", "C", "D"],
   time: 30,
   roundTimer: null,
-  display: { moneybag: "./img/money-bag.svg", timer: "./img/timer.svg" },
-  lifelinesImg: ["./img/audience.png", "./img/friend.png", "./img/50-50.png"],
+  display: { moneybag: moneybagSvg, timer: timerSvg },
+  lifelinesImg: [audienceImg, friendImg, fiftyfiftyImg],
   lifelinesId: ["audience", "friend", "fifty-fifty"],
   friend: [
     "Dad",
