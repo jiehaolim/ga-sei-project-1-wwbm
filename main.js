@@ -456,14 +456,14 @@ const $suspenseAndReflectAns = (id) => {
   $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
   // selected answer as orange
   $(`#${id}`).css("background-color", "#FF8326");
-  // show correct answer as green after 5s
+  // show correct answer as green after 2s
   setTimeout(() => {
     $(`#${questionsList[userProfile.Progress].key}`).css(
       "background-color",
       "#37CD3B"
     );
   }, 1000);
-  // check answer after 10s
+  // check answer after 2s
   setTimeout(() => {
     checkAnswer(id);
   }, 2000);
@@ -519,7 +519,7 @@ const updateScore = () => {
   $displayPrizeLadder(gameObject.prizeLadder, userProfile.Progress);
   setTimeout(() => {
     $displayQuestion(userProfile.Progress);
-  }, 1000);
+  }, 2000);
 };
 
 // Main game function!
@@ -527,7 +527,7 @@ const startGame = () => {
   $displayPrizeLadder(gameObject.prizeLadder, userProfile.Progress);
   setTimeout(() => {
     $displayQuestion(userProfile.Progress);
-  }, 1000);
+  }, 2000);
 };
 
 // document ready!
