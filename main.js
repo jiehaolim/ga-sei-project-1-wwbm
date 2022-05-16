@@ -179,26 +179,39 @@ const audienceLifeline = () => {
   } else {
     chartPercentage.splice(correctAnsIndex,0,maxPercent)
   }
-  // Canvas Chart https://www.w3schools.com/js/tryit.asp?filename=tryai_chartjs_bars_horizontal
+  // Canvas Chart 
   let xValues = userProfile.currentOptions;
   let yValues = chartPercentage;
   let barColors = ["red", "green","blue","orange"];
   const myAudienceChart = new Chart("myChart", {
-    type: "horizontalBar",
+    type: 'bar',
     data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues,
-    }]
-  },
+      labels: xValues,
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues,
+      }],
+    },
     options: {
-      legend: {display: false},
+      indexAxis: 'y',
+      plugins: {
+        legend: { display: false },
+      },
       scales: {
-        xAxes: [{ticks: {min: 0, max: maxPercentRounded,fontColor: "white"}}],
-        yAxes: [{ticks: {fontColor: "white"}}]
-      }
-    }
+        x: {
+          ticks: {
+            color: 'white',
+            beginAtZero: true,
+          },
+        },
+        y: {
+          ticks: {
+            color: 'white',
+            beginAtZero: true,
+          },
+        },
+      },
+    },
   });
   // turn off modal
   $(".modal").on("click",()=>{$('.modal').css("display","none")})
