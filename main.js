@@ -21,7 +21,9 @@ const gameObject = {
 const userProfile = {
   Progress: 0,
   score: 0,
-  lifelines: [1,1,1] //correspond to the game object lifelines Id
+  currentOptions: ["A", "B", "C", "D"],
+  //correspond to the game object lifelines Id
+  lifelines: [1,1,1] 
 }
 
 // General functions to shorten the code!
@@ -105,6 +107,8 @@ const $displayQuestion = (index) => {
   $(".lifelineimg").eq(1).on("click", friendLifeline);
   // add life line event listener for 50-50 lifeline
   $(".lifelineimg").eq(2).on("click", fiftyfiftyLifeline);
+  // reset the user available options
+  userProfile.currentOptions = gameObject.options
   // insert question into div
   $("#question").text(`${questionsList[index].question}`)
   // loop the ids into the options and text
@@ -136,48 +140,90 @@ const timer = () => {
 // Game life line function!
 // function for audience lifeline
 const audienceLifeline = () => {
-
-  
-
-  //Canvas Chart https://www.w3schools.com/js/tryit.asp?filename=tryai_chartjs_bars_horizontal
-  var xValues = ["A", "B", "C", "D"];
-  var yValues = [55, 49, 44, 24];
-  var barColors = ["red", "green","blue","orange"];
-
-  new Chart("myChart", {
+  // turn on modal
+  $(".modal").css("display","block")
+  // clear modal
+  $(".modalheader").text("")
+  $(".modalresponse").text("")
+  // Insert header words for modal
+  $(".modalheader").text("Audience")
+  // create the canvas html element
+  $generateHTMLElement("canvas",1,"id","myChart",".modalresponse","append")
+  // random generate percentages
+  const randomNumberArray = []
+  let randomTotal = 0;
+  for (let i = 0; i < userProfile.currentOptions.length; i ++){
+    // Step 1: Generate random numbers between 0 and 1
+    let randomindex = Math.random() * userProfile.currentOptions.length
+    randomNumberArray.push(randomindex)
+    // Step 2: Add these numbers
+    randomTotal += randomindex
+  }
+  // Step 3: Divide each of the numbers by the sum,
+  // Step 4: Multiply by 100, and round to the nearest integer.
+  const randomPercentage = randomNumberArray.map(element => Math.round(element/randomTotal * 100))
+  // Align the percentage with the options to reflect the correct answer and with 90% chance of getting right
+  // for chart axis
+  let maxPercent = randomPercentage.reduce(function(a, b) {return Math.max(a, b);})
+  let maxPercentRounded = (Math.ceil(maxPercent/10)*10)
+  // take out the highest percent to insert into the correct answer index
+  const chartPercentage = randomPercentage.filter(element => element !== maxPercent)
+  let randomIndex1 = Math.random()
+  const correctAnsIndex = userProfile.currentOptions.indexOf(questionsList[userProfile.Progress].key)
+  let randomIndex2 = 0;
+  if (randomIndex1 <= 0.1) {
+    do {
+      randomIndex2 = Math.floor(Math.random() * userProfile.currentOptions.length)
+    } while (randomIndex2 === correctAnsIndex)
+    chartPercentage.splice(randomIndex2,0,maxPercent)
+  } else {
+    chartPercentage.splice(correctAnsIndex,0,maxPercent)
+  }
+  // Canvas Chart https://www.w3schools.com/js/tryit.asp?filename=tryai_chartjs_bars_horizontal
+  let xValues = userProfile.currentOptions;
+  let yValues = chartPercentage;
+  let barColors = ["red", "green","blue","orange"];
+  const myAudienceChart = new Chart("myChart", {
     type: "horizontalBar",
     data: {
     labels: xValues,
     datasets: [{
       backgroundColor: barColors,
-      data: yValues
+      data: yValues,
     }]
   },
     options: {
       legend: {display: false},
-      title: {
-        display: true,
-        text: "Audience"
-      },
       scales: {
-        xAxes: [{ticks: {min: 10, max:60}}]
+        xAxes: [{ticks: {min: 0, max: maxPercentRounded,fontColor: "white"}}],
+        yAxes: [{ticks: {fontColor: "white"}}]
       }
     }
   });
+  // turn off modal
+  $(".modal").on("click",()=>{$('.modal').css("display","none")})
+  // remove the audience life line
+  $("#audience").css("opacity","0.3").addClass("disabled-div").prop("enabled", true);
+  // update user profile
+  userProfile.lifelines[0] = 0
 }
 
 // function for friend lifeline
 const friendLifeline = () => {
     // turn on modal
     $(".modal").css("display","block")
+    // clear modal
+    $(".modalheader").text("")
+    $(".modalresponse").text("")
+    $("#myChart").remove()
     // insert random friend into modal header
     let randomIndex = Math.floor(Math.random() * gameObject.friend.length)
     $(".modalheader").text(gameObject.friend[randomIndex])
-    // generate 80% chance of getting getting the right answer
+    // generate 70% chance of getting getting the right answer
     let randomIndex1 = Math.random()
     let friendAnswer = null
-    if (randomIndex1 <= 0.2){
-      const wrongAnswer = gameObject.options.filter(element => element !== questionsList[userProfile.Progress].key)
+    if (randomIndex1 <= 0.3){
+      const wrongAnswer = userProfile.currentOptions.filter(element => element !== questionsList[userProfile.Progress].key)
       let randomIndex2 = Math.floor(Math.random() * wrongAnswer.length)
       friendAnswer = wrongAnswer[randomIndex2]
     } else {
@@ -188,7 +234,7 @@ const friendLifeline = () => {
     $(".modalresponse").text(`${gameObject.friendResponse[randomIndex3]} ${friendAnswer}.`)
     // turn off modal
     $(".modal").on("click",()=>{$('.modal').css("display","none")})
-    // remove the fifty life lines
+    // remove the friend life lines
     $("#friend").css("opacity","0.3").addClass("disabled-div").prop("enabled", true);
     // update user profile
     userProfile.lifelines[1] = 0
@@ -197,7 +243,7 @@ const friendLifeline = () => {
 // function for 50-50 lifeline
 const fiftyfiftyLifeline = () => {
   // create an array that does not contains the answer
-  const wrongAnswer = gameObject.options.filter(element => element !== questionsList[userProfile.Progress].key)
+  const wrongAnswer = userProfile.currentOptions.filter(element => element !== questionsList[userProfile.Progress].key)
   // to randomly generate 2 different wrong answers to be eliminated
   const answerToBeEliminated = []
   while(answerToBeEliminated.length < 2){
@@ -211,9 +257,11 @@ const fiftyfiftyLifeline = () => {
   for (const element of answerToBeEliminated) {
     $(`#${element}`).text("")
   }
+  // update the remaining options available incase other lifelines are utilized
+  userProfile.currentOptions = userProfile.currentOptions.filter(element => answerToBeEliminated.includes(element) === false )
   // disable the 2 options eliminated options button
   $enableOrDisableDiv(answerToBeEliminated,"addClass","enabled")
-  // remove the fifty life lines
+  // remove the fifty fifty life lines
   $("#fifty-fifty").css("opacity","0.3").addClass("disabled-div").prop("enabled", true);
   // update user profile
   userProfile.lifelines[2] = 0
