@@ -13,7 +13,7 @@ import fiftyfiftyImg from "./img/50-50.png";
 const gameObject = {
   prizeLadder: ["100","200","300","500","1,000","2,000","4,000","8,000","16,000","32,000","64,000","125,000","250,000","500,000","1,000,000"],
   options: ["A", "B", "C", "D"],
-  time: 5,
+  time: 30,
   roundTimer: null,
   display: { moneybag: moneybagSvg, timer: timerSvg },
   lifelinesImg: [audienceImg, friendImg, fiftyfiftyImg],
@@ -95,7 +95,7 @@ const $displayQuestion = (index) => {
   $(".display").eq(0).attr("src", `${gameObject.display.moneybag}`);
   $(".text").eq(0).text(`$${userProfile.score}`);
   // reset timer, start timer and user current winnings
-  gameObject.time = 5;
+  gameObject.time = 30;
   gameObject.roundTimer = setInterval(timer, 1000);
   // insert 3 life lines images
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
@@ -300,9 +300,9 @@ const $suspenseAndReflectAns = (id) => {
   $(`#${id}`).css("background-color", "#FF8326");
   // show correct answer as green after 2s
   setTimeout(() => {
-    $(`#${questionsList[userProfile.Progress].key}`).css("background-color","#37CD3B");}, 1000);
-  // check answer after 2s
-  setTimeout(() => {checkAnswer(id);}, 2000);
+    $(`#${questionsList[userProfile.Progress].key}`).css("background-color","#37CD3B");}, 2000);
+  // check answer after 4s
+  setTimeout(() => {checkAnswer(id);}, 4000);
   // enable button
   $enableOrDisableDiv(optionsNotChosen, "remove", "Disabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
@@ -316,12 +316,12 @@ const reflectAnsAfterTimeOut = () => {
   // disable all button
   $enableOrDisableDiv(allOptions, "addClass", "enabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
-  // show correct answer as green after 5s
-  setTimeout(() => {$(`#${questionsList[userProfile.Progress].key}`).css("background-color","#37CD3B");}, 1000);
+  // show correct answer as green after 2s
+  setTimeout(() => {$(`#${questionsList[userProfile.Progress].key}`).css("background-color","#37CD3B");}, 2000);
   // enable all button
   $enableOrDisableDiv(allOptions, "remove", "Disabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
-  setTimeout(() => {endGame();}, 3000);
+  setTimeout(() => {endGame();}, 4000);
 };
 
 // Game logic function!
@@ -379,7 +379,7 @@ const endGame = (highscore) => {
     userProfile.score = 0
   }
   // add text to the divs
-  $(".finalscore").text("High Score:");
+  $(".finalscore").text("Final Score:");
   $(".scoreboard").text(`$${userProfile.score}`);
   $(".button").text("Restart");
   
