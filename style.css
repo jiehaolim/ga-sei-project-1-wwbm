@@ -51,7 +51,8 @@ h1 {
 #question,
 .option,
 .prize,
-.menu {
+.menu,
+.button {
   height: 50px;
   width: 290px;
   display: flex;
@@ -66,7 +67,7 @@ h1 {
   border-width: 2px;
 }
 
-.menu,
+.button, .menu,
 .prize {
   justify-content: center;
   margin-bottom: 10px;
@@ -222,4 +223,11 @@ h1 {
 
 .modal-body {
   padding: 2px 16px;
+}
+
+.finalscore, .scoreboard {
+  font-size: 25px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
