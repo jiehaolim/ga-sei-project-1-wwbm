@@ -357,16 +357,15 @@ const continueGame = () => {
 const endGame = (highscore) => {
   // Hide all the game objects
   $(".timerbank").remove();
-  $("#logo").hide()
   $(".lifeline").remove();
   $(".qn").remove();
   $(".opt").remove();
-  // Create the highscore board
+  // Create the final score board
   $generateHTMLElement("div", 1, "class", "finalscore","#footer","append");
   $generateHTMLElement("div", 1, "class", "scoreboard","#footer","append");
   $generateHTMLElement("div", 1, "class", "reset container","#footer","append");
   $generateHTMLElement("div", 1, "class", "button",".reset","append");
-  // update high score
+  // update final score
   if (gameObject.prizeLadder.indexOf(userProfile.score) === gameObject.prizeLadder.indexOf("1,000,000")) {
     userProfile.score = "1,000,000" 
   } else if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("32,000")){
@@ -388,7 +387,7 @@ const endGame = (highscore) => {
 };
 
 const restartGame = () => {
-  // hide the high score screen
+  // hide the final score screen
   $(".finalscore").remove();
   $(".scoreboard").remove();
   $(".reset").remove();
@@ -398,7 +397,6 @@ const restartGame = () => {
   userProfile.score = 0,
   userProfile.lifelines = [1, 1, 1],
   // show the menu
-  $("#logo").show();
   $(".startmenu").show();
 }
 
