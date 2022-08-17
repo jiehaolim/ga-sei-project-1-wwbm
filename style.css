@@ -95,6 +95,7 @@ h1 {
   justify-content: center;
   align-items: center;
   width: 80px;
+  min-width: 73px;
   max-width: 5rem;
 }
 
@@ -105,10 +106,6 @@ h1 {
   display: block;
   justify-content: center;
   align-items: center;
-}
-
-.lifelineimg {
-  min-width: 73px;
 }
 
 .display {
