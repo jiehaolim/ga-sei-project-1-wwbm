@@ -94,6 +94,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 80px;
   max-width: 5rem;
 }
 
