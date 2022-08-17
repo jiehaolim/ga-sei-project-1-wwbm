@@ -98,6 +98,7 @@ h1 {
 }
 
 .display,
+.text,
 .lifelineimg {
   width: 100%;
   display: block;
@@ -125,14 +126,6 @@ h1 {
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
-}
-
-.displaytimebank.container {
-  flex-direction: column;
-}
-
-.displaytimebank.container:last-of-type {
-  width: 88px;
 }
 
 /* blinking button https://www.codegrepper.com/code-examples/css/how+to+make+a+box+blink+in+css */
