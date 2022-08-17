@@ -107,8 +107,12 @@ h1 {
   align-items: center;
 }
 
+.lifelineimg {
+  min-width: 73px;
+}
+
 .display {
-  max-width: 2rem;
+  max-width: 2.5rem;
 }
 
 #question {
