@@ -94,12 +94,11 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 5rem;
 }
 
 .display,
 .lifelineimg {
-  min-width: 2rem;
-  max-width: 5rem;
   width: 100%;
   display: block;
   justify-content: center;
@@ -107,7 +106,7 @@ h1 {
 }
 
 .display {
-  max-width: 1rem;
+  max-width: 2rem;
 }
 
 #question {
