@@ -291,10 +291,8 @@ const fiftyfiftyLifeline = () => {
 const $suspenseAndReflectAns = (id) => {
   // stop timer
   clearInterval(gameObject.roundTimer);
-  // identify the rest of the button
-  const optionsNotChosen = gameObject.options.filter((element) => element !== id);
   // disable button
-  $enableOrDisableDiv(optionsNotChosen, "addClass", "enabled");
+  $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
   // selected answer as orange
   $(`#${id}`).css("background-color", "#FF8326");
@@ -304,7 +302,7 @@ const $suspenseAndReflectAns = (id) => {
   // check answer after 4s
   setTimeout(() => {checkAnswer(id);}, 4000);
   // enable button
-  $enableOrDisableDiv(optionsNotChosen, "remove", "Disabled");
+  $enableOrDisableDiv(gameObject.options, "remove", "Disabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
 };
 
@@ -380,7 +378,7 @@ const endGame = (highscore) => {
   // add text to the divs
   $(".finalscore").text("Final Score:");
   $(".scoreboard").text(`$${userProfile.score}`);
-  $(".button").text("Restart");
+  $(".button").text("Menu");
   
   // add life line event listener for resetting the game
   $(".button").on("click", restartGame);
@@ -406,7 +404,17 @@ const startGame = () => {
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
 
+// Rules!
+const rules = () => {
+  $(".logo").hide();
+  $(".startmenu").hide();
+};
+
+// Back to Menu!
+
+
 // document ready!
 $(() => {
   $(".menu").eq(0).on("click", startGame);
+  $(".menu").eq(1).on("click", rules);
 });

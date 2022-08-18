@@ -48,6 +48,14 @@ h1 {
   background-color: #ff8326;
 }
 
+.rules {
+  display: none;
+}
+
+.back {
+  display: none;
+}
+
 #question,
 .option,
 .prize,
@@ -86,6 +94,7 @@ h1 {
 
 .ladder {
   display: block;
+  margin-top: 5px;
 }
 
 .timerbank,
