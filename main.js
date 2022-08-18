@@ -65,7 +65,7 @@ const $displayPrizeLadder = (prizeLadder, Progress) => {
   for (let i = 0; i < gameObject.prizeLadder.length; i++) {
     let prizeNum = gameObject.prizeLadder.length - 1 - i;
     let prizeQuestionIndex = gameObject.prizeLadder.length - i;
-    $(".prize").eq(i).text(`${[prizeQuestionIndex]} $${gameObject.prizeLadder[prizeNum]}`);
+    $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - $${gameObject.prizeLadder[prizeNum]}`);
   }
   // change the css of current level
   let prizeQuestionIndex = gameObject.prizeLadder.length - userProfile.Progress - 1;
@@ -91,9 +91,10 @@ const $displayQuestion = (index) => {
   $generateHTMLElement("div", 1, "id", "question", ".qn", "append");
   $generateHTMLElement("div",2,"class","opt container","#overall-footer-container","append");
   $generateHTMLElement("div", 2, "class", "option", ".opt", "append");
-  // current winnings text
+  // current winnings svg and text plus timer svg
   $(".display").eq(0).attr("src", `${gameObject.display.moneybag}`);
   $(".text").eq(0).text(`$${userProfile.score}`);
+  $(".display").eq(1).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
   // reset timer, start timer and user current winnings
   gameObject.time = 30;
   gameObject.roundTimer = setInterval(timer, 1000);
@@ -133,11 +134,9 @@ const $displayQuestion = (index) => {
 // function to run and stop the round timer
 const timer = () => {
   if (gameObject.time > 5) {
-    $(".display").eq(1).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
     $(".text").eq(1).css("color","#37CD3B").text(`${gameObject.time}`);
     gameObject.time--;
   } else if (gameObject.time > - 1) {
-    $(".display").eq(1).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
     $(".text").eq(1).css("color","red").text(`${gameObject.time}`);
     gameObject.time--;
   } else if (gameObject.time === -1) {
@@ -410,20 +409,36 @@ const rules = () => {
   // hide the menu screen
   $(".logo").hide();
   $(".startmenu").hide();
-  // Create the final score board
+  // Create the divs for rules
   $generateHTMLElement("div", 1, "class", "rules","#overall-body-container","append");
-  $generateHTMLElement("div", 9, "class", "details",".rules","append");
+  $generateHTMLElement("div", 8, "class", "details",".rules","append");
   $generateHTMLElement("div", 1, "class", "back",".rules","append");
   // add text to the divs
   $(".details").eq(0).addClass("header").text("Rules of the Game")
-  $(".details").eq(1).addClass("body").text("Based on the international television game show franchise of British origin, created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stay a chance to win a million dollar.")
-  $(".details").eq(2).addClass("header").text("Safe Haven")
-  $(".details").eq(3).addClass("body").text("There are three ‘safe havens’ in the question structure (Questions five, ten and fifteen). Contestants accumulate money with each correct answer, but should the they answer incorrectly before reaching a safe haven, they stand to lose a large amount of winnings.")
-  $(".details").eq(4).addClass("body").text("")
-  $(".details").eq(5).addClass("header").text("Lifelines")
-  $(".details").eq(6).addClass("body").text("")
-  $(".details").eq(7).addClass("header").text("Rights")
-  $(".details").eq(8).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.")
+  $(".details").eq(1).addClass("body").text("Based on the international television game show franchise of British origin, created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stay a chance to win a million dollars.")
+  $(".details").eq(2).addClass("header").text("Safe Havens")
+  $(".details").eq(3).addClass("body").text("There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will retain their winnings at the amount of the last safe haven.")
+  $(".details").eq(4).addClass("header").text("Lifelines")
+  $(".details").eq(5).addClass("lifelines-container")
+  // Create the divs for lifeline items
+  $generateHTMLElement("div", 3, "class", "lifeline-container",".lifelines-container","append");
+  $generateHTMLElement("div", 1, "class", "lifelineicon",".lifeline-container","append");
+  $generateHTMLElement("img", 1, "class", "iconimg",".lifelineicon","append");
+  $generateHTMLElement("div", 1, "class", "iconlabel",".lifelineicon","append");
+  $generateHTMLElement("div", 1, "class", "lifelineexplainer body",".lifeline-container","append");
+  // lifeline image and text
+  for (let i = 0; i < gameObject.lifelinesId.length; i++) {
+    $(".iconimg").eq(i).attr("src", gameObject.lifelinesImg[i]);
+  }
+  $(".iconlabel").eq(0).text("Ask the audience")
+  $(".lifelineexplainer").eq(0).text("A poll will be conducted with the audience and the results will be shown in a chart. The answer provided will have an accuracy of 90%.")
+  $(".iconlabel").eq(1).text("Phone a friend")
+  $(".lifelineexplainer").eq(1).text("Contestant will be allowed to randomly phone a friend or family member and ask for the answer to the question. The answer provided will have an accuracy of 70%.")
+  $(".iconlabel").eq(2).text("Fifty fifty")
+  $(".lifelineexplainer").eq(2).text("This eliminates two incorrect answers from the four answers.")
+  // copyright text
+  $(".details").eq(6).addClass("header").text("Copyrights")
+  $(".details").eq(7).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.")
   $(".back").text("Menu");
   // add life line event listener for resetting the game
   $(".back").on("click", menu);
