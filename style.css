@@ -44,23 +44,18 @@ h1 {
 }
 
 .menu:hover,
-.option:hover {
+.option:hover,
+.back:hover,
+.button:hover {
   background-color: #ff8326;
-}
-
-.rules {
-  display: none;
-}
-
-.back {
-  display: none;
 }
 
 #question,
 .option,
 .prize,
 .menu,
-.button {
+.button,
+.back {
   height: 50px;
   width: 290px;
   display: flex;
@@ -81,10 +76,33 @@ h1 {
   }
 }
 
-.button, .menu,
-.prize {
+.button,
+.menu,
+.prize,
+.back {
   justify-content: center;
   margin-bottom: 10px;
+}
+
+.rules {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  row-gap: 20px;
+  width: 630px;
+}
+
+.header {
+  font-size: 1.5em;
+}
+
+.body {
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: none;
+  width: 630px;
 }
 
 .prize {
@@ -234,7 +252,8 @@ h1 {
   padding: 2px 16px;
 }
 
-.finalscore, .scoreboard {
+.finalscore,
+.scoreboard {
   font-size: 25px;
   text-align: center;
   margin-top: 20px;

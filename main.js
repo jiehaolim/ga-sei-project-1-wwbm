@@ -132,9 +132,13 @@ const $displayQuestion = (index) => {
 // Game round timer function!
 // function to run and stop the round timer
 const timer = () => {
-  if (gameObject.time > -1) {
+  if (gameObject.time > 5) {
     $(".display").eq(1).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
-    $(".text").eq(1).text(`${gameObject.time}`);
+    $(".text").eq(1).css("color","#37CD3B").text(`${gameObject.time}`);
+    gameObject.time--;
+  } else if (gameObject.time > - 1) {
+    $(".display").eq(1).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
+    $(".text").eq(1).css("color","red").text(`${gameObject.time}`);
     gameObject.time--;
   } else if (gameObject.time === -1) {
     gameObject.time = -2;
@@ -352,7 +356,7 @@ const continueGame = () => {
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
 
-const endGame = (highscore) => {
+const endGame = () => {
   // Hide all the game objects
   $(".timerbank").remove();
   $(".lifeline").remove();
@@ -370,16 +374,13 @@ const endGame = (highscore) => {
     userProfile.score = "32,000"
   } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("32,000") && gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("1,000")){
     userProfile.score = "1,000"
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("1,000") && gameObject.prizeLadder.indexOf(userProfile.score) !== -1) {
-    userProfile.score = gameObject.prizeLadder[userProfile.Progress - 1]
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) === -1) {
+  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("1,000")) {
     userProfile.score = 0
-  }
+  } 
   // add text to the divs
   $(".finalscore").text("Final Score:");
   $(".scoreboard").text(`$${userProfile.score}`);
   $(".button").text("Menu");
-  
   // add life line event listener for resetting the game
   $(".button").on("click", restartGame);
 };
@@ -406,12 +407,34 @@ const startGame = () => {
 
 // Rules!
 const rules = () => {
+  // hide the menu screen
   $(".logo").hide();
   $(".startmenu").hide();
+  // Create the final score board
+  $generateHTMLElement("div", 1, "class", "rules","#overall-body-container","append");
+  $generateHTMLElement("div", 9, "class", "details",".rules","append");
+  $generateHTMLElement("div", 1, "class", "back",".rules","append");
+  // add text to the divs
+  $(".details").eq(0).addClass("header").text("Rules of the Game")
+  $(".details").eq(1).addClass("body").text("Based on the international television game show franchise of British origin, created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stay a chance to win a million dollar.")
+  $(".details").eq(2).addClass("header").text("Safe Haven")
+  $(".details").eq(3).addClass("body").text("There are three ‘safe havens’ in the question structure (Questions five, ten and fifteen). Contestants accumulate money with each correct answer, but should the they answer incorrectly before reaching a safe haven, they stand to lose a large amount of winnings.")
+  $(".details").eq(4).addClass("body").text("")
+  $(".details").eq(5).addClass("header").text("Lifelines")
+  $(".details").eq(6).addClass("body").text("")
+  $(".details").eq(7).addClass("header").text("Rights")
+  $(".details").eq(8).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.")
+  $(".back").text("Menu");
+  // add life line event listener for resetting the game
+  $(".back").on("click", menu);
 };
 
 // Back to Menu!
-
+const menu = () => {
+  $(".rules").remove()
+  $(".logo").show()
+  $(".startmenu").show()
+}
 
 // document ready!
 $(() => {
