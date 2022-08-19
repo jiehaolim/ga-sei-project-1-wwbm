@@ -93,7 +93,7 @@ const $displayQuestion = (index) => {
   $generateHTMLElement("div", 2, "class", "option", ".opt", "append");
   // current winnings svg and text plus timer svg
   $(".display").eq(0).attr("src", `${gameObject.display.moneybag}`);
-  $(".text").eq(0).text(`$${userProfile.score}`);
+  $(".text").eq(0).text(`$${userProfile.score}`).css("color","#37CD3B");
   $(".display").eq(1).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
   // reset timer, start timer and user current winnings
   gameObject.time = 30;
@@ -134,7 +134,7 @@ const $displayQuestion = (index) => {
 // function to run and stop the round timer
 const timer = () => {
   if (gameObject.time > 5) {
-    $(".text").eq(1).css("color","#37CD3B").text(`${gameObject.time}`);
+    $(".text").eq(1).css("color","#FF8326").text(`${gameObject.time}`);
     gameObject.time--;
   } else if (gameObject.time > - 1) {
     $(".text").eq(1).css("color","red").text(`${gameObject.time}`);
@@ -415,7 +415,7 @@ const rules = () => {
   $generateHTMLElement("div", 1, "class", "back",".rules","append");
   // add text to the divs
   $(".details").eq(0).addClass("header").text("Rules of the Game")
-  $(".details").eq(1).addClass("body").text(`Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin, created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars. Each question needs to be answered in the duration of 30 seconds.`)
+  $(".details").eq(1).addClass("body").text(`Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars. Each question needs to be answered in the duration of 30 seconds.`)
   $(".details").eq(2).addClass("header").text("Safe Havens")
   $(".details").eq(3).addClass("body").text("There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven.")
   $(".details").eq(4).addClass("header").text("Lifelines")
