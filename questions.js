@@ -270,7 +270,7 @@ const questionsList = [
   // question 4 - General knowledge
   [
     {
-      question: "What Is A Male Witch Known As",
+      question: "What Is A Male Witch Known As?",
       optionA: "Warlock",
       optionB: "Mage",
       optionC: "Magus",
@@ -287,7 +287,7 @@ const questionsList = [
     },
     {
       question:
-        "What toy was released in 1957, creating an instant craze among children",
+        "What toy was released in 1957, creating an instant craze among children?",
       optionA: "Rubix Cube",
       optionB: "Slinky",
       optionC: "The Hula Hoop",
@@ -403,7 +403,7 @@ const questionsList = [
     },
     {
       question:
-        "Which artistic movement of the late eighteenth to mid-nineteenth century focused on emotion over reason, and on spontaneous expression.",
+        "Which artistic movement of the late eighteenth to mid-nineteenth century focused on emotion over reason, and on spontaneous expression?",
       optionA: "Realism",
       optionB: "Romanticism",
       optionC: "Nostalgia",

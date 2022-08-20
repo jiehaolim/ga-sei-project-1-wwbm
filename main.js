@@ -89,10 +89,9 @@ const $displayQuestion = (index) => {
   $generateHTMLElement("div", 2, "class", "displaytimebank container", ".timerbank", "append");
   $generateHTMLElement("img", 1, "class", "display", ".displaytimebank", "append");
   $generateHTMLElement("div", 1, "class", "text", ".displaytimebank", "append");
-  // create divs for the three life lines and walkaway button
+  // create divs for the three life lines
   $generateHTMLElement("div", 1, "class", "lifeline container", "#overall-body-container", "append");
   $generateHTMLElement("img", 3, "class", "lifelineimg", ".lifeline", "append");
-  $generateHTMLElement("div", 1, "class", "walkaway button", ".lifeline", "append");
   // create the divs
   $generateHTMLElement("div", 1, "class", "qn container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 1, "id", "question", ".qn", "append");
@@ -121,8 +120,11 @@ const $displayQuestion = (index) => {
   $(".lifelineimg").eq(1).on("click", friendLifeline);
   // add life line event listener for 50-50 lifeline
   $(".lifelineimg").eq(2).on("click", fiftyfiftyLifeline);
-  // add walk away event listener and text
-  $(".walkaway").eq(0).text("Walk away?").on("click", walkaway)
+  // create divs add walk away event listener and text from question 2 onwards, question 1 has no winnings to walk away
+  if (userProfile.score !== 0) {
+    $generateHTMLElement("div", 1, "class", "walkaway button", ".lifeline", "append");
+    $(".walkaway").eq(0).text("Walk away?").on("click", walkAway)
+  }
   // reset the user available options
   userProfile.currentOptions = gameObject.options;
   // generate a random index for the question in each level
@@ -393,7 +395,7 @@ const continueGame = () => {
 };
 
 // function for walkaway
-const walkaway = () => {
+const walkAway = () => {
   // stop timer
   clearInterval(gameObject.roundTimer);
   // go to scoreboard screen
