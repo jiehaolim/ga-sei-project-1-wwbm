@@ -147,11 +147,11 @@ const $displayQuestion = (index) => {
     $(".option").eq(i).text(`${gameObject.options[i]}. ${questionsList[index][userProfile.questionIndex][objKey]}`);
   }
   // add event listener for the options
-  $(".option").on("click", () => $modalFinalAnswer(event));
+  $(".option").on("click", () => $modalFinalAnswer($(event.currentTarget).attr("id")));
 };
 
 // display modal for final answer
-const $modalFinalAnswer = (event) => {
+const $modalFinalAnswer = (id) => {
     // turn on modal
     $(".modal").css("display", "block");
     // clear modal
@@ -161,7 +161,7 @@ const $modalFinalAnswer = (event) => {
     // create the response html element
     $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
     $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
-    $(".yesno").eq(0).text("Yes").on("click", () => $suspenseAndReflectAns($(event.currentTarget).attr("id")))
+    $(".yesno").eq(0).text("Yes").on("click", () => $suspenseAndReflectAns(id))
     $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
     // turn off modal
     $(".modal").on("click", () => {$(".modal").css("display", "none");});
