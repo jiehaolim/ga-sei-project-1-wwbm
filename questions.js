@@ -5,11 +5,11 @@ const questionsList = [
     {
       no: 1,
       question:
-      "In the UK, the abbreviation NHS stands for National what Service? In the UK, the abbreviation NHS stands for National what Service? In the UK, the abb",
-      optionA: "In the UK, the abbreviation NHS stands for Nationa",
-      optionB: "In the UK, the abbreviation NHS stands for Nationa",
-      optionC: "In the UK, the abbreviation NHS stands for Nationa",
-      optionD: "In the UK, the abbreviation NHS stands for Nationa",
+        "In the UK, the abbreviation NHS stands for National what Service?",
+      optionA: "Humanity",
+      optionB: "Health",
+      optionC: "Honour",
+      optionD: "Household",
       key: "B",
     },
     {
