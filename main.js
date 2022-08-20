@@ -11,7 +11,7 @@ import fiftyfiftyImg from "./img/50-50.png";
 // Game object
 // line lifes picture - https://imgur.com/sQvoOhJ
 const gameObject = {
-  prizeLadder: ["100","200","300","500","1,000","2,000","4,000","8,000","16,000","32,000","64,000","125,000","250,000","500,000","1,000,000"],
+  prizeLadder: ["100","200","300","500","1,000","2,000","4,000","8,000","16,000","32,000","64,000","125,000","250,000","500,000","1,000,000",],
   options: ["A", "B", "C", "D"],
   time: 30,
   roundTimer: null,
@@ -24,17 +24,19 @@ const gameObject = {
 
 // User profile
 const userProfile = {
+  // reset at end of game
   Progress: 0,
   score: 0,
+  // correspond to the game object lifelines Id
+  lifelines: [1, 1, 1],
+  // reset every new question
   questionIndex: 0,
   currentOptions: ["A", "B", "C", "D"],
-  //correspond to the game object lifelines Id
-  lifelines: [1, 1, 1],
 };
 
 // General functions to shorten the code!
 // function to create html element
-const $generateHTMLElement = (htmlElement,numOfDiv,attrName,attrValue,parent,appendOrPrepend) => {
+const $generateHTMLElement = (htmlElement, numOfDiv, attrName, attrValue, parent, appendOrPrepend) => {
   for (let i = 1; i <= numOfDiv; i++) {
     const $htmlElement = $(`<${htmlElement}>`).attr(attrName, attrValue);
     $(parent)[appendOrPrepend]($htmlElement);
@@ -45,7 +47,9 @@ const $generateHTMLElement = (htmlElement,numOfDiv,attrName,attrValue,parent,app
 const $enableOrDisableDiv = (arrayOfButtonsId,addClassOrRemove,enabledOrDisabled) => {
   // disable all other options button via loop
   for (const element of arrayOfButtonsId) {
-    $(`#${element}`)[addClassOrRemove]("disabled-div").prop(enabledOrDisabled, true);
+    $(`#${element}`)
+      [addClassOrRemove]("disabled-div")
+      .prop(enabledOrDisabled, true);
   }
 };
 
@@ -60,7 +64,7 @@ const $displayPrizeLadder = (prizeLadder, Progress) => {
   $(".timerbank").remove();
   $(".lifeline").remove();
   // create the divs for the ladder
-  $generateHTMLElement("div",1,"class","ladder container","#overall-footer-container","append");
+  $generateHTMLElement("div", 1, "class", "ladder container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 15, "class", "prize", ".ladder", "append");
   // insert prize ladder text into divs
   for (let i = 0; i < gameObject.prizeLadder.length; i++) {
@@ -69,7 +73,8 @@ const $displayPrizeLadder = (prizeLadder, Progress) => {
     $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - $${gameObject.prizeLadder[prizeNum]}`);
   }
   // change the css of current level
-  let prizeQuestionIndex = gameObject.prizeLadder.length - userProfile.Progress - 1;
+  let prizeQuestionIndex =
+    gameObject.prizeLadder.length - userProfile.Progress - 1;
   $(".prize").eq(prizeQuestionIndex).css("background-color", "#FF8326").addClass("blink");
 };
 
@@ -80,21 +85,22 @@ const $displayQuestion = (index) => {
   $(".ladder").remove();
   $("#logo").show();
   // create the divs for timer and current prize value
-  $generateHTMLElement("div",1,"class","timerbank container","#overall-body-container","prepend");
-  $generateHTMLElement("div",2,"class","displaytimebank container",".timerbank","append");
-  $generateHTMLElement("img",1,"class","display",".displaytimebank","append");
+  $generateHTMLElement("div", 1, "class", "timerbank container", "#overall-body-container", "prepend");
+  $generateHTMLElement("div", 2, "class", "displaytimebank container", ".timerbank", "append");
+  $generateHTMLElement("img", 1, "class", "display", ".displaytimebank", "append");
   $generateHTMLElement("div", 1, "class", "text", ".displaytimebank", "append");
+  $generateHTMLElement("div", 1, "class", "displaytimebank container", ".timerbank", "append");
   // create divs for the three life lines
-  $generateHTMLElement("div",1,"class","lifeline container","#overall-body-container","append");
+  $generateHTMLElement("div", 1, "class", "lifeline container", "#overall-body-container", "append");
   $generateHTMLElement("img", 3, "class", "lifelineimg", ".lifeline", "append");
   // create the divs
-  $generateHTMLElement("div",1,"class","qn container","#overall-footer-container","append");
-  $generateHTMLElement("div", 1, "id", "question", ".qn", "append");
-  $generateHTMLElement("div",2,"class","opt container","#overall-footer-container","append");
-  $generateHTMLElement("div", 2, "class", "option", ".opt", "append");
+  $generateHTMLElement("div", 1,"class", "qn container", "#overall-footer-container", "append");
+  $generateHTMLElement("div", 1,"id", "question", ".qn", "append");
+  $generateHTMLElement("div", 2,"class", "opt container", "#overall-footer-container", "append");
+  $generateHTMLElement("div", 2,"class", "option", ".opt", "append");
   // current winnings svg and text plus timer svg
   $(".display").eq(0).attr("src", `${gameObject.display.moneybag}`);
-  $(".text").eq(0).text(`$${userProfile.score}`).css("color","#37CD3B");
+  $(".text").eq(0).text(`$${userProfile.score}`).css("color", "#37CD3B");
   $(".display").eq(1).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
   // reset timer, start timer and user current winnings
   gameObject.time = 30;
@@ -106,7 +112,8 @@ const $displayQuestion = (index) => {
   // disabled life lines that are used up
   for (let i = 0; i < userProfile.lifelines.length; i++) {
     if (userProfile.lifelines[i] === 0)
-      $(".lifelineimg").eq(i).attr("src", gameObject.lifelinesImg[i]).attr("id", gameObject.lifelinesId[i]).css("opacity", "0.3").addClass("disabled-div").prop("enabled", true);
+      $(".lifelineimg").eq(i).attr("src", gameObject.lifelinesImg[i]).attr("id", gameObject.lifelinesId[i])
+        .css("opacity", "0.3").addClass("disabled-div").prop("enabled", true);
   }
   // add life line event listener for audience lifeline
   $(".lifelineimg").eq(0).on("click", audienceLifeline);
@@ -117,7 +124,7 @@ const $displayQuestion = (index) => {
   // reset the user available options
   userProfile.currentOptions = gameObject.options;
   // generate a random index for the question in each level
-  userProfile.questionIndex = Math.floor(Math.random()*questionsList[index].length)
+  userProfile.questionIndex = Math.floor(Math.random() * questionsList[index].length);
   // insert question into div
   $("#question").text(`${questionsList[index][userProfile.questionIndex].question}`);
   // loop the ids into the options and text
@@ -137,10 +144,10 @@ const $displayQuestion = (index) => {
 // function to run and stop the round timer
 const timer = () => {
   if (gameObject.time > 5) {
-    $(".text").eq(1).css("color","#FF8326").text(`${gameObject.time}`);
+    $(".text").eq(1).css("color", "#FF8326").text(`${gameObject.time}`);
     gameObject.time--;
-  } else if (gameObject.time > - 1) {
-    $(".text").eq(1).css("color","red").text(`${gameObject.time}`);
+  } else if (gameObject.time > -1) {
+    $(".text").eq(1).css("color", "red").text(`${gameObject.time}`);
     gameObject.time--;
   } else if (gameObject.time === -1) {
     gameObject.time = -2;
@@ -160,7 +167,7 @@ const audienceLifeline = () => {
   // Insert header words for modal
   $(".modalheader").text("Audience");
   // create the canvas html element
-  $generateHTMLElement("canvas",1,"id","myChart",".modalresponse","append");
+  $generateHTMLElement("canvas", 1, "id", "myChart", ".modalresponse", "append");
   // random generate percentages
   const randomNumberArray = [];
   let randomTotal = 0;
@@ -176,14 +183,16 @@ const audienceLifeline = () => {
   const randomPercentage = randomNumberArray.map((element) => Math.round((element / randomTotal) * 100));
   // Align the percentage with the options to reflect the correct answer and with 90% chance of getting right
   // take out the highest percent to insert into the correct answer index
-  let maxPercent = randomPercentage.reduce(function (a, b) {return Math.max(a, b);});
+  let maxPercent = randomPercentage.reduce(function (a, b) { return Math.max(a, b);});
   const chartPercentage = randomPercentage.filter((element) => element !== maxPercent);
   let randomIndex1 = Math.random();
   const correctAnsIndex = userProfile.currentOptions.indexOf(questionsList[userProfile.Progress][userProfile.questionIndex].key);
   let randomIndex2 = 0;
   if (randomIndex1 <= 0.1) {
-    do {randomIndex2 = Math.floor(
-        Math.random() * userProfile.currentOptions.length);
+    do {
+      randomIndex2 = Math.floor(
+        Math.random() * userProfile.currentOptions.length
+      );
     } while (randomIndex2 === correctAnsIndex);
     chartPercentage.splice(randomIndex2, 0, maxPercent);
   } else {
@@ -303,8 +312,7 @@ const $suspenseAndReflectAns = (id) => {
   // selected answer as orange
   $(`#${id}`).css("background-color", "#FF8326");
   // show correct answer as green after 2s
-  setTimeout(() => {
-    $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color","#37CD3B");}, 2000);
+  setTimeout(() => {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
   // check answer after 4s
   setTimeout(() => {checkAnswer(id);}, 4000);
   // enable button
@@ -321,7 +329,8 @@ const reflectAnsAfterTimeOut = () => {
   $enableOrDisableDiv(allOptions, "addClass", "enabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
   // show correct answer as green after 2s
-  setTimeout(() => {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color","#37CD3B");}, 2000);
+  setTimeout(() => {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");
+  }, 2000);
   // enable all button
   $enableOrDisableDiv(allOptions, "remove", "Disabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
@@ -365,20 +374,20 @@ const endGame = () => {
   $(".qn").remove();
   $(".opt").remove();
   // Create the final score board
-  $generateHTMLElement("div", 1, "class", "finalscore","#footer","append");
-  $generateHTMLElement("div", 1, "class", "scoreboard","#footer","append");
-  $generateHTMLElement("div", 1, "class", "reset container","#footer","append");
-  $generateHTMLElement("div", 1, "class", "button",".reset","append");
+  $generateHTMLElement("div", 1, "class", "finalscore", "#footer", "append");
+  $generateHTMLElement("div", 1, "class", "scoreboard", "#footer", "append");
+  $generateHTMLElement("div", 1, "class", "reset container", "#footer", "append");
+  $generateHTMLElement("div", 1, "class", "button", ".reset", "append");
   // update final score
   if (gameObject.prizeLadder.indexOf(userProfile.score) === gameObject.prizeLadder.indexOf("1,000,000")) {
-    userProfile.score = "1,000,000" 
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("32,000")){
-    userProfile.score = "32,000"
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("32,000") && gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("1,000")){
-    userProfile.score = "1,000"
+    userProfile.score = "1,000,000";
+  } else if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("32,000")) {
+    userProfile.score = "32,000";
+  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("32,000") && gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("1,000")) {
+    userProfile.score = "1,000";
   } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("1,000")) {
-    userProfile.score = 0
-  } 
+    userProfile.score = 0;
+  }
   // add text to the divs
   $(".finalscore").text("Final Score:");
   $(".scoreboard").text(`$${userProfile.score}`);
@@ -394,12 +403,12 @@ const restartGame = () => {
   $(".reset").remove();
   $(".button").remove();
   // reset the game
-  userProfile.Progress = 0,
-  userProfile.score = 0,
-  userProfile.lifelines = [1, 1, 1],
+  (userProfile.Progress = 0),
+  (userProfile.score = 0),
+  (userProfile.lifelines = [1, 1, 1]),
   // show the menu
   $(".startmenu").show();
-}
+};
 
 // Main game function!
 const startGame = () => {
@@ -413,35 +422,35 @@ const rules = () => {
   $(".logo").hide();
   $(".startmenu").hide();
   // Create the divs for rules
-  $generateHTMLElement("div", 1, "class", "rules","#overall-body-container","append");
-  $generateHTMLElement("div", 8, "class", "details",".rules","append");
-  $generateHTMLElement("div", 1, "class", "back",".rules","append");
+  $generateHTMLElement("div", 1, "class", "rules", "#overall-body-container", "append");
+  $generateHTMLElement("div", 8, "class", "details", ".rules", "append");
+  $generateHTMLElement("div", 1, "class", "back", ".rules", "append");
   // add text to the divs
-  $(".details").eq(0).addClass("header").text("Rules of the Game")
-  $(".details").eq(1).addClass("body").text(`Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars. Each question needs to be answered in the duration of 30 seconds.`)
-  $(".details").eq(2).addClass("header").text("Safe Havens")
-  $(".details").eq(3).addClass("body").text("There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven.")
-  $(".details").eq(4).addClass("header").text("Lifelines")
-  $(".details").eq(5).addClass("lifelines-container")
+  $(".details").eq(0).addClass("header").text("Rules of the Game");
+  $(".details").eq(1).addClass("body").text(`Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars. Each question needs to be answered in the duration of 30 seconds.`);
+  $(".details").eq(2).addClass("header").text("Safe Havens");
+  $(".details").eq(3).addClass("body").text("There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven.");
+  $(".details").eq(4).addClass("header").text("Lifelines");
+  $(".details").eq(5).addClass("lifelines-container");
   // Create the divs for lifeline items
-  $generateHTMLElement("div", 3, "class", "lifeline-container",".lifelines-container","append");
-  $generateHTMLElement("div", 1, "class", "lifelineicon",".lifeline-container","append");
-  $generateHTMLElement("img", 1, "class", "iconimg",".lifelineicon","append");
-  $generateHTMLElement("div", 1, "class", "iconlabel",".lifelineicon","append");
-  $generateHTMLElement("div", 1, "class", "lifelineexplainer body",".lifeline-container","append");
+  $generateHTMLElement("div", 3, "class", "lifeline-container", ".lifelines-container", "append");
+  $generateHTMLElement("div", 1, "class", "lifelineicon", ".lifeline-container", "append");
+  $generateHTMLElement("img", 1, "class", "iconimg", ".lifelineicon", "append");
+  $generateHTMLElement("div", 1, "class", "iconlabel", ".lifelineicon", "append");
+  $generateHTMLElement("div", 1, "class", "lifelineexplainer body", ".lifeline-container", "append");
   // lifeline image and text
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
     $(".iconimg").eq(i).attr("src", gameObject.lifelinesImg[i]);
   }
-  $(".iconlabel").eq(0).text("Ask the audience")
-  $(".lifelineexplainer").eq(0).text("A poll will be conducted with the audience and the results will be shown in a chart. The answer provided will have an accuracy of 90%.")
-  $(".iconlabel").eq(1).text("Phone a friend")
-  $(".lifelineexplainer").eq(1).text("Contestant will be allowed to randomly phone a friend or family member and ask for the answer to the question. The answer provided will have an accuracy of 70%.")
-  $(".iconlabel").eq(2).text("Fifty fifty")
-  $(".lifelineexplainer").eq(2).text("This eliminates two incorrect answers from the four answers.")
+  $(".iconlabel").eq(0).text("Ask the audience");
+  $(".lifelineexplainer").eq(0).text("A poll will be conducted with the audience and the results will be shown in a chart. The answer provided will have an accuracy of 90%.");
+  $(".iconlabel").eq(1).text("Phone a friend");
+  $(".lifelineexplainer").eq(1).text("Contestant will be allowed to randomly phone a friend or family member and ask for the answer to the question. The answer provided will have an accuracy of 70%.");
+  $(".iconlabel").eq(2).text("Fifty fifty");
+  $(".lifelineexplainer").eq(2).text("This eliminates two incorrect answers from the four answers.");
   // copyright text
-  $(".details").eq(6).addClass("header").text("Copyrights")
-  $(".details").eq(7).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.")
+  $(".details").eq(6).addClass("header").text("Copyrights");
+  $(".details").eq(7).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.");
   $(".back").text("Menu");
   // add life line event listener for resetting the game
   $(".back").on("click", menu);
@@ -449,10 +458,10 @@ const rules = () => {
 
 // Back to Menu!
 const menu = () => {
-  $(".rules").remove()
-  $(".logo").show()
-  $(".startmenu").show()
-}
+  $(".rules").remove();
+  $(".logo").show();
+  $(".startmenu").show();
+};
 
 // document ready!
 $(() => {
