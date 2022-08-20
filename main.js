@@ -92,18 +92,24 @@ const $displayQuestion = (index) => {
   // create divs for the three life lines
   $generateHTMLElement("div", 1, "class", "lifeline container", "#overall-body-container", "append");
   $generateHTMLElement("img", 3, "class", "lifelineimg", ".lifeline", "append");
-  // create the divs
+  // create the divs for the questions
   $generateHTMLElement("div", 1, "class", "qn container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 1, "id", "question", ".qn", "append");
   $generateHTMLElement("div", 2, "class", "opt container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 2, "class", "option", ".opt", "append");
-  // current winnings svg and text plus timer svg
-  $(".display").eq(0).attr("src", `${gameObject.display.moneybag}`);
-  $(".text").eq(0).text(`$${userProfile.score}`).css("color", "#37CD3B");
-  $(".display").eq(1).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
+  // current text plus timer svg and winnings svg
+  // timer svg
+  $(".display").eq(0).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
   // reset timer, start timer and user current winnings
   gameObject.time = 30;
   gameObject.roundTimer = setInterval(timer, 1000);
+  // winnings svg and function to walk away after question 1
+  if (userProfile.score === 0) {
+    $(".displaytimebank").eq(1).remove()
+  } else {
+    $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", walkAway)
+    $(".text").eq(1).text(`$${userProfile.score}`).css("color", "#37CD3B").on("click", walkAway)
+  }
   // insert 3 life lines images
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
     $(".lifelineimg").eq(i).attr("src", gameObject.lifelinesImg[i]).attr("id", gameObject.lifelinesId[i]);
@@ -120,11 +126,6 @@ const $displayQuestion = (index) => {
   $(".lifelineimg").eq(1).on("click", friendLifeline);
   // add life line event listener for 50-50 lifeline
   $(".lifelineimg").eq(2).on("click", fiftyfiftyLifeline);
-  // create divs add walk away event listener and text from question 2 onwards, question 1 has no winnings to walk away
-  if (userProfile.score !== 0) {
-    $generateHTMLElement("div", 1, "class", "walkaway button", ".lifeline", "append");
-    $(".walkaway").eq(0).text("Walk away?").on("click", walkAway)
-  }
   // reset the user available options
   userProfile.currentOptions = gameObject.options;
   // generate a random index for the question in each level
@@ -168,10 +169,10 @@ const $displayScoreboard = () => {
 // function to run and stop the round timer
 const timer = () => {
   if (gameObject.time > 5) {
-    $(".text").eq(1).css("color", "#FF8326").text(`${gameObject.time}`);
+    $(".text").eq(0).css("color", "#FF8326").text(`${gameObject.time}`);
     gameObject.time--;
   } else if (gameObject.time > -1) {
-    $(".text").eq(1).css("color", "red").text(`${gameObject.time}`);
+    $(".text").eq(0).css("color", "red").text(`${gameObject.time}`);
     gameObject.time--;
   } else if (gameObject.time === -1) {
     gameObject.time = -2;
