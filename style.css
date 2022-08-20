@@ -142,7 +142,8 @@ h1 {
 }
 
 .timerbank,
-.lifeline {
+.lifeline,
+.walkaway {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -150,6 +151,10 @@ h1 {
   width: 80px;
   min-width: 73px;
   max-width: 5rem;
+}
+
+.walkaway {
+  width: auto;
 }
 
 .display,

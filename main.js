@@ -89,15 +89,15 @@ const $displayQuestion = (index) => {
   $generateHTMLElement("div", 2, "class", "displaytimebank container", ".timerbank", "append");
   $generateHTMLElement("img", 1, "class", "display", ".displaytimebank", "append");
   $generateHTMLElement("div", 1, "class", "text", ".displaytimebank", "append");
-  $generateHTMLElement("div", 1, "class", "displaytimebank container", ".timerbank", "append");
-  // create divs for the three life lines
+  // create divs for the three life lines and walkaway button
   $generateHTMLElement("div", 1, "class", "lifeline container", "#overall-body-container", "append");
   $generateHTMLElement("img", 3, "class", "lifelineimg", ".lifeline", "append");
+  $generateHTMLElement("div", 1, "class", "walkaway button", ".lifeline", "append");
   // create the divs
-  $generateHTMLElement("div", 1,"class", "qn container", "#overall-footer-container", "append");
-  $generateHTMLElement("div", 1,"id", "question", ".qn", "append");
-  $generateHTMLElement("div", 2,"class", "opt container", "#overall-footer-container", "append");
-  $generateHTMLElement("div", 2,"class", "option", ".opt", "append");
+  $generateHTMLElement("div", 1, "class", "qn container", "#overall-footer-container", "append");
+  $generateHTMLElement("div", 1, "id", "question", ".qn", "append");
+  $generateHTMLElement("div", 2, "class", "opt container", "#overall-footer-container", "append");
+  $generateHTMLElement("div", 2, "class", "option", ".opt", "append");
   // current winnings svg and text plus timer svg
   $(".display").eq(0).attr("src", `${gameObject.display.moneybag}`);
   $(".text").eq(0).text(`$${userProfile.score}`).css("color", "#37CD3B");
@@ -121,6 +121,8 @@ const $displayQuestion = (index) => {
   $(".lifelineimg").eq(1).on("click", friendLifeline);
   // add life line event listener for 50-50 lifeline
   $(".lifelineimg").eq(2).on("click", fiftyfiftyLifeline);
+  // add walk away event listener and text
+  $(".walkaway").eq(0).text("Walk away?").on("click", walkaway)
   // reset the user available options
   userProfile.currentOptions = gameObject.options;
   // generate a random index for the question in each level
@@ -139,6 +141,26 @@ const $displayQuestion = (index) => {
   };
   $(".option").on("click", $answerSelected);
 };
+
+// display scoreboard
+const $displayScoreboard = () => {
+  // Hide all the game objects
+  $(".timerbank").remove();
+  $(".lifeline").remove();
+  $(".qn").remove();
+  $(".opt").remove();
+  // Create the final score board
+  $generateHTMLElement("div", 1, "class", "finalscore", "#footer", "append");
+  $generateHTMLElement("div", 1, "class", "scoreboard", "#footer", "append");
+  $generateHTMLElement("div", 1, "class", "reset container", "#footer", "append");
+  $generateHTMLElement("div", 1, "class", "button", ".reset", "append");
+  // add text to the divs
+  $(".finalscore").text("Final Score:");
+  $(".scoreboard").text(`$${userProfile.score}`);
+  $(".button").text("Menu");
+  // add life line event listener for resetting the game
+  $(".button").on("click", restartGame);
+}
 
 // Game round timer function!
 // function to run and stop the round timer
@@ -340,20 +362,23 @@ const reflectAnsAfterTimeOut = () => {
 // Game logic function!
 // function to check the user's input
 const checkAnswer = (id) => {
+  // last question
   if (userProfile.Progress + 1 === gameObject.prizeLadder.length && id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
-    updateScore();
+    updateRoundScore();
     endGame();
+    // normal round
   } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
-    updateScore();
+    updateRoundScore();
     continueGame();
   } else {
+    // wrong answer
     endGame();
   }
 };
 
 // Game updating function!
 // function to update the user's score
-const updateScore = () => {
+const updateRoundScore = () => {
   // Update progress
   userProfile.Progress += 1;
   userProfile.score = gameObject.prizeLadder[userProfile.Progress - 1];
@@ -367,17 +392,15 @@ const continueGame = () => {
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
 
+// function for walkaway
+const walkaway = () => {
+  // stop timer
+  clearInterval(gameObject.roundTimer);
+  // go to scoreboard screen
+  $displayScoreboard()
+}
+
 const endGame = () => {
-  // Hide all the game objects
-  $(".timerbank").remove();
-  $(".lifeline").remove();
-  $(".qn").remove();
-  $(".opt").remove();
-  // Create the final score board
-  $generateHTMLElement("div", 1, "class", "finalscore", "#footer", "append");
-  $generateHTMLElement("div", 1, "class", "scoreboard", "#footer", "append");
-  $generateHTMLElement("div", 1, "class", "reset container", "#footer", "append");
-  $generateHTMLElement("div", 1, "class", "button", ".reset", "append");
   // update final score
   if (gameObject.prizeLadder.indexOf(userProfile.score) === gameObject.prizeLadder.indexOf("1,000,000")) {
     userProfile.score = "1,000,000";
@@ -388,12 +411,8 @@ const endGame = () => {
   } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("1,000")) {
     userProfile.score = 0;
   }
-  // add text to the divs
-  $(".finalscore").text("Final Score:");
-  $(".scoreboard").text(`$${userProfile.score}`);
-  $(".button").text("Menu");
-  // add life line event listener for resetting the game
-  $(".button").on("click", restartGame);
+  // go to scoreboard screen
+  $displayScoreboard()
 };
 
 const restartGame = () => {
