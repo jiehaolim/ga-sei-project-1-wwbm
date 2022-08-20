@@ -154,7 +154,9 @@ h1 {
 }
 
 .walkaway {
-  width: auto;
+  padding: 0px;
+  width: 73px;
+  margin-bottom: 0px;
 }
 
 .display,
