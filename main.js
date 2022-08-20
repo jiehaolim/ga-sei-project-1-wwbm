@@ -147,21 +147,22 @@ const $displayQuestion = (index) => {
     $(".option").eq(i).text(`${gameObject.options[i]}. ${questionsList[index][userProfile.questionIndex][objKey]}`);
   }
   // add event listener for the options
-  const $answerSelected = (event) => {
-    $suspenseAndReflectAns($(event.currentTarget).attr("id"));
-  };
-  $(".option").on("click", $answerSelected);
+  $(".option").on("click", () => $modalFinalAnswer(event));
 };
 
 // display modal for final answer
-const $modalFinalAnswer = () => {
+const $modalFinalAnswer = (event) => {
     // turn on modal
     $(".modal").css("display", "block");
     // clear modal
     $clearModal()
     // insert header text
     $(".modalheader").text("Final answer?");
-    //
+    // create the response html element
+    $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
+    $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
+    $(".yesno").eq(0).text("Yes").on("click", () => $suspenseAndReflectAns($(event.currentTarget).attr("id")))
+    $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
     // turn off modal
     $(".modal").on("click", () => {$(".modal").css("display", "none");});
 }
@@ -174,7 +175,7 @@ const $modalWalkAway = () => {
     $clearModal()
     // insert header text
     $(".modalheader").text(`Walk away with $${userProfile.score}?`);
-    // create the canvas html element
+    // create the response html element
     $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
     $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
     $(".yesno").eq(0).text("Yes").on("click", walkAway)
