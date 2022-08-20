@@ -26,6 +26,7 @@ const gameObject = {
 const userProfile = {
   Progress: 0,
   score: 0,
+  questionIndex: 0,
   currentOptions: ["A", "B", "C", "D"],
   //correspond to the game object lifelines Id
   lifelines: [1, 1, 1],
@@ -115,13 +116,15 @@ const $displayQuestion = (index) => {
   $(".lifelineimg").eq(2).on("click", fiftyfiftyLifeline);
   // reset the user available options
   userProfile.currentOptions = gameObject.options;
+  // generate a random index for the question in each level
+  userProfile.questionIndex = Math.floor(Math.random()*questionsList[index].length)
   // insert question into div
-  $("#question").text(`${questionsList[index].question}`);
+  $("#question").text(`${questionsList[index][userProfile.questionIndex].question}`);
   // loop the ids into the options and text
   for (let i = 0; i < gameObject.options.length; i++) {
     let objKey = "option" + gameObject.options[i];
     $(".option").eq(i).attr("id", gameObject.options[i]);
-    $(".option").eq(i).text(`${gameObject.options[i]}. ${questionsList[index][objKey]}`);
+    $(".option").eq(i).text(`${gameObject.options[i]}. ${questionsList[index][userProfile.questionIndex][objKey]}`);
   }
   // add event listener for the options
   const $answerSelected = (event) => {
@@ -176,7 +179,7 @@ const audienceLifeline = () => {
   let maxPercent = randomPercentage.reduce(function (a, b) {return Math.max(a, b);});
   const chartPercentage = randomPercentage.filter((element) => element !== maxPercent);
   let randomIndex1 = Math.random();
-  const correctAnsIndex = userProfile.currentOptions.indexOf(questionsList[userProfile.Progress].key);
+  const correctAnsIndex = userProfile.currentOptions.indexOf(questionsList[userProfile.Progress][userProfile.questionIndex].key);
   let randomIndex2 = 0;
   if (randomIndex1 <= 0.1) {
     do {randomIndex2 = Math.floor(
@@ -245,11 +248,11 @@ const friendLifeline = () => {
   let randomIndex1 = Math.random();
   let friendAnswer = null;
   if (randomIndex1 <= 0.3) {
-    const wrongAnswer = userProfile.currentOptions.filter((element) => element !== questionsList[userProfile.Progress].key);
+    const wrongAnswer = userProfile.currentOptions.filter((element) => element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
     let randomIndex2 = Math.floor(Math.random() * wrongAnswer.length);
     friendAnswer = wrongAnswer[randomIndex2];
   } else {
-    friendAnswer = questionsList[userProfile.Progress].key;
+    friendAnswer = questionsList[userProfile.Progress][userProfile.questionIndex].key;
   }
   // insert random response into modal body
   let randomIndex3 = Math.floor(Math.random() * gameObject.friendResponse.length);
@@ -265,7 +268,7 @@ const friendLifeline = () => {
 // function for 50-50 lifeline
 const fiftyfiftyLifeline = () => {
   // create an array that does not contains the answer
-  const wrongAnswer = userProfile.currentOptions.filter((element) => element !== questionsList[userProfile.Progress].key);
+  const wrongAnswer = userProfile.currentOptions.filter((element) => element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
   // to randomly generate 2 different wrong answers to be eliminated
   const answerToBeEliminated = [];
   while (answerToBeEliminated.length < 2) {
@@ -301,7 +304,7 @@ const $suspenseAndReflectAns = (id) => {
   $(`#${id}`).css("background-color", "#FF8326");
   // show correct answer as green after 2s
   setTimeout(() => {
-    $(`#${questionsList[userProfile.Progress].key}`).css("background-color","#37CD3B");}, 2000);
+    $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color","#37CD3B");}, 2000);
   // check answer after 4s
   setTimeout(() => {checkAnswer(id);}, 4000);
   // enable button
@@ -318,7 +321,7 @@ const reflectAnsAfterTimeOut = () => {
   $enableOrDisableDiv(allOptions, "addClass", "enabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
   // show correct answer as green after 2s
-  setTimeout(() => {$(`#${questionsList[userProfile.Progress].key}`).css("background-color","#37CD3B");}, 2000);
+  setTimeout(() => {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color","#37CD3B");}, 2000);
   // enable all button
   $enableOrDisableDiv(allOptions, "remove", "Disabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
@@ -328,10 +331,10 @@ const reflectAnsAfterTimeOut = () => {
 // Game logic function!
 // function to check the user's input
 const checkAnswer = (id) => {
-  if (userProfile.Progress + 1 === gameObject.prizeLadder.length && id === questionsList[userProfile.Progress].key) {
+  if (userProfile.Progress + 1 === gameObject.prizeLadder.length && id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
     updateScore();
     endGame();
-  } else if (id === questionsList[userProfile.Progress].key) {
+  } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
     updateScore();
     continueGame();
   } else {
