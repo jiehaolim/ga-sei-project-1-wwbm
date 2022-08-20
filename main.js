@@ -53,6 +53,14 @@ const $enableOrDisableDiv = (arrayOfButtonsId,addClassOrRemove,enabledOrDisabled
   }
 };
 
+// function to clear modal
+const $clearModal = () => {
+  $(".modalheader").text("");
+  $(".modalresponse").text("");
+  $("#myChart").remove();
+  $(".yesnobutton").remove()
+}
+
 // Game function!
 // Game display function!
 // display the prize ladder
@@ -107,8 +115,8 @@ const $displayQuestion = (index) => {
   if (userProfile.score === 0) {
     $(".displaytimebank").eq(1).remove()
   } else {
-    $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", walkAway)
-    $(".text").eq(1).text(`$${userProfile.score}`).css("color", "#37CD3B").on("click", walkAway)
+    $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", $modalWalkAway)
+    $(".text").eq(1).text(`$${userProfile.score}`).css("color", "#37CD3B").on("click", $modalWalkAway)
   }
   // insert 3 life lines images
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
@@ -144,6 +152,36 @@ const $displayQuestion = (index) => {
   };
   $(".option").on("click", $answerSelected);
 };
+
+// display modal for final answer
+const $modalFinalAnswer = () => {
+    // turn on modal
+    $(".modal").css("display", "block");
+    // clear modal
+    $clearModal()
+    // insert header text
+    $(".modalheader").text("Final answer?");
+    //
+    // turn off modal
+    $(".modal").on("click", () => {$(".modal").css("display", "none");});
+}
+
+// display modal for walk away
+const $modalWalkAway = () => {
+    // turn on modal
+    $(".modal").css("display", "block");
+    // clear modal
+    $clearModal()
+    // insert header text
+    $(".modalheader").text(`Walk away with $${userProfile.score}?`);
+    // create the canvas html element
+    $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
+    $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
+    $(".yesno").eq(0).text("Yes").on("click", walkAway)
+    $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
+    // turn off modal
+    $(".modal").on("click", () => {$(".modal").css("display", "none");});
+}
 
 // display scoreboard
 const $displayScoreboard = () => {
@@ -187,8 +225,7 @@ const audienceLifeline = () => {
   // turn on modal
   $(".modal").css("display", "block");
   // clear modal
-  $(".modalheader").text("");
-  $(".modalresponse").text("");
+  $clearModal()
   // Insert header words for modal
   $(".modalheader").text("Audience");
   // create the canvas html element
@@ -272,9 +309,7 @@ const friendLifeline = () => {
   // turn on modal
   $(".modal").css("display", "block");
   // clear modal
-  $(".modalheader").text("");
-  $(".modalresponse").text("");
-  $("#myChart").remove();
+  $clearModal()
   // insert random friend into modal header
   let randomIndex = Math.floor(Math.random() * gameObject.friend.length);
   $(".modalheader").text(gameObject.friend[randomIndex]);
@@ -428,6 +463,10 @@ const restartGame = () => {
   (userProfile.Progress = 0),
   (userProfile.score = 0),
   (userProfile.lifelines = [1, 1, 1]),
+  // clear modal
+  $(".modalheader").text("");
+  $(".modalresponse").text("");
+  $("#myChart").remove();
   // show the menu
   $(".startmenu").show();
 };
