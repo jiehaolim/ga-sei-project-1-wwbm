@@ -11,24 +11,28 @@ import fiftyfiftyImg from "./img/50-50.png";
 // Game object
 // line lifes picture - https://imgur.com/sQvoOhJ
 const gameObject = {
-  prizeLadder: ["100","200","300","500","1,000","2,000","4,000","8,000","16,000","32,000","64,000","125,000","250,000","500,000","1,000,000",],
+  prizeLadder: ["$100","$200","$300","$500","$1,000",
+  "$2,000","$4,000","$8,000","$16,000","$32,000",
+  "$64,000","$125,000","$250,000","$500,000","$1,000,000",],
   options: ["A", "B", "C", "D"],
   time: 30,
   roundTimer: null,
   display: { moneybag: moneybagSvg, timer: timerSvg },
   lifelinesImg: [audienceImg, friendImg, fiftyfiftyImg],
   lifelinesId: ["audience", "friend", "fifty-fifty"],
-  friend: ["Dad","Mum","Brother","Sister","Girlfriend","Boyfriend","Tom","Dick","Harry","Lucas",],
-  friendResponse: ["I think it is","I read it on the internet, it is","I read this on the newspaper yesterday, it is","I know this one. It is","I am guessing it is",],
+  friend: ["Dad","Mum","Brother","Sister","Girlfriend",
+  "Boyfriend","Tom","Dick","Harry","Lucas",],
+  friendResponse: ["I think it is","I read it on the internet, it is",
+  "I read this on the newspaper yesterday, it is","I know this one. It is","I am guessing it is",],
 };
 
 // User profile
 const userProfile = {
   // reset at end of game
-  Progress: 0,
-  score: 0,
   // correspond to the game object lifelines Id
   lifelines: [1, 1, 1],
+  Progress: 0,
+  score: 0,
   // reset every new question
   questionIndex: 0,
   currentOptions: ["A", "B", "C", "D"],
@@ -64,7 +68,7 @@ const $clearModal = () => {
 // Game function!
 // Game display function!
 // display the prize ladder
-const $displayPrizeLadder = (prizeLadder, Progress) => {
+const $displayPrizeLadder = () => {
   // hide header, logo and menu div
   $("#header").hide();
   $("#logo").hide();
@@ -78,7 +82,7 @@ const $displayPrizeLadder = (prizeLadder, Progress) => {
   for (let i = 0; i < gameObject.prizeLadder.length; i++) {
     let prizeNum = gameObject.prizeLadder.length - 1 - i;
     let prizeQuestionIndex = gameObject.prizeLadder.length - i;
-    $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - $${gameObject.prizeLadder[prizeNum]}`);
+    $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - ${gameObject.prizeLadder[prizeNum]}`);
   }
   // change the css of current level
   let prizeQuestionIndex =
@@ -116,7 +120,7 @@ const $displayQuestion = (index) => {
     $(".displaytimebank").eq(1).remove()
   } else {
     $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", $modalWalkAway)
-    $(".text").eq(1).text(`$${userProfile.score}`).css("color", "#37CD3B").on("click", $modalWalkAway)
+    $(".text").eq(1).text(`${userProfile.score}`).css("color", "#37CD3B").on("click", $modalWalkAway)
   }
   // insert 3 life lines images
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
@@ -174,7 +178,7 @@ const $modalWalkAway = () => {
     // clear modal
     $clearModal()
     // insert header text
-    $(".modalheader").text(`Walk away with $${userProfile.score}?`);
+    $(".modalheader").text(`Walk away with ${userProfile.score}?`);
     // create the response html element
     $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
     $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
@@ -187,24 +191,83 @@ const $modalWalkAway = () => {
 // display scoreboard
 const $displayScoreboard = () => {
   // Hide all the game objects
+  $(".startmenu").hide();
+  // $("#logo").hide()
   $(".timerbank").remove();
   $(".lifeline").remove();
   $(".qn").remove();
   $(".opt").remove();
+  // store high score array index instead of actual score, lesser data manipulation
+  // create high score array index if it does not exist in local storage, else retrieve it from local storage
+  let wwbmScore = ""
+  if (localStorage.getItem("wwbmscore") === null) {
+    wwbmScore = []
+  } else if (localStorage.getItem("wwbmscore") !== null) {
+    wwbmScore = JSON.parse(localStorage.getItem("wwbmscore"))
+  }
+  // push the score index to the array if it is not default
+  if (userProfile.score !== 0) {
+    wwbmScore.push(gameObject.prizeLadder.indexOf(userProfile.score))
+    wwbmScore.sort(function(a, b) { return b - a})
+    // limit the array to top 5 scores
+    if (wwbmScore.length > 5) {
+      wwbmScore.pop()
+    }
+    // set high score into local storage
+    localStorage.setItem("wwbmscore", JSON.stringify(wwbmScore))
+  }
   // Create the final score board
-  $generateHTMLElement("div", 1, "class", "finalscore", "#footer", "append");
-  $generateHTMLElement("div", 1, "class", "scoreboard", "#footer", "append");
-  $generateHTMLElement("div", 1, "class", "reset container", "#footer", "append");
-  $generateHTMLElement("div", 1, "class", "button", ".reset", "append");
-  // add text to the divs
-  $(".finalscore").text("Final Score:");
-  $(".scoreboard").text(`$${userProfile.score}`);
+  $generateHTMLElement("div", 1, "class", "scoreboard container", "#overall-footer-container", "append");
+  // generate div for current score and add text to the div
+  if (userProfile.score !== 0) {
+    $generateHTMLElement("div", 1, "class", "currentscore", ".scoreboard", "append");
+    $(".currentscore").text(`Current Score: ${userProfile.score}`);  
+  }
+  // generate div and add text for the scoreboard header
+  $generateHTMLElement("div", 1, "class", "scoreheader", ".scoreboard", "append");
+  if (wwbmScore.length === 0) {
+    $(".scoreheader").text(`No High Score`);
+  } else {
+    $(".scoreheader").text(`High Score`);
+  }
+  // generate divs for the high score details
+  $generateHTMLElement("div", wwbmScore.length, "class", "scoredetails", ".scoreboard", "append");
+  // loop the high score into the divs
+  // when the scoreboard is viewed from the main screen no current score
+  if (userProfile.score === 0) {
+    for (let i = 0; i < wwbmScore.length; i++) {
+      // $0 is not in the prizeladder
+      if (gameObject.prizeLadder[wwbmScore[i]] === undefined) {
+        $(".scoredetails").eq(i).text(`${i + 1}. $0`)
+      } else {
+        $(".scoredetails").eq(i).text(`${i + 1}. ${gameObject.prizeLadder[wwbmScore[i]]}`)
+      }
+    }
+    // when the scoreboard is after a game to highlight the current score if it appear in high score board
+  } else {
+    const currentScoreIndex = gameObject.prizeLadder.indexOf(userProfile.score)
+    const currentScoreExists = wwbmScore.lastIndexOf(currentScoreIndex)
+    for (let i = 0; i < wwbmScore.length; i++) {
+      // $0 is not in the prizeladder
+      if (gameObject.prizeLadder[wwbmScore[i]] === undefined && currentScoreExists === i) {
+        $(".scoredetails").eq(i).text(`${i + 1}. $0`).css("color", "#37CD3B")
+      } else if (gameObject.prizeLadder[wwbmScore[i]] === undefined) {
+        $(".scoredetails").eq(i).text(`${i + 1}. $0`)
+      } else if (currentScoreExists === i) {
+        $(".scoredetails").eq(i).text(`${i + 1}. ${gameObject.prizeLadder[wwbmScore[i]]}`).css("color", "#37CD3B")
+      } else {
+        $(".scoredetails").eq(i).text(`${i + 1}. ${gameObject.prizeLadder[wwbmScore[i]]}`)
+      }
+    }
+  }
+  // generate div for button
+  $generateHTMLElement("div", 1, "class", "button", ".scoreboard", "append");
   $(".button").text("Menu");
   // add life line event listener for resetting the game
   $(".button").on("click", restartGame);
 }
 
-// Game round timer function!
+// Game question screen event listeners
 // function to run and stop the round timer
 const timer = () => {
   if (gameObject.time > 5) {
@@ -220,7 +283,14 @@ const timer = () => {
   }
 };
 
-// Game life line function!
+// function for walkaway
+const walkAway = () => {
+  // stop timer
+  clearInterval(gameObject.roundTimer);
+  // go to scoreboard screen
+  $displayScoreboard()
+}
+
 // function for audience lifeline
 const audienceLifeline = () => {
   // turn on modal
@@ -318,7 +388,8 @@ const friendLifeline = () => {
   let randomIndex1 = Math.random();
   let friendAnswer = null;
   if (randomIndex1 <= 0.3) {
-    const wrongAnswer = userProfile.currentOptions.filter((element) => element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
+    const wrongAnswer = userProfile.currentOptions.filter((element) => 
+    element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
     let randomIndex2 = Math.floor(Math.random() * wrongAnswer.length);
     friendAnswer = wrongAnswer[randomIndex2];
   } else {
@@ -338,7 +409,8 @@ const friendLifeline = () => {
 // function for 50-50 lifeline
 const fiftyfiftyLifeline = () => {
   // create an array that does not contains the answer
-  const wrongAnswer = userProfile.currentOptions.filter((element) => element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
+  const wrongAnswer = userProfile.currentOptions.filter((element) => 
+  element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
   // to randomly generate 2 different wrong answers to be eliminated
   const answerToBeEliminated = [];
   while (answerToBeEliminated.length < 2) {
@@ -353,13 +425,31 @@ const fiftyfiftyLifeline = () => {
     $(`#${element}`).text("");
   }
   // update the remaining options available incase other lifelines are utilized
-  userProfile.currentOptions = userProfile.currentOptions.filter((element) => answerToBeEliminated.includes(element) === false);
+  userProfile.currentOptions = userProfile.currentOptions.filter((element) => 
+  answerToBeEliminated.includes(element) === false);
   // disable the 2 options eliminated options button
   $enableOrDisableDiv(answerToBeEliminated, "addClass", "enabled");
   // remove the fifty fifty life lines
   $("#fifty-fifty").css("opacity", "0.3").addClass("disabled-div").prop("enabled", true);
   // update user profile
   userProfile.lifelines[2] = 0;
+};
+
+// function to check the user's input
+const checkAnswer = (id) => {
+  // last question
+  if (userProfile.Progress + 1 === gameObject.prizeLadder.length && 
+    id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
+    updateRoundScore();
+    endGame();
+    // normal round
+  } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
+    updateRoundScore();
+    continueGame();
+  } else {
+    // wrong answer
+    endGame();
+  }
 };
 
 // Game animation function!
@@ -373,7 +463,8 @@ const $suspenseAndReflectAns = (id) => {
   // selected answer as orange
   $(`#${id}`).css("background-color", "#FF8326");
   // show correct answer as green after 2s
-  setTimeout(() => {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
+  setTimeout(() => 
+  {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
   // check answer after 4s
   setTimeout(() => {checkAnswer(id);}, 4000);
   // enable button
@@ -390,29 +481,12 @@ const reflectAnsAfterTimeOut = () => {
   $enableOrDisableDiv(allOptions, "addClass", "enabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
   // show correct answer as green after 2s
-  setTimeout(() => {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");
-  }, 2000);
+  setTimeout(() => 
+  {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
   // enable all button
   $enableOrDisableDiv(allOptions, "remove", "Disabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
   setTimeout(() => {endGame();}, 4000);
-};
-
-// Game logic function!
-// function to check the user's input
-const checkAnswer = (id) => {
-  // last question
-  if (userProfile.Progress + 1 === gameObject.prizeLadder.length && id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
-    updateRoundScore();
-    endGame();
-    // normal round
-  } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
-    updateRoundScore();
-    continueGame();
-  } else {
-    // wrong answer
-    endGame();
-  }
 };
 
 // Game updating function!
@@ -427,28 +501,21 @@ const continueGame = () => {
   // Hide the question div
   $(".qn").remove();
   $(".opt").remove();
-  $displayPrizeLadder(gameObject.prizeLadder, userProfile.Progress);
+  $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
 
-// function for walkaway
-const walkAway = () => {
-  // stop timer
-  clearInterval(gameObject.roundTimer);
-  // go to scoreboard screen
-  $displayScoreboard()
-}
-
 const endGame = () => {
-  // update final score
-  if (gameObject.prizeLadder.indexOf(userProfile.score) === gameObject.prizeLadder.indexOf("1,000,000")) {
-    userProfile.score = "1,000,000";
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("32,000")) {
-    userProfile.score = "32,000";
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("32,000") && gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("1,000")) {
-    userProfile.score = "1,000";
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("1,000")) {
-    userProfile.score = 0;
+  // update final score per safe heaven
+  if (gameObject.prizeLadder.indexOf(userProfile.score) === gameObject.prizeLadder.indexOf("$1,000,000")) {
+    userProfile.score = "$1,000,000";
+  } else if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("$32,000")) {
+    userProfile.score = "$32,000";
+  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("$32,000") && 
+  gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("$1,000")) {
+    userProfile.score = "$1,000";
+  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("$1,000")) {
+    userProfile.score = "$0";
   }
   // go to scoreboard screen
   $displayScoreboard()
@@ -456,25 +523,22 @@ const endGame = () => {
 
 const restartGame = () => {
   // hide the final score screen
-  $(".finalscore").remove();
   $(".scoreboard").remove();
   $(".reset").remove();
-  $(".button").remove();
   // reset the game
-  (userProfile.Progress = 0),
-  (userProfile.score = 0),
-  (userProfile.lifelines = [1, 1, 1]),
+  userProfile.Progress = 0,
+  userProfile.score = 0,
+  userProfile.lifelines = [1, 1, 1],
   // clear modal
-  $(".modalheader").text("");
-  $(".modalresponse").text("");
-  $("#myChart").remove();
+  $clearModal()
   // show the menu
   $(".startmenu").show();
+  $("#logo").show()
 };
 
 // Main game function!
 const startGame = () => {
-  $displayPrizeLadder(gameObject.prizeLadder, userProfile.Progress);
+  $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
 
@@ -484,7 +548,7 @@ const rules = () => {
   $(".logo").hide();
   $(".startmenu").hide();
   // Create the divs for rules
-  $generateHTMLElement("div", 1, "class", "rules", "#overall-body-container", "append");
+  $generateHTMLElement("div", 1, "class", "rules container", "#overall-body-container", "append");
   $generateHTMLElement("div", 8, "class", "details", ".rules", "append");
   $generateHTMLElement("div", 1, "class", "back", ".rules", "append");
   // add text to the divs
@@ -521,7 +585,7 @@ const rules = () => {
 // Back to Menu!
 const menu = () => {
   $(".rules").remove();
-  $(".logo").show();
+  // $(".logo").show();
   $(".startmenu").show();
 };
 
@@ -529,4 +593,5 @@ const menu = () => {
 $(() => {
   $(".menu").eq(0).on("click", startGame);
   $(".menu").eq(1).on("click", rules);
+  $(".menu").eq(2).on("click", $displayScoreboard);
 });

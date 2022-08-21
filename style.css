@@ -91,31 +91,39 @@ h1 {
   margin-bottom: 10px;
 }
 
-.rules {
-  display: flex;
+.rules, .scoreboard {
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 15px;
-  row-gap: 15px;
   width: 620px;
-  padding: 5px;
+  padding: 0px 5px 5px 5px;
+}
+
+.scoreboard {
+  margin-top: 0px;
 }
 
 .back {
   margin-top: 10px;
 }
 
-.header {
+.header, .scoreheader {
   font-size: 1.5em;
 }
 
-.body {
+.body, .currentscore, .scoredetails {
   text-align: justify;
   font-family: Arial, Helvetica, sans-serif;
   text-transform: none;
   max-width: 630px;
   width: 100%;
+}
+
+.currentscore, .scoredetails {
+  font-family: Copperplate, "Copperplate Gothic Light";
+  font-size: 1.5em;
+  text-align: center;
 }
 
 .lifeline-container {
@@ -276,13 +284,6 @@ h1 {
 
 .modal-body {
   padding: 2px 16px;
-}
-
-.finalscore,
-.scoreboard {
-  font-size: 25px;
-  text-align: center;
-  margin-bottom: 15px;
 }
 
 @media only screen and (max-width: 683px) {
