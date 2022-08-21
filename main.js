@@ -32,6 +32,7 @@ const userProfile = {
   // correspond to the game object lifelines Id
   lifelines: [1, 1, 1],
   Progress: 0,
+  // 0 is just a placeholder for game not started.
   score: 0,
   // reset every new question
   questionIndex: 0,
@@ -192,7 +193,7 @@ const $modalWalkAway = () => {
 const $displayScoreboard = () => {
   // Hide all the game objects
   $(".startmenu").hide();
-  // $("#logo").hide()
+  $("#logo").hide()
   $(".timerbank").remove();
   $(".lifeline").remove();
   $(".qn").remove();
@@ -585,7 +586,7 @@ const rules = () => {
 // Back to Menu!
 const menu = () => {
   $(".rules").remove();
-  // $(".logo").show();
+  $(".logo").show();
   $(".startmenu").show();
 };
 
