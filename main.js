@@ -229,7 +229,7 @@ const $displayScoreboard = () => {
   if (wwbmScore.length === 0) {
     $(".scoreheader").text(`No High Score`);
   } else {
-    $(".scoreheader").text(`High Score`);
+    $(".scoreheader").text(`High Score Board`);
   }
   // generate divs for the high score details
   $generateHTMLElement("div", wwbmScore.length, "class", "scoredetails", ".scoreboard", "append");
@@ -262,7 +262,8 @@ const $displayScoreboard = () => {
     }
   }
   // generate div for button
-  $generateHTMLElement("div", 1, "class", "button", ".scoreboard", "append");
+  $generateHTMLElement("div", 1, "class", "menu-container", "#overall-footer-container", "append");
+  $generateHTMLElement("div", 1, "class", "button", ".menu-container", "append");
   $(".button").text("Menu");
   // add life line event listener for resetting the game
   $(".button").on("click", restartGame);
@@ -526,6 +527,7 @@ const restartGame = () => {
   // hide the final score screen
   $(".scoreboard").remove();
   $(".reset").remove();
+  $(".menu-container").remove()
   // reset the game
   userProfile.Progress = 0,
   userProfile.score = 0,

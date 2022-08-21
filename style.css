@@ -24,6 +24,7 @@ h1 {
 #overall-body-container,
 #overall-footer-container,
 .lifelines-container,
+.menu-container,
 .container {
   display: flex;
   justify-content: center;
@@ -91,13 +92,24 @@ h1 {
   margin-bottom: 10px;
 }
 
-.rules, .scoreboard {
+.rules, .scoreboard, .menu-container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 15px;
   width: 620px;
   padding: 0px 5px 5px 5px;
+}
+
+.scoreboard {
+  border-style: solid;
+  border-width: 2px;
+  width: 606px;
+  padding: 10px;
+}
+
+.menu-container {
+  margin-top: 0px;
 }
 
 .back {
