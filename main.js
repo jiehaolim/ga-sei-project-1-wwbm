@@ -49,7 +49,7 @@ const $generateHTMLElement = (htmlElement, numOfDiv, attrName, attrValue, parent
 };
 
 // function to enable or disable buttons for an array of buttons
-const $enableOrDisableDiv = (arrayOfButtonsId,addClassOrRemove,enabledOrDisabled) => {
+const $enableOrDisableDiv = (arrayOfButtonsId, addClassOrRemove, enabledOrDisabled) => {
   // disable all other options button via loop
   for (const element of arrayOfButtonsId) {
     $(`#${element}`)
@@ -116,12 +116,12 @@ const $displayQuestion = (index) => {
   // reset timer, start timer and user current winnings
   gameObject.time = 30;
   gameObject.roundTimer = setInterval(timer, 1000);
-  // winnings svg and function to walk away after question 1
+  // winnings svg and event listener to walk away after question 1
   if (userProfile.score === 0) {
     $(".displaytimebank").eq(1).remove()
   } else {
-    $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", $modalWalkAway)
-    $(".text").eq(1).text(`${userProfile.score}`).css("color", "#37CD3B").on("click", $modalWalkAway)
+    $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", $modalWalkAway).attr("id", "walkAwayDisplay")
+    $(".text").eq(1).text(`${userProfile.score}`).css("color", "#37CD3B").on("click", $modalWalkAway).attr("id", "walkAwayText")
   }
   // insert 3 life lines images
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
@@ -437,6 +437,48 @@ const fiftyfiftyLifeline = () => {
   userProfile.lifelines[2] = 0;
 };
 
+// Game animation function!
+// function to set delay to create suspense then turn the answer green
+const $suspenseAndReflectAns = (id) => {
+  // stop timer
+  clearInterval(gameObject.roundTimer);
+  // disable button
+  $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
+  $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
+  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass", "enabled");
+  // selected answer as orange
+  $(`#${id}`).css("background-color", "#FF8326");
+  // show correct answer as green after 2s
+  setTimeout(() => 
+  {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
+  // check answer after 4s
+  setTimeout(() => {checkAnswer(id);}, 4000);
+  // enable button
+  $enableOrDisableDiv(gameObject.options, "remove", "Disabled");
+  $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
+  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "remove", "Disabled");
+};
+
+const reflectAnsAfterTimeOut = () => {
+  // stop timer
+  clearInterval(gameObject.roundTimer);
+  // identify the all of the button
+  const allOptions = gameObject.options;
+  // disable all button
+  $enableOrDisableDiv(allOptions, "addClass", "enabled");
+  $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
+  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass", "enabled");
+  // show correct answer as green after 2s
+  setTimeout(() => 
+  {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
+  // enable all button
+  $enableOrDisableDiv(allOptions, "remove", "Disabled");
+  $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
+  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "remove", "Disabled");
+  setTimeout(() => {endGame();}, 4000);
+};
+
+// Game updating function!
 // function to check the user's input
 const checkAnswer = (id) => {
   // last question
@@ -454,44 +496,6 @@ const checkAnswer = (id) => {
   }
 };
 
-// Game animation function!
-// function to set delay to create suspense then turn the answer green
-const $suspenseAndReflectAns = (id) => {
-  // stop timer
-  clearInterval(gameObject.roundTimer);
-  // disable button
-  $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
-  // selected answer as orange
-  $(`#${id}`).css("background-color", "#FF8326");
-  // show correct answer as green after 2s
-  setTimeout(() => 
-  {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
-  // check answer after 4s
-  setTimeout(() => {checkAnswer(id);}, 4000);
-  // enable button
-  $enableOrDisableDiv(gameObject.options, "remove", "Disabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
-};
-
-const reflectAnsAfterTimeOut = () => {
-  // stop timer
-  clearInterval(gameObject.roundTimer);
-  // identify the all of the button
-  const allOptions = gameObject.options;
-  // disable all button
-  $enableOrDisableDiv(allOptions, "addClass", "enabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
-  // show correct answer as green after 2s
-  setTimeout(() => 
-  {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
-  // enable all button
-  $enableOrDisableDiv(allOptions, "remove", "Disabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
-  setTimeout(() => {endGame();}, 4000);
-};
-
-// Game updating function!
 // function to update the user's score
 const updateRoundScore = () => {
   // Update progress
