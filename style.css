@@ -34,9 +34,12 @@ h1 {
   flex-wrap: wrap;
   row-gap: 15px;
   column-gap: 15px;
+  width: 100%;
 }
 
-.lifelines-container {
+.lifelines-container,
+.walkaways-container,
+.timers-container {
   justify-content: flex-start;
 }
 
