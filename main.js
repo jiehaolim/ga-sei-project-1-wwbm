@@ -64,6 +64,7 @@ const $clearModal = () => {
   $(".modalresponse").text("");
   $("#myChart").remove();
   $(".yesnobutton").remove()
+  // remove event listener from .modal
   $(".modal").off()
 }
 
@@ -184,10 +185,7 @@ const $modalFinalAnswer = (id) => {
     // create the response html element
     $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
     $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
-    $(".yesno").eq(0).text("Yes").on("click", () => {  
-      // clear timer
-      clearInterval(gameObject.roundTimer);
-      $suspenseAndReflectAns(id)})
+    $(".yesno").eq(0).text("Yes").on("click", () => {$suspenseAndReflectAns(id)})
     $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
     // turn off modal
     $(".modal").on("click", () => {$(".modal").css("display", "none");});
@@ -283,7 +281,7 @@ const $displayScoreboard = () => {
     }
   }
   // generate div for button
-  $generateHTMLElement("div", 1, "class", "menu-container", "#overall-footer-container", "append");
+  $generateHTMLElement("div", 1, "class", "menu-container", ".scoreboard", "append");
   $generateHTMLElement("div", 1, "class", "button", ".menu-container", "append");
   $(".button").text("Menu");
   // add life line event listener for resetting the game
@@ -301,7 +299,6 @@ const $timer = () => {
     gameObject.time--;
   } else if (gameObject.time === -1) {
     gameObject.time = -2;
-    clearInterval(gameObject.roundTimer);
     $modalTimesUp()
   }
 };
@@ -461,6 +458,8 @@ const $fiftyfiftyLifeline = () => {
 // Game updating function!
 // function to set delay to create suspense then turn the answer green
 const $suspenseAndReflectAns = (id) => {
+  // clear timer
+  clearInterval(gameObject.roundTimer);
   // disable button
   $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
