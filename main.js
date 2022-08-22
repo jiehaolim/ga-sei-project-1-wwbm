@@ -623,7 +623,6 @@ const $restartGame = () => {
 
 // document ready!
 $(() => {
-  $("#music").get(0).play()
   $(".menu").eq(0).on("click", $startGame);
   $(".menu").eq(1).on("click", $rules);
   $(".menu").eq(2).on("click", $displayScoreboard);
