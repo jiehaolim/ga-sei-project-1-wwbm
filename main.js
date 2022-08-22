@@ -1,11 +1,12 @@
 import "./style.css";
-import $ from "jquery";
+import $, { get } from "jquery";
 import questionsList from "./questions";
 import moneybagSvg from "./img/money-bag.svg";
 import timerSvg from "./img/timer.svg";
 import audienceImg from "./img/audience.png";
 import friendImg from "./img/friend.png";
 import fiftyfiftyImg from "./img/50-50.png";
+import wwbmTheme from "./music/wwbm-theme.mp3";
 
 // Game and user objects!
 // Game object
@@ -621,8 +622,15 @@ const $restartGame = () => {
   $("#logo").show()
 };
 
+const $mainMenu = () => {
+  $generateHTMLElement("audio", 1, "id", "music", "#overall-body-container", "append");
+  $("#music").attr("src",wwbmTheme)
+  $("#music").get(0).play()
+}
+
 // document ready!
 $(() => {
+  $mainMenu()
   $(".menu").eq(0).on("click", $startGame);
   $(".menu").eq(1).on("click", $rules);
   $(".menu").eq(2).on("click", $displayScoreboard);
