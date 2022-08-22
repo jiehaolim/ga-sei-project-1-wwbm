@@ -115,7 +115,7 @@ const $displayQuestion = (index) => {
   $(".display").eq(0).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
   // reset timer, start timer and user current winnings
   gameObject.time = 30;
-  gameObject.roundTimer = setInterval(timer, 1000);
+  gameObject.roundTimer = setInterval($timer, 1000);
   // winnings svg and event listener to walk away after question 1
   if (userProfile.score === 0) {
     $(".displaytimebank").eq(1).remove()
@@ -134,11 +134,11 @@ const $displayQuestion = (index) => {
         .css("opacity", "0.3").addClass("disabled-div").prop("enabled", true);
   }
   // add life line event listener for audience lifeline
-  $(".lifelineimg").eq(0).on("click", audienceLifeline);
+  $(".lifelineimg").eq(0).on("click", $audienceLifeline);
   // add life line event listener for friend lifeline
-  $(".lifelineimg").eq(1).on("click", friendLifeline);
+  $(".lifelineimg").eq(1).on("click", $friendLifeline);
   // add life line event listener for 50-50 lifeline
-  $(".lifelineimg").eq(2).on("click", fiftyfiftyLifeline);
+  $(".lifelineimg").eq(2).on("click", $fiftyfiftyLifeline);
   // reset the user available options
   userProfile.currentOptions = gameObject.options;
   // generate a random index for the question in each level
@@ -183,7 +183,7 @@ const $modalWalkAway = () => {
     // create the response html element
     $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
     $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
-    $(".yesno").eq(0).text("Yes").on("click", walkAway)
+    $(".yesno").eq(0).text("Yes").on("click", $walkAway)
     $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
     // turn off modal
     $(".modal").on("click", () => {$(".modal").css("display", "none");});
@@ -266,12 +266,12 @@ const $displayScoreboard = () => {
   $generateHTMLElement("div", 1, "class", "button", ".menu-container", "append");
   $(".button").text("Menu");
   // add life line event listener for resetting the game
-  $(".button").on("click", restartGame);
+  $(".button").on("click", $restartGame);
 }
 
 // Game question screen event listeners
 // function to run and stop the round timer
-const timer = () => {
+const $timer = () => {
   if (gameObject.time > 5) {
     $(".text").eq(0).css("color", "#FF8326").text(`${gameObject.time}`);
     gameObject.time--;
@@ -281,12 +281,12 @@ const timer = () => {
   } else if (gameObject.time === -1) {
     gameObject.time = -2;
     clearInterval(gameObject.roundTimer);
-    reflectAnsAfterTimeOut();
+    $suspenseAndReflectAns("timeout");
   }
 };
 
 // function for walkaway
-const walkAway = () => {
+const $walkAway = () => {
   // stop timer
   clearInterval(gameObject.roundTimer);
   // go to scoreboard screen
@@ -294,7 +294,7 @@ const walkAway = () => {
 }
 
 // function for audience lifeline
-const audienceLifeline = () => {
+const $audienceLifeline = () => {
   // turn on modal
   $(".modal").css("display", "block");
   // clear modal
@@ -378,7 +378,7 @@ const audienceLifeline = () => {
 };
 
 // function for friend lifeline
-const friendLifeline = () => {
+const $friendLifeline = () => {
   // turn on modal
   $(".modal").css("display", "block");
   // clear modal
@@ -409,7 +409,7 @@ const friendLifeline = () => {
 };
 
 // function for 50-50 lifeline
-const fiftyfiftyLifeline = () => {
+const $fiftyfiftyLifeline = () => {
   // create an array that does not contains the answer
   const wrongAnswer = userProfile.currentOptions.filter((element) => 
   element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
@@ -437,7 +437,7 @@ const fiftyfiftyLifeline = () => {
   userProfile.lifelines[2] = 0;
 };
 
-// Game animation function!
+// Game updating function!
 // function to set delay to create suspense then turn the answer green
 const $suspenseAndReflectAns = (id) => {
   // stop timer
@@ -446,53 +446,36 @@ const $suspenseAndReflectAns = (id) => {
   $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
   $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass", "enabled");
-  // selected answer as orange
-  $(`#${id}`).css("background-color", "#FF8326");
+  // timeout means no answer selected else reflect answer as orange
+  if (id === "timeout") {
+  } else {
+    $(`#${id}`).css("background-color", "#FF8326");
+  }
   // show correct answer as green after 2s
   setTimeout(() => 
   {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
-  // check answer after 4s
-  setTimeout(() => {checkAnswer(id);}, 4000);
-  // enable button
-  $enableOrDisableDiv(gameObject.options, "remove", "Disabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
-  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "remove", "Disabled");
+  // timeout means not answer selected else check answer after 4s
+  if (id === "timeout") {
+    setTimeout(() => {$endGame();}, 4000);
+  } else {
+    setTimeout(() => {checkAnswer(id);}, 4000);
+  }
 };
 
-const reflectAnsAfterTimeOut = () => {
-  // stop timer
-  clearInterval(gameObject.roundTimer);
-  // identify the all of the button
-  const allOptions = gameObject.options;
-  // disable all button
-  $enableOrDisableDiv(allOptions, "addClass", "enabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
-  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass", "enabled");
-  // show correct answer as green after 2s
-  setTimeout(() => 
-  {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
-  // enable all button
-  $enableOrDisableDiv(allOptions, "remove", "Disabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "remove", "Disabled");
-  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "remove", "Disabled");
-  setTimeout(() => {endGame();}, 4000);
-};
-
-// Game updating function!
 // function to check the user's input
 const checkAnswer = (id) => {
   // last question
   if (userProfile.Progress + 1 === gameObject.prizeLadder.length && 
     id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
     updateRoundScore();
-    endGame();
+    $endGame();
     // normal round
   } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
     updateRoundScore();
-    continueGame();
+    $continueGame();
   } else {
     // wrong answer
-    endGame();
+    $endGame();
   }
 };
 
@@ -503,7 +486,7 @@ const updateRoundScore = () => {
   userProfile.score = gameObject.prizeLadder[userProfile.Progress - 1];
 };
 
-const continueGame = () => {
+const $continueGame = () => {
   // Hide the question div
   $(".qn").remove();
   $(".opt").remove();
@@ -511,7 +494,7 @@ const continueGame = () => {
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
 
-const endGame = () => {
+const $endGame = () => {
   // update final score per safe heaven
   if (gameObject.prizeLadder.indexOf(userProfile.score) === gameObject.prizeLadder.indexOf("$1,000,000")) {
     userProfile.score = "$1,000,000";
@@ -527,7 +510,7 @@ const endGame = () => {
   $displayScoreboard()
 };
 
-const restartGame = () => {
+const $restartGame = () => {
   // hide the final score screen
   $(".scoreboard").remove();
   $(".reset").remove();
@@ -544,13 +527,13 @@ const restartGame = () => {
 };
 
 // Main game function!
-const startGame = () => {
+const $startGame = () => {
   $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
 
 // Rules!
-const rules = () => {
+const $rules = () => {
   // hide the menu screen
   $(".logo").hide();
   $(".startmenu").hide();
@@ -586,11 +569,11 @@ const rules = () => {
   $(".details").eq(7).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.");
   $(".back").text("Menu");
   // add life line event listener for resetting the game
-  $(".back").on("click", menu);
+  $(".back").on("click", $menu);
 };
 
 // Back to Menu!
-const menu = () => {
+const $menu = () => {
   $(".rules").remove();
   $(".logo").show();
   $(".startmenu").show();
@@ -598,7 +581,7 @@ const menu = () => {
 
 // document ready!
 $(() => {
-  $(".menu").eq(0).on("click", startGame);
-  $(".menu").eq(1).on("click", rules);
+  $(".menu").eq(0).on("click", $startGame);
+  $(".menu").eq(1).on("click", $rules);
   $(".menu").eq(2).on("click", $displayScoreboard);
 });
