@@ -1,5 +1,5 @@
 import "./style.css";
-import $, { get } from "jquery";
+import $ from "jquery";
 import questionsList from "./questions";
 import moneybagSvg from "./img/money-bag.svg";
 import timerSvg from "./img/timer.svg";
@@ -163,9 +163,6 @@ const $displayPrizeLadder = () => {
   let prizeQuestionIndex =
     gameObject.prizeLadder.length - userProfile.Progress - 1;
   $(".prize").eq(prizeQuestionIndex).css("background-color", "#FF8326").addClass("blink");
-  $generateHTMLElement("audio", 1, "id", "music", "#overall-body-container", "append");
-  $("#music").attr("src",wwbmTheme)
-  $("#music").get(0).play()
 };
 
 // display question
@@ -533,9 +530,15 @@ const $fiftyfiftyLifeline = () => {
 // Game updating function!
 // Main game function!
 const $startGame = () => {
+  $playMusic()
   $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
+
+// music function
+$generateHTMLElement("audio", 1, "id", "music", "#overall-body-container", "append");
+$("#music").attr("src",wwbmTheme)
+$("#music").get(0).play()
 
 // function to set delay to create suspense then turn the answer green
 const $suspenseAndReflectAns = (id) => {
@@ -624,10 +627,6 @@ const $restartGame = () => {
   $(".startmenu").show();
   $("#logo").show()
 };
-
-const $mainMenu = () => {
-
-}
 
 // document ready!
 $(() => {
