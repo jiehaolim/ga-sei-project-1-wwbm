@@ -64,6 +64,7 @@ const $clearModal = () => {
   $(".modalresponse").text("");
   $("#myChart").remove();
   $(".yesnobutton").remove()
+  $(".modal").off()
 }
 
 // Game function!
@@ -156,7 +157,7 @@ const $displayQuestion = (index) => {
 };
 
 // display modal when time is up
-const $modalTimeUp = () => {
+const $modalTimesUp = () => {
     // turn on modal
     $(".modal").css("display", "block");
     // clear modal
@@ -166,9 +167,10 @@ const $modalTimeUp = () => {
     // create the response html element
     $generateHTMLElement("div", 1, "class", "okbutton container", ".modalresponse", "append");
     $generateHTMLElement("div", 1, "class", "ok button", ".okbutton", "append");
-    $(".ok").eq(0).text("Ok").on("click", () => $suspenseAndReflectAns("timesup"))
+    $(".ok").text("ok").on("click", () => {$(".modal").css("display", "none")})
     // turn off modal
-    $(".modal").on("click", () => {$(".modal").css("display", "none");});  
+    $(".modal").on("click", () => {$(".modal").css("display", "none");
+    $suspenseAndReflectAns("timesup")})
 }
 
 // display modal for final answer
@@ -182,7 +184,10 @@ const $modalFinalAnswer = (id) => {
     // create the response html element
     $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
     $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
-    $(".yesno").eq(0).text("Yes").on("click", () => $suspenseAndReflectAns(id))
+    $(".yesno").eq(0).text("Yes").on("click", () => {  
+      // clear timer
+      clearInterval(gameObject.roundTimer);
+      $suspenseAndReflectAns(id)})
     $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
     // turn off modal
     $(".modal").on("click", () => {$(".modal").css("display", "none");});
@@ -297,7 +302,7 @@ const $timer = () => {
   } else if (gameObject.time === -1) {
     gameObject.time = -2;
     clearInterval(gameObject.roundTimer);
-    $modalTimeUp()
+    $modalTimesUp()
   }
 };
 
@@ -468,7 +473,7 @@ const $suspenseAndReflectAns = (id) => {
   // show correct answer as green after 2s
   setTimeout(() => 
   {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
-  // timeout means not answer selected else check answer after 4s
+  // timeout means no answer selected else check answer after 4s
   if (id === "timesup") {
     setTimeout(() => {$endGame();}, 4000);
   } else {
