@@ -25,6 +25,8 @@ h1 {
 #overall-footer-container,
 .lifelines-container,
 .menu-container,
+.walkaways-container,
+.timers-container,
 .container {
   display: flex;
   justify-content: center;
@@ -35,9 +37,11 @@ h1 {
 }
 
 .lifelines-container {
-  justify-content: left;
+  justify-content: flex-start;
 }
 
+.walkaway-container,
+.timer-container,
 .lifeline-container {
   display: flex;
 }
@@ -92,7 +96,9 @@ h1 {
   margin-bottom: 10px;
 }
 
-.rules, .scoreboard, .menu-container {
+.rules,
+.scoreboard,
+.menu-container {
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -109,11 +115,14 @@ h1 {
   margin-top: 10px;
 }
 
-.header, .scoreheader {
+.header,
+.scoreheader {
   font-size: 1.5em;
 }
 
-.body, .currentscore, .scoredetails {
+.body,
+.currentscore,
+.scoredetails {
   text-align: justify;
   font-family: Arial, Helvetica, sans-serif;
   text-transform: none;
@@ -121,21 +130,39 @@ h1 {
   width: 100%;
 }
 
-.currentscore, .scoredetails {
+.currentscore,
+.scoredetails {
   font-family: Copperplate, "Copperplate Gothic Light";
   font-size: 1.5em;
   text-align: center;
 }
 
+.walkaway-container,
+.timer-container,
 .lifeline-container {
   column-gap: 20px;
 }
 
-.lifelineicon, .iconimg, .iconlabel {
+.lifelineicon,
+.iconimg,
+.iconlabel,
+.walkawaysvgicon,
+.walkawaysvgimg,
+.walkawaysvglabel,
+.timersvgicon,
+.timersvgimg,
+.timersvglabel {
   width: 100px;
 }
 
-.lifelineexplainer {
+.walkawaysvgimg,
+.timersvgimg {
+  height: 50px;
+}
+
+.lifelineexplainer,
+.walkawayexplainer,
+.timerexplainer {
   display: flex;
   align-items: center;
 }

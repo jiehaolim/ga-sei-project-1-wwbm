@@ -557,15 +557,39 @@ const $rules = () => {
   $(".startmenu").hide();
   // Create the divs for rules
   $generateHTMLElement("div", 1, "class", "rules container", "#overall-body-container", "append");
-  $generateHTMLElement("div", 8, "class", "details", ".rules", "append");
+  $generateHTMLElement("div", 10, "class", "details", ".rules", "append");
   $generateHTMLElement("div", 1, "class", "back", ".rules", "append");
   // add text to the divs
   $(".details").eq(0).addClass("header").text("Rules of the Game");
-  $(".details").eq(1).addClass("body").text(`Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars. Each question needs to be answered in the duration of 30 seconds.`);
-  $(".details").eq(2).addClass("header").text("Safe Havens");
-  $(".details").eq(3).addClass("body").text("There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven.");
-  $(".details").eq(4).addClass("header").text("Lifelines");
-  $(".details").eq(5).addClass("lifelines-container");
+  $(".details").eq(1).addClass("body").text(`Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.`);
+  $(".details").eq(2).addClass("timers-container")
+  // Create the divs for walkaway svg
+  $generateHTMLElement("div", 1, "class", "timer-container", ".timers-container", "append");
+  $generateHTMLElement("div", 1, "class", "timersvgicon", ".timer-container", "append");
+  $generateHTMLElement("img", 1, "class", "timersvgimg", ".timersvgicon", "append");
+  $generateHTMLElement("div", 1, "class", "timersvglabel", ".timersvgicon", "append");
+  $generateHTMLElement("div", 1, "class", "timerexplainer body", ".timer-container", "append");
+  // add text for timer svg and text
+  $(".timersvgimg").attr("src", gameObject.display.timer)
+  $(".timersvglabel").text("Timer");
+  $(".timerexplainer").text("Each question needs to be answered in the duration of 30 seconds.")
+  // Create the divs for timer svg
+  $(".details").eq(3).addClass("header").text("Safe Havens");
+  $(".details").eq(4).addClass("body").text("There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.");
+  $(".details").eq(5).addClass("walkaways-container")
+  // Create the divs for walkaway svg
+  $generateHTMLElement("div", 1, "class", "walkaway-container", ".walkaways-container", "append");
+  $generateHTMLElement("div", 1, "class", "walkawaysvgicon", ".walkaway-container", "append");
+  $generateHTMLElement("img", 1, "class", "walkawaysvgimg", ".walkawaysvgicon", "append");
+  $generateHTMLElement("div", 1, "class", "walkawaysvglabel", ".walkawaysvgicon", "append");
+  $generateHTMLElement("div", 1, "class", "walkawayexplainer body", ".walkaway-container", "append");  
+  // add text for walkaway svg and text
+  $(".walkawaysvgimg").attr("src", gameObject.display.moneybag)
+  $(".walkawaysvglabel").text("Winnings");
+  $(".walkawayexplainer").text("The contestant will also be able to choose to walk away with any existing winnings prior to answering the next question.")
+  // add text to the divs for life lines
+  $(".details").eq(6).addClass("header").text("Lifelines");
+  $(".details").eq(7).addClass("lifelines-container");
   // Create the divs for lifeline items
   $generateHTMLElement("div", 3, "class", "lifeline-container", ".lifelines-container", "append");
   $generateHTMLElement("div", 1, "class", "lifelineicon", ".lifeline-container", "append");
@@ -583,8 +607,8 @@ const $rules = () => {
   $(".iconlabel").eq(2).text("Fifty fifty");
   $(".lifelineexplainer").eq(2).text("This eliminates two incorrect answers from the four answers.");
   // copyright text
-  $(".details").eq(6).addClass("header").text("Copyrights");
-  $(".details").eq(7).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.");
+  $(".details").eq(8).addClass("header").text("Copyrights");
+  $(".details").eq(9).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.");
   $(".back").text("Menu");
   // add life line event listener for resetting the game
   $(".back").on("click", $menu);
