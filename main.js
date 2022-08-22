@@ -530,15 +530,15 @@ const $fiftyfiftyLifeline = () => {
 // Game updating function!
 // Main game function!
 const $startGame = () => {
-  $playMusic()
+  // $playMusic()
   $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
 
 // music function
-$generateHTMLElement("audio", 1, "id", "music", "#overall-body-container", "append");
-$("#music").attr("src",wwbmTheme)
-$("#music").get(0).play()
+  $generateHTMLElement("audio", 1, "id", "music", "#overall-body-container", "append");
+  $("#music").attr("src",wwbmTheme)
+  $("#music").get(0).play()
 
 // function to set delay to create suspense then turn the answer green
 const $suspenseAndReflectAns = (id) => {
@@ -630,7 +630,6 @@ const $restartGame = () => {
 
 // document ready!
 $(() => {
-  $mainMenu()
   $(".menu").eq(0).on("click", $startGame);
   $(".menu").eq(1).on("click", $rules);
   $(".menu").eq(2).on("click", $displayScoreboard);
