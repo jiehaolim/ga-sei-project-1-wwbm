@@ -163,6 +163,9 @@ const $displayPrizeLadder = () => {
   let prizeQuestionIndex =
     gameObject.prizeLadder.length - userProfile.Progress - 1;
   $(".prize").eq(prizeQuestionIndex).css("background-color", "#FF8326").addClass("blink");
+  $generateHTMLElement("audio", 1, "id", "music", "#overall-body-container", "append");
+  $("#music").attr("src",wwbmTheme)
+  $("#music").get(0).play()
 };
 
 // display question
@@ -623,9 +626,7 @@ const $restartGame = () => {
 };
 
 const $mainMenu = () => {
-  $generateHTMLElement("audio", 1, "id", "music", "#overall-body-container", "append");
-  $("#music").attr("src",wwbmTheme)
-  $("#music").get(0).play()
+
 }
 
 // document ready!
