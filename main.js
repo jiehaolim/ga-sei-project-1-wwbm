@@ -155,6 +155,22 @@ const $displayQuestion = (index) => {
   $(".option").on("click", () => $modalFinalAnswer($(event.currentTarget).attr("id")));
 };
 
+// display modal when time is up
+const $modalTimeUp = () => {
+    // turn on modal
+    $(".modal").css("display", "block");
+    // clear modal
+    $clearModal()
+    // insert header text
+    $(".modalheader").text("Time's up!");
+    // create the response html element
+    $generateHTMLElement("div", 1, "class", "okbutton container", ".modalresponse", "append");
+    $generateHTMLElement("div", 1, "class", "ok button", ".okbutton", "append");
+    $(".ok").eq(0).text("Ok").on("click", () => $suspenseAndReflectAns("timesup"))
+    // turn off modal
+    $(".modal").on("click", () => {$(".modal").css("display", "none");});  
+}
+
 // display modal for final answer
 const $modalFinalAnswer = (id) => {
     // turn on modal
@@ -281,7 +297,7 @@ const $timer = () => {
   } else if (gameObject.time === -1) {
     gameObject.time = -2;
     clearInterval(gameObject.roundTimer);
-    $suspenseAndReflectAns("timeout");
+    $modalTimeUp()
   }
 };
 
@@ -440,14 +456,12 @@ const $fiftyfiftyLifeline = () => {
 // Game updating function!
 // function to set delay to create suspense then turn the answer green
 const $suspenseAndReflectAns = (id) => {
-  // stop timer
-  clearInterval(gameObject.roundTimer);
   // disable button
   $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
   $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
   $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass", "enabled");
   // timeout means no answer selected else reflect answer as orange
-  if (id === "timeout") {
+  if (id === "timesup") {
   } else {
     $(`#${id}`).css("background-color", "#FF8326");
   }
@@ -455,7 +469,7 @@ const $suspenseAndReflectAns = (id) => {
   setTimeout(() => 
   {$(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 2000);
   // timeout means not answer selected else check answer after 4s
-  if (id === "timeout") {
+  if (id === "timesup") {
     setTimeout(() => {$endGame();}, 4000);
   } else {
     setTimeout(() => {checkAnswer(id);}, 4000);
