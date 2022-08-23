@@ -6,7 +6,6 @@ import timerSvg from "./img/timer.svg";
 import audienceImg from "./img/audience.png";
 import friendImg from "./img/friend.png";
 import fiftyfiftyImg from "./img/50-50.png";
-import wwbmTheme from "./music/wwbm-theme.mp3";
 
 // Game and user objects!
 // Game object
@@ -530,15 +529,9 @@ const $fiftyfiftyLifeline = () => {
 // Game updating function!
 // Main game function!
 const $startGame = () => {
-  // $playMusic()
   $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 2000);
 };
-
-// music function
-  $generateHTMLElement("audio", 1, "id", "music", "#overall-body-container", "append");
-  $("#music").attr("src",wwbmTheme)
-  $("#music").get(0).play()
 
 // function to set delay to create suspense then turn the answer green
 const $suspenseAndReflectAns = (id) => {
