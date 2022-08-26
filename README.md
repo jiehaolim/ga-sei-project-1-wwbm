@@ -10,7 +10,7 @@ Your app needs to:
 # Who wants to be a Millionaire ("WWBM")
 <p align="center"><img src="./img/readme/wwbm-wallpaper.jpeg"/></p>
 
-This game is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.
+This game is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 3 questions with three lifelines to stand a chance to win a million dollars.
 
 ## Where to Play
 Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
@@ -29,7 +29,7 @@ Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 - All rights belong directly to their rightful owners. No copyright infringement intended.
 
 # Code
-## Technologies & Tools used
+## Technologies and Tools used
 - Html
 - CSS
 - Javascript
@@ -45,11 +45,16 @@ Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 <p align="center"><img src="./img/readme/css-1.png"/></p>
 
 ## Code Organisation
-- Game object and user object to track game items and user's progress
+- Objects to track game items and user's progress
 - General functions for functions that are repeatedly used in other functions
 - Display functions to generate different screens
-- Event listeners function on game screens
-- Game updating functions to update the game progress
+<p align="center"><img src="./img/readme/CO-1.png"/></p>
+
+- Event listener functions on game screens
+- Game flow functions to update the game progress
+<p align="center"><img src="./img/readme/CO-2.png"/></p>
+
+## Code Flow
 
 ## Code Behaviour
 
