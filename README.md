@@ -1,6 +1,6 @@
 # ![](./img/ga_logo.svg) Project #1: The Game
 
-### Technical Requirements
+## Technical Requirements
 Your app needs to:
 - Display a game in the browser
 - be interactive

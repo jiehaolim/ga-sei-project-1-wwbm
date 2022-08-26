@@ -420,14 +420,6 @@ const $modalWalkAway = () => {
   $(".modal").on("click", () => {$(".modal").css("display", "none");});
 }
 
-// function for walkaway
-const $walkAway = () => {
-  // stop timer
-  clearInterval(gameObject.roundTimer);
-  // go to scoreboard screen
-  $displayScoreboard()
-}
-
 // lifelines 
 // function for audience lifeline
 const $audienceLifeline = () => {
@@ -630,6 +622,14 @@ const $timesUpRevealAns = () => {
   }, 2000); 
   // end the game after 5s after revealing the answer
   setTimeout(() => {$endGame()}, 7000);     
+}
+
+// function for walkaway
+const $walkAway = () => {
+  // stop timer
+  clearInterval(gameObject.roundTimer);
+  // go to scoreboard screen
+  $displayScoreboard()
 }
 
 // function to set delay to create suspense then turn the answer green
