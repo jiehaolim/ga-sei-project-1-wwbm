@@ -555,9 +555,9 @@ const $friendLifeline = () => {
   // create the response html element
   $okButtonModal()
   // turn off modal
-  $(".modal").on("click", () => {$
+  $(".modal").on("click", () => {
     $("#music2").get(0).pause()
-    (".modal").css("display", "none");});
+    $(".modal").css("display", "none");});
   // remove the friend life lines
   $("#friend").css("opacity", "0.3").addClass("disabled-div").prop("enabled", true);
   // update user profile
