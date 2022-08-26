@@ -8,7 +8,7 @@ The game app needs to:
 - Use Javascript for DOM manipulation that is triggered by a browser event
 
 # Who wants to be a Millionaire ("WWBM")
-<p align="center"><img src="./img/readme/wwbm-wallpaper.jpeg"/></p>
+<img src="./img/readme/wwbm-wallpaper.jpeg"/>
 
 This game is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 3 questions with three lifelines to stand a chance to win a million dollars.
 
@@ -35,15 +35,15 @@ Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 - Javascript
 - jQuery
 - Chart.js
-- Git & GitHub
+- Git and GitHub
 
 ## HTML Structure
-<p align="center"><img src="./img/readme/html-structure-1.png"/></p>
-<p align="center"><img src="./img/readme/html-structure-2.png"/></p>
+<img src="./img/readme/html-structure-1.png"/>
+<img src="./img/readme/html-structure-2.png"/>
 
 ## CSS Properties
-<p align="center"><img src="./img/readme/css-1.png"/></p>
-<p align="center"><img src="./img/readme/css-2.png"/></p>
+<img src="./img/readme/css-1.png"/>
+<img src="./img/readme/css-2.png"/>
 
 ## Code Organisation
 The code is organised into the five categories as follows:
@@ -58,10 +58,18 @@ The code is organised into the five categories as follows:
 ## Code Behaviour
 
 ## Learning and Improvement Points
-1. CSS class name
+1. Learnt and discovered that general functions can be written to shorten code. For example, the $generateHTMLElement function allows me to generate HTML element more efficiently instead of coding html line by line.
+<p align="left"><img src="./img/readme/generalhtmlelement.png"/></p>
 
-## References
+2. CSS class and id naming convention can be confusing. This causes time to be wasted when coding and can be improved with better planning.
+3. Current app is mostly responsive, but it can be even more responsive since some of the CSS properties are in px instead of em/rem.
+4. Implement more game settings, e.g. adjust timer per round or adjust difficulty of the questions.
 
-
-
-
+## References and Inspirations
+- [W3 school modal](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2)
+- [Lifelines icons picture](https://imgur.com/sQvoOhJ)
+- [Blinking CSS effect](https://www.codegrepper.com/code-examples/css/how+to+make+a+box+blink+in+css)
+- [Trial question list](https://www.theguardian.com/tv-and-radio/ng-interactive/2020/sep/12/who-wants-to-be-a-millionaire-jackpot-questions-quiz-yourself)
+- [Question API](https://the-trivia-api.com/search/)
+- [Who wants to be a Millionaire Game site on wwbm.com](https://wwbm.com/)
+- [Who wants to be a Millionaire Game site on crazygames.com](https://www.crazygames.com/game/millionaire-quiz)
