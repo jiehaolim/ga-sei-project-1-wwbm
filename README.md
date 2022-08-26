@@ -1,9 +1,9 @@
 # ![](./img/readme/ga_logo.svg) Project #1: The Game
 
 ### Technical Requirements
-Your app needs to:
+The game app needs to:
 - Display a game in the browser
-- be interactive
+- Be interactive
 - Include separate HTML / CSS / JavaScript files
 - Use Javascript for DOM manipulation that is triggered by a browser event
 
@@ -43,22 +43,22 @@ Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 
 ## CSS Properties
 <p align="center"><img src="./img/readme/css-1.png"/></p>
+<p align="center"><img src="./img/readme/css-2.png"/></p>
 
 ## Code Organisation
-- Objects to track game items and user's progress
-- General functions for functions that are repeatedly used in other functions
-- Display functions to generate different screens
-<p align="center"><img src="./img/readme/CO-1.png"/></p>
-
-- Event listener functions on game screens
-- Game flow functions to update the game progress
-<p align="center"><img src="./img/readme/CO-2.png"/></p>
+The code is organised into the five categories as follows:
+1. Objects to track game items and user's progress
+2. General functions for functions that are repeatedly used in other functions
+3. Display functions to generate different screens
+4. Event listener functions on game screens
+5. Game flow functions to update the game progress
 
 ## Code Flow
 
 ## Code Behaviour
 
 ## Learning and Improvement Points
+1. CSS class name
 
 ## References
 
