@@ -1,6 +1,6 @@
-# ![](./img/ga_logo.svg) Project #1: The Game
+# ![](./img/readme/ga_logo.svg) Project #1: The Game
 
-## Technical Requirements
+### Technical Requirements
 Your app needs to:
 - Display a game in the browser
 - be interactive
@@ -8,9 +8,7 @@ Your app needs to:
 - Use Javascript for DOM manipulation that is triggered by a browser event
 
 # Who wants to be a Millionaire ("WWBM")
-
-<!--![](./documentation/header-hd.gif)--> 
-<p align="center"><img src="./img/wwbm-wallpaper.jpeg"/></p>
+<p align="center"><img src="./img/readme/wwbm-wallpaper.jpeg"/></p>
 
 This game is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.
 
@@ -30,16 +28,35 @@ Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 ## Copyrights
 - All rights belong directly to their rightful owners. No copyright infringement intended.
 
+# Code
 ## Technologies & Tools used
 - Html
 - CSS
 - Javascript
 - jQuery
+- Chart.js
 - Git & GitHub
+
+## HTML Structure
+<p align="center"><img src="./img/readme/html-structure-1.png"/></p>
+<p align="center"><img src="./img/readme/html-structure-2.png"/></p>
+
+## CSS Properties
+<p align="center"><img src="./img/readme/css-1.png"/></p>
+
+## Code Organisation
+- Game object and user object to track game items and user's progress
+- General functions for functions that are repeatedly used in other functions
+- Display functions to generate different screens
+- Event listeners function on game screens
+- Game updating functions to update the game progress
+
+## Code Behaviour
 
 ## Learning and Improvement Points
 
 ## References
+
 
 
 
