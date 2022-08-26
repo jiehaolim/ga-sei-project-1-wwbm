@@ -37,6 +37,8 @@ Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 - Chart.js
 - Git and GitHub
 
+## Code Flow
+
 ## HTML Structure
 <img src="./img/readme/html-structure-1.png"/>
 <img src="./img/readme/html-structure-2.png"/>
@@ -53,12 +55,13 @@ The code is organised into the five categories as follows:
 4. Event listener functions on game screens
 5. Game flow functions to update the game progress
 
-## Code Flow
-
-## Code Behaviour
+## Javascript and jQuery Code Structure
+Most of the codes are structured in the following manner with the exception of customized behavior required in different screens/modals/event listeners
+<p align="left"><img src="./img/readme/code-behav-1.png"/></p>
+<p align="left"><img src="./img/readme/code-behav-2.png"/></p>
 
 ## Learning and Improvement Points
-1. Learnt and discovered that general functions can be written to shorten code. For example, the $generateHTMLElement function allows me to generate HTML element more efficiently instead of coding html line by line.
+1. Learnt and discovered that general functions can be written to shorten code. For example, the $generateHTMLElement function allows me to generate HTML element more efficiently instead of coding jQuery line by line.
 <p align="left"><img src="./img/readme/generalhtmlelement.png"/></p>
 
 2. CSS class and id naming convention can be confusing. This causes time to be wasted when coding and can be improved with better planning.

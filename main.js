@@ -18,7 +18,6 @@ import askAudienceTheme from "./sound/68-Ask-The-Audience-Cut.mp3";
 import phoneAFriendTheme from "./sound/66-Phone-A-Friend-Cut.mp3";
 import fiftyFiftyTheme from "./sound/67-50-50-Cut.mp3";
 
-
 // Game and user objects!
 // Game object
 // line lifes picture - https://imgur.com/sQvoOhJ
@@ -198,8 +197,7 @@ const $displayPrizeLadder = () => {
     $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - ${gameObject.prizeLadder[prizeNum]}`);
   }
   // change the css of current level
-  let prizeQuestionIndex =
-    gameObject.prizeLadder.length - userProfile.Progress - 1;
+  let prizeQuestionIndex = gameObject.prizeLadder.length - userProfile.Progress - 1;
   $(".prize").eq(prizeQuestionIndex).css("background-color", "#FF8326").addClass("blink");
 };
 
