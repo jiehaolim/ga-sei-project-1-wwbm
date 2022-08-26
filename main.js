@@ -677,6 +677,7 @@ const updateRoundScore = () => {
   userProfile.score = gameObject.prizeLadder[userProfile.Progress - 1];
 };
 
+// function to continue game
 const $continueGame = () => {
   // Hide the question div
   $(".qn").remove();
@@ -685,6 +686,7 @@ const $continueGame = () => {
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 3000);
 };
 
+// function to end game
 const $endGame = () => {
   // update final score per safe heaven
   if (gameObject.prizeLadder.indexOf(userProfile.score) === gameObject.prizeLadder.indexOf("$1,000,000")) {
@@ -701,6 +703,7 @@ const $endGame = () => {
   $displayScoreboard()
 };
 
+// function to restart game
 const $restartGame = () => {
   // hide the final score screen
   $(".scoreboard").remove();

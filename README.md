@@ -45,7 +45,7 @@ Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 <img src="./img/readme/css-1.png"/>
 <img src="./img/readme/css-2.png"/>
 
-## Code Organisation
+## Javascript and jQuery Code Organisation
 The code is organised into the five categories as follows:
 1. Objects to track game items and user's progress
 2. General functions for functions that are repeatedly used in other functions
