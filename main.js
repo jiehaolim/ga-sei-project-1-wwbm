@@ -168,7 +168,14 @@ const $displayRules = () => {
   $(".details").eq(9).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.");
   $(".back").text("Menu");
   // add life line event listener for resetting the game
-  $(".back").on("click", $menu);
+  $(".back").on("click", $displayMenu);
+};
+
+// Back to Menu!
+const $displayMenu = () => {
+  $(".rules").remove();
+  $(".logo").show();
+  $(".startmenu").show();
 };
 
 // display the prize ladder
@@ -346,6 +353,7 @@ const $displayScoreboard = () => {
   $(".button").on("click", $restartGame);
 }
 
+// Game question screen event listeners
 // display modal for welcome screen, to tell user game is better with sound and trigger music
 const $modalWelcome = () => {
   // turn on modal
@@ -362,6 +370,21 @@ const $modalWelcome = () => {
   $(".modal").on("click", () => {$(".modal").css("display", "none");
   $playSound(mainTheme)})
 }
+
+// timer
+// function to run and stop the round timer
+const $timer = () => {
+  if (gameObject.time > 5) {
+    $(".text").eq(0).css("color", "#FF8326").text(`${gameObject.time}`);
+    gameObject.time--;
+  } else if (gameObject.time > -1) {
+    $(".text").eq(0).css("color", "red").text(`${gameObject.time}`);
+    gameObject.time--;
+  } else if (gameObject.time === -1) {
+    gameObject.time = -2;
+    $modalTimesUp()
+  }
+};
 
 // display modal when time is up
 const $modalTimesUp = () => {
@@ -380,22 +403,7 @@ const $modalTimesUp = () => {
   $timesUpRevealAns()})
 }
 
-// display modal for final answer
-const $modalFinalAnswer = (id) => {
-  // turn on modal
-  $(".modal").css("display", "block");
-  // clear modal
-  $clearModal()
-  // insert header text
-  $(".modalheader").text("Final answer?");
-  // create the response html element
-  $yesNoButtonModal()
-  $(".yesno").eq(0).text("Yes").on("click", () => {$checkAnsAndRevealAns(id)})
-  $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
-  // turn off modal
-  $(".modal").on("click", () => {$(".modal").css("display", "none");});
-}
-
+// walk away
 // display modal for walk away
 const $modalWalkAway = () => {
   // turn on modal
@@ -412,21 +420,6 @@ const $modalWalkAway = () => {
   $(".modal").on("click", () => {$(".modal").css("display", "none");});
 }
 
-// Game question screen event listeners
-// function to run and stop the round timer
-const $timer = () => {
-  if (gameObject.time > 5) {
-    $(".text").eq(0).css("color", "#FF8326").text(`${gameObject.time}`);
-    gameObject.time--;
-  } else if (gameObject.time > -1) {
-    $(".text").eq(0).css("color", "red").text(`${gameObject.time}`);
-    gameObject.time--;
-  } else if (gameObject.time === -1) {
-    gameObject.time = -2;
-    $modalTimesUp()
-  }
-};
-
 // function for walkaway
 const $walkAway = () => {
   // stop timer
@@ -435,6 +428,7 @@ const $walkAway = () => {
   $displayScoreboard()
 }
 
+// lifelines 
 // function for audience lifeline
 const $audienceLifeline = () => {
   // play additional sound effect
@@ -596,19 +590,29 @@ const $fiftyfiftyLifeline = () => {
   userProfile.lifelines[2] = 0;
 };
 
+// answering the question
+// display modal for final answer
+const $modalFinalAnswer = (id) => {
+  // turn on modal
+  $(".modal").css("display", "block");
+  // clear modal
+  $clearModal()
+  // insert header text
+  $(".modalheader").text("Final answer?");
+  // create the response html element
+  $yesNoButtonModal()
+  $(".yesno").eq(0).text("Yes").on("click", () => {$checkAnsAndRevealAns(id)})
+  $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
+  // turn off modal
+  $(".modal").on("click", () => {$(".modal").css("display", "none");});
+}
+
 // Game updating function!
 // Main game function!
 const $startGame = () => {
   // play music
   $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 3000);
-};
-
-// Back to Menu!
-const $menu = () => {
-  $(".rules").remove();
-  $(".logo").show();
-  $(".startmenu").show();
 };
 
 // function to reveal answer after time is up
