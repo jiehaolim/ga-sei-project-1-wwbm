@@ -1,6 +1,6 @@
 # ![](./img/readme/ga_logo.svg) Project #1: The Game
 
-### Technical Requirements
+## Technical Requirements
 The game app needs to:
 - Display a game in the browser
 - Be interactive
@@ -57,9 +57,9 @@ The code is organised into the five categories as follows:
 5. Game flow functions to update the game progress
 
 ## Javascript and jQuery Code Structure
-Most of the codes are structured in the following manner with the exception of customized behavior required in different screens/modals/event listeners:
-<p align="left"><img src="./img/readme/code-behav-1.png"/></p>
-<p align="left"><img src="./img/readme/code-behav-2.png"/></p>
+Most of the codes are structured in the following manner with the exception of customized code required in different screens/modals/event listeners:
+<p align="left"><img src="./img/readme/js-structure-1.png"/></p>
+<p align="left"><img src="./img/readme/js-structure-2.png"/></p>
 
 ## Learning and Improvement Points
 1. Learnt and discovered that general functions can be written to shorten code. For example, the $generateHTMLElement function allows me to generate HTML element more efficiently instead of coding jQuery line by line.
