@@ -63,9 +63,7 @@ const $generateHTMLElement = (htmlElement, numOfDiv, attrName, attrValue, parent
 const $enableOrDisableDiv = (arrayOfButtonsId, addClassOrRemove, enabledOrDisabled) => {
   // disable all other options button via loop
   for (const element of arrayOfButtonsId) {
-    $(`#${element}`)
-      [addClassOrRemove]("disabled-div")
-      .prop(enabledOrDisabled, true);
+    $(`#${element}`)[addClassOrRemove]("disabled-div").prop(enabledOrDisabled, true);
   }
 };
 
@@ -354,7 +352,7 @@ const $displayScoreboard = () => {
   $generateHTMLElement("div", 1, "class", "menu-container", ".scoreboard", "append");
   $generateHTMLElement("div", 1, "class", "button", ".menu-container", "append");
   $(".button").text("Menu");
-  // add life line event listener for resetting the game
+  // add event listener for resetting the game
   $(".button").on("click", $restartGame);
 }
 
