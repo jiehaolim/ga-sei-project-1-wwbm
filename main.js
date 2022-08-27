@@ -93,6 +93,13 @@ const $clearModal = () => {
   $(".modal").off()
 }
 
+// function to disable event listener on question screen
+const $disableButton = () => {
+  $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
+  $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
+  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass", "enabled");
+}
+
 // function to play sound effect
 const $playSound = (theme) => {
   $("#music").attr("src", theme)
@@ -610,9 +617,7 @@ const $timesUpRevealAns = () => {
   // clear timer
   clearInterval(gameObject.roundTimer);
   // disable button
-  $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
-  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass", "enabled");
+  $disableButton()
   // show correct answer as green after 2s
   setTimeout(() => 
   {$playSound(wrongTheme); 
@@ -626,8 +631,15 @@ const $timesUpRevealAns = () => {
 const $walkAway = () => {
   // stop timer
   clearInterval(gameObject.roundTimer);
-  // go to scoreboard screen
-  $displayScoreboard()
+  // disable button
+  $disableButton()
+  // show correct answer as green after 2s
+  setTimeout(() => 
+  {$playSound(wrongTheme); 
+  $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")
+  }, 2000); 
+  // go to scoreboard screen after 5s after revealing the answer
+  setTimeout(() => {$displayScoreboard()}, 7000);   
 }
 
 // function to set delay to create suspense then turn the answer green
@@ -637,9 +649,7 @@ const $checkAnsAndRevealAns = (id) => {
   // clear timer
   clearInterval(gameObject.roundTimer);
   // disable button
-  $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
-  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass", "enabled");
+  $disableButton()
   // reflect selected answer as orange
   $(`#${id}`).css("background-color", "#FF8326");
   // show correct answer as green after 5s
