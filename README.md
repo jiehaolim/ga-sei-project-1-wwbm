@@ -65,10 +65,13 @@ Most of the codes are structured in the following manner with the exception of c
 1. Learnt and discovered that general functions can be written to shorten code. For example, the $generateHTMLElement function allows me to generate HTML element more efficiently instead of coding jQuery line by line.
 <p align="left"><img src="./img/readme/generalhtmlelement.png"/></p>
 
-2. CSS class and id naming convention can be confusing. This causes time to be wasted when coding and can be improved with better planning.
-3. Current app is mostly responsive to other screen size, but it can be even more responsive since some of the CSS properties are in px instead of em/rem.
-4. Game can be improved by implementing more game settings, e.g. adjust timer per round or adjust difficulty of the questions.
-5. Game can have more CSS animation to make it the game even more "alive".
+2. Learnt to use local storage to store high scores.
+<p align="left"><img src="./img/readme/local-storage.png"/></p>
+
+3. CSS class and id naming convention can be confusing. This causes time to be wasted when coding and can be improved with better planning.
+4. Current app is mostly responsive to other screen size, but it can be even more responsive since some of the CSS properties are in px instead of em/rem.
+5. Game can be improved by implementing more game settings, e.g. adjust timer per round or adjust difficulty of the questions.
+6. Game can have more CSS animation to make it the game even more "alive".
 
 ## References and Inspirations
 - [W3 school for the modal](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2)
