@@ -38,7 +38,7 @@ Play [Who Wants to be a Millionaire.](https://wwbm.vercel.app/)
 - Git and GitHub
 
 ## Game Flow
-View [flowchart at Miro.](https://miro.com/app/board/uXjVPccHgUw=/?share_link_id=207407740407)
+View [flowchart at Miro.](https://miro.com/app/board/uXjVPccHgUw=/?share_link_id=161052720807)
 
 <img src="./img/readme/wwbm-flowchart.png"/>
 
