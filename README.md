@@ -16,7 +16,7 @@ This game is based on the international television game show franchise of Britis
 Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 
 ## Rules
-- The contestant will have to answer 15 random questions and climb up the prize ladder to win the a million dollars. A total of 150 questions have been set into the game with 10 questions per level.
+- The contestant will have to answer 15 random questions and climb up the prize ladder to win the a million dollars. A total of 150 questions have been set into the game with 10 different question type per level.
 - The contestant is given 25 seconds to answer each question per round.
 - There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.
 - The contestant will also have the choice to walk away with any existing winnings prior to answering the next question.
@@ -30,7 +30,7 @@ Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 
 # Code
 ## Technologies and Tools used
-- Html
+- HTML
 - CSS
 - Javascript
 - jQuery
@@ -38,6 +38,7 @@ Play [Who Wants to be a Millionaire](https://wwbm.vercel.app/).
 - Git and GitHub
 
 ## Code Flow
+<img src="./img/readme/gameflow.png"/>
 
 ## HTML Structure
 <img src="./img/readme/html-structure-1.png"/>
@@ -56,7 +57,7 @@ The code is organised into the five categories as follows:
 5. Game flow functions to update the game progress
 
 ## Javascript and jQuery Code Structure
-Most of the codes are structured in the following manner with the exception of customized behavior required in different screens/modals/event listeners
+Most of the codes are structured in the following manner with the exception of customized behavior required in different screens/modals/event listeners:
 <p align="left"><img src="./img/readme/code-behav-1.png"/></p>
 <p align="left"><img src="./img/readme/code-behav-2.png"/></p>
 
@@ -65,14 +66,13 @@ Most of the codes are structured in the following manner with the exception of c
 <p align="left"><img src="./img/readme/generalhtmlelement.png"/></p>
 
 2. CSS class and id naming convention can be confusing. This causes time to be wasted when coding and can be improved with better planning.
-3. Current app is mostly responsive, but it can be even more responsive since some of the CSS properties are in px instead of em/rem.
-4. Implement more game settings, e.g. adjust timer per round or adjust difficulty of the questions.
+3. Current app is mostly responsive to other screen size, but it can be even more responsive since some of the CSS properties are in px instead of em/rem.
+4. Game can be improved by implementing more game settings, e.g. adjust timer per round or adjust difficulty of the questions.
+5. Game can have more CSS animation to make it the game even more "alive".
 
 ## References and Inspirations
-- [W3 school modal](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2)
-- [Lifelines icons picture](https://imgur.com/sQvoOhJ)
-- [Blinking CSS effect](https://www.codegrepper.com/code-examples/css/how+to+make+a+box+blink+in+css)
-- [Trial question list](https://www.theguardian.com/tv-and-radio/ng-interactive/2020/sep/12/who-wants-to-be-a-millionaire-jackpot-questions-quiz-yourself)
-- [Question API](https://the-trivia-api.com/search/)
-- [Who wants to be a Millionaire Game site on wwbm.com](https://wwbm.com/)
-- [Who wants to be a Millionaire Game site on crazygames.com](https://www.crazygames.com/game/millionaire-quiz)
+- [W3 school for the modal](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2)
+- [Imgur for lifelines icons picture](https://imgur.com/sQvoOhJ)
+- [Codegrepper for the blinking CSS effect](https://www.codegrepper.com/code-examples/css/how+to+make+a+box+blink+in+css)
+- [Guardian.com for trial question list](https://www.theguardian.com/tv-and-radio/ng-interactive/2020/sep/12/who-wants-to-be-a-millionaire-jackpot-questions-quiz-yourself)
+- [Trivia API for the list of questions](https://the-trivia-api.com/search/)
