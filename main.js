@@ -661,10 +661,11 @@ const $checkAnsAndRevealAns = (id) => {
   }, 5000);
   // proceed with the game
   setTimeout(() => {
+    // last question
     if (userProfile.Progress + 1 === gameObject.prizeLadder.length && 
       id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
       updateRoundScore();
-      $endGame();
+      $displayScoreboard();
       // normal round
     } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
       updateRoundScore();
