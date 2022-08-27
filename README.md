@@ -64,10 +64,10 @@ Most of the codes are structured in the following manner with the exception of c
 <p align="left"><img src="./img/readme/js-structure-2.png"/></p>
 
 ## Learning and Improvement Points
-1. Learnt and discovered that general functions can be written to shorten code. For example, the $generateHTMLElement function allows me to generate HTML element more efficiently instead of coding jQuery line by line.
+1. Learned and discovered that general functions can be written to shorten code. For example, the $generateHTMLElement function allows me to generate HTML element more efficiently instead of coding jQuery line by line.
 <p align="left"><img src="./img/readme/generalhtmlelement.png"/></p>
 
-2. Learnt to use local storage to store high scores.
+2. Learned how to use local storage to store high scores.
 <p align="left"><img src="./img/readme/local-storage.png"/></p>
 
 3. CSS class and id naming convention can be confusing. This causes time to be wasted when coding and can be improved with better planning.
