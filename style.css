@@ -243,18 +243,21 @@ h1 {
   pointer-events: none;
 }
 
-/* Rainbow effect for Million Dollars https://code-boxx.com/create-rainbow-text-pure-css-js/ */ 
-@keyframes rainbow{ 
-  0%{
-    color:white;
-  } 
-  50%{
-    color:#37CD3B;
-  } 100%{
-    color:#FF8326;} }
+/* Rainbow effect for Million Dollars https://code-boxx.com/create-rainbow-text-pure-css-js/ */
+@keyframes rainbow {
+  0% {
+    color: white;
+  }
+  50% {
+    color: #37cd3b;
+  }
+  100% {
+    color: #ff8326;
+  }
+}
 
-.rainbow { 
-  animation: rainbow 2s infinite; 
+.rainbow {
+  animation: rainbow 2s infinite;
 }
 
 /* Modal */
