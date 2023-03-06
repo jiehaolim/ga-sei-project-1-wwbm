@@ -29,7 +29,7 @@ import fiftyFiftyTheme from "./sound/67-50-50-Cut.mp3";
 const gameObject = {
   prizeLadder: ["$100","$200","$300","$500","$1,000",
   "$2,000","$4,000","$8,000","$16,000","$32,000",
-  "$64,000","$125,000","$250,000","$500,000","$1,000,000",],
+  "$64,000","$125,000","$250,000","$500,000","$1,000,000"],
   options: ["A", "B", "C", "D"],
   time: 25,
   roundTimer: null,
@@ -37,9 +37,9 @@ const gameObject = {
   lifelinesImg: [audienceImg, friendImg, fiftyfiftyImg],
   lifelinesId: ["audience", "friend", "fifty-fifty"],
   friend: ["Dad","Mum","Brother","Sister","Girlfriend",
-  "Boyfriend","Tom","Dick","Harry","Lucas",],
+  "Boyfriend","Tom","Dick","Harry","Lucas"],
   friendResponse: ["I think it is","I read it on the internet, it is",
-  "I read this on the newspaper yesterday, it is","I know this one. It is","I am guessing it is",],
+  "I read this on the newspaper yesterday, it is","I know this one. It is","I am guessing it is"],
 };
 
 // User profile
@@ -197,6 +197,8 @@ const $displayPrizeLadder = () => {
   $(".startmenu").hide();
   $(".timerbank").remove();
   $(".lifeline").remove();
+  $(".qn").remove();
+  $(".opt").remove();
   // create the divs for the ladder
   $generateHTMLElement("div", 1, "class", "ladder container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 15, "class", "prize", ".ladder", "append");
@@ -692,8 +694,6 @@ const updateRoundScore = () => {
 // function to continue game
 const $continueGame = () => {
   // Hide the question div
-  $(".qn").remove();
-  $(".opt").remove();
   $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 3000);
 };
