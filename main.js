@@ -98,7 +98,7 @@ const $yesNoButtonModal = () => {
 // Function to clear modal
 const $clearModal = () => {
   // Clear modal text
-  $(".modalheader").text("");
+  $(".modalheader").text("").removeClass("rainbow");
   $(".modalresponse").text("");
   // Remove divs in modal
   $("#myChart").remove();
@@ -588,7 +588,22 @@ const $modalFinalAnswer = (id) => {
   $(".yesno").eq(0).text("Yes").on("click", () => {$checkAnsAndRevealAns(id)})
   $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
   // Turn off modal
-  $(".modal").on("click", () => {$(".modal").css("display", "none");});
+  $(".modal").on("click", () => {$(".modal").css("display", "none")});
+}
+
+// Million dollars modal
+const $modalMillionDollars = () => {
+  // Play music
+  $playSound(mainTheme)
+  // Turn on and clear modal
+  $(".modal").css("display", "block");
+  $clearModal()
+  // Insert header and response text and ok button
+  $(".modalheader").addClass("rainbow").text("Congrations! You won a million dollars!");
+  $okButtonModal()
+  // Turn off modal and go to score board
+  $(".modal").on("click", () => {$(".modal").css("display", "none");
+  $displayScoreboard()});
 }
 
 // Game updating function
@@ -648,7 +663,7 @@ const $checkAnsAndRevealAns = (id) => {
     if (userProfile.Progress + 1 === gameObject.prizeLadder.length && 
       id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
       updateRoundScore();
-      $displayScoreboard();
+      $modalMillionDollars();
       // Normal round
     } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
       updateRoundScore();

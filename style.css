@@ -225,6 +225,7 @@ h1 {
   margin: 0 auto;
 }
 
+/* Blinking effect */
 /* blinking button https://www.codegrepper.com/code-examples/css/how+to+make+a+box+blink+in+css */
 .blink {
   animation: blinker 1s linear infinite;
@@ -236,9 +237,24 @@ h1 {
   }
 }
 
+/* Disabled div */
 /* disabled-div for events */
 .disabled-div {
   pointer-events: none;
+}
+
+/* Rainbow effect for Million Dollars https://code-boxx.com/create-rainbow-text-pure-css-js/ */ 
+@keyframes rainbow{ 
+  0%{
+    color:white;
+  } 
+  50%{
+    color:#37CD3B;
+  } 100%{
+    color:#FF8326;} }
+
+.rainbow { 
+  animation: rainbow 2s infinite; 
 }
 
 /* Modal */
@@ -320,6 +336,8 @@ h1 {
   padding: 2px 16px;
 }
 
+/* Resize @meda */
+/* Resize for the options to be same length with the question */
 @media only screen and (max-width: 683px) {
   .option {
     flex: 1 1 auto;
