@@ -1,11 +1,16 @@
+// CSS, jQuery, question list 
 import "./style.css";
 import $ from "jquery";
 import questionsList from "./questions";
+
+// Images, SVG for Vercel
 import moneybagSvg from "./img/game/money-bag.svg";
 import timerSvg from "./img/game/timer.svg";
 import audienceImg from "./img/game/audience.png";
 import friendImg from "./img/game/friend.png";
 import fiftyfiftyImg from "./img/game/50-50.png";
+
+// Sound Effect for Vercel
 import mainTheme from "./sound/01-Main-Theme-Cut.mp3";
 import fullMainTheme from "./sound/01-Main-Theme-Org.mp3";
 import prizeTheme from "./sound/10-Let's-Play-Prize.mp3";
