@@ -1,16 +1,16 @@
-// CSS, jQuery, question list 
+// Import CSS, jQuery, question list 
 import "./style.css";
 import $ from "jquery";
 import questionsList from "./questions";
 
-// Images, SVG for Vercel
+// Import images, SVG for Vercel
 import moneybagSvg from "./img/game/money-bag.svg";
 import timerSvg from "./img/game/timer.svg";
 import audienceImg from "./img/game/audience.png";
 import friendImg from "./img/game/friend.png";
 import fiftyfiftyImg from "./img/game/50-50.png";
 
-// Sound Effect for Vercel
+// Import sound clips for Vercel
 import mainTheme from "./sound/01-Main-Theme-Cut.mp3";
 import fullMainTheme from "./sound/01-Main-Theme-Org.mp3";
 import prizeTheme from "./sound/10-Let's-Play-Prize.mp3";
@@ -25,7 +25,7 @@ import fiftyFiftyTheme from "./sound/67-50-50-Cut.mp3";
 
 // Game and user objects
 // Game object
-// Line lifes picture - https://imgur.com/sQvoOhJ
+// Lifelines picture - https://imgur.com/sQvoOhJ
 const gameObject = {
   prizeLadder: ["$100","$200","$300","$500","$1,000",
   "$2,000","$4,000","$8,000","$16,000","$32,000",
@@ -70,6 +70,17 @@ const $disableDiv = (arrayOfButtonsId) => {
     $(`#${element}`).addClass("disabled-div");
   }
 };
+
+const $hideMenuAndQuestionScreen = () => {
+  // Hide the menu screen
+  $(".startmenu").hide();
+  $("#logo").hide();
+  // Hide the question screen
+  $(".timerbank").remove();
+  $(".lifeline").remove();
+  $(".qn").remove();
+  $(".opt").remove();
+}
 
 // Function to create ok button in modal
 const $okButtonModal = () => {
@@ -188,16 +199,11 @@ const $displayMenu = () => {
 const $displayPrizeLadder = () => {
   // Play music
   $playSound(prizeTheme)
-  // Hide the menu screen
+  // Hide the WWBM header
   $("#header").hide();
-  $("#logo").hide();
-  $(".startmenu").hide();
-  // Hide the question screen
-  $(".timerbank").remove();
-  $(".lifeline").remove();
-  $(".qn").remove();
-  $(".opt").remove();
-  // Create divs for the prizeladder
+  // Hide the menu and question screen
+  $hideMenuAndQuestionScreen()
+  // Create divs for the prize ladder
   $generateHTMLElement("div", 1, "class", "ladder container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 15, "class", "prize", ".ladder", "append");
   // Insert prize ladder text into divs
@@ -206,7 +212,7 @@ const $displayPrizeLadder = () => {
     let prizeQuestionIndex = gameObject.prizeLadder.length - i;
     $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - ${gameObject.prizeLadder[prizeNum]}`);
   }
-  // Change CSS to reflect the current level
+  // Add CSS effect to reflect the current level
   let prizeQuestionIndex = gameObject.prizeLadder.length - userProfile.Progress - 1;
   $(".prize").eq(prizeQuestionIndex).css("background-color", "#FF8326").addClass("blink");
 };
@@ -215,119 +221,109 @@ const $displayPrizeLadder = () => {
 const $displayQuestion = (index) => {
   // Play music
   $playSound(questionTheme)
-  // hide prize ladder div
+  // Hide the prize ladder screen
   $("#header").show();
   $(".ladder").remove();
   $("#logo").show();
-  // create the divs for timer and current prize value
+  // Create divs for timer and winnings value
   $generateHTMLElement("div", 1, "class", "timerbank container", "#overall-body-container", "prepend");
   $generateHTMLElement("div", 2, "class", "displaytimebank container", ".timerbank", "append");
   $generateHTMLElement("img", 1, "class", "display", ".displaytimebank", "append");
   $generateHTMLElement("div", 1, "class", "text", ".displaytimebank", "append");
-  // create divs for the three life lines
+  // Create divs for three lifelines
   $generateHTMLElement("div", 1, "class", "lifeline container", "#overall-body-container", "append");
   $generateHTMLElement("img", 3, "class", "lifelineimg", ".lifeline", "append");
-  // create the divs for the questions
+  // Create divs for question and options
   $generateHTMLElement("div", 1, "class", "qn container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 1, "id", "question", ".qn", "append");
   $generateHTMLElement("div", 2, "class", "opt container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 2, "class", "option", ".opt", "append");
-  // current text plus timer svg and winnings svg
-  // timer svg
-  $(".display").eq(0).attr("src", `${gameObject.display.timer}`).text(`${gameObject.time}`);
-  // reset timer, start timer and user current winnings
+  // Timer and winnings - Insert SVG, text and event listener
+  // Reset timer
   gameObject.time = 25;
   gameObject.roundTimer = setInterval($timer, 1000);
-  // winnings svg and event listener to walk away after question 1
+  $(".display").eq(0).attr("src", `${gameObject.display.timer}`)
+  $("text").eq(0).text(`${gameObject.time}`);
+  // Winnings SVG to appear after question 1 when there are winnings
   if (userProfile.score === null) {
     $(".displaytimebank").eq(1).remove()
   } else {
     $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", $modalWalkAway).attr("id", "walkAwayDisplay")
     $(".text").eq(1).text(`${userProfile.score}`).css("color", "#37CD3B").on("click", $modalWalkAway).attr("id", "walkAwayText")
   }
-  // insert 3 life lines images
+  // Lifelines - Insert image and event listener
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
     $(".lifelineimg").eq(i).attr("src", gameObject.lifelinesImg[i]).attr("id", gameObject.lifelinesId[i]);
   }
-  // disabled life lines that are used up
+  // Disabled lifelines that are used up
   for (let i = 0; i < userProfile.lifelines.length; i++) {
     if (userProfile.lifelines[i] === 0)
       $(".lifelineimg").eq(i).attr("src", gameObject.lifelinesImg[i]).attr("id", gameObject.lifelinesId[i])
         .css("opacity", "0.3").addClass("disabled-div");
   }
-  // add life line event listener for audience lifeline
   $(".lifelineimg").eq(0).on("click", $audienceLifeline);
-  // add life line event listener for friend lifeline
   $(".lifelineimg").eq(1).on("click", $friendLifeline);
-  // add life line event listener for 50-50 lifeline
   $(".lifelineimg").eq(2).on("click", $fiftyfiftyLifeline);
-  // reset the user available options
+  // Question and options - Insert text and event listener
+  // Reset options for users
   userProfile.currentOptions = gameObject.options;
-  // generate a random index for the question in each level
+  // Generate a random index for the question in each level
   userProfile.questionIndex = Math.floor(Math.random() * questionsList[index].length);
-  // insert question into div
   $("#question").text(`${questionsList[index][userProfile.questionIndex].question}`);
-  // loop the ids into the options and text
   for (let i = 0; i < gameObject.options.length; i++) {
     let objKey = "option" + gameObject.options[i];
     $(".option").eq(i).attr("id", gameObject.options[i]);
     $(".option").eq(i).text(`${gameObject.options[i]}. ${questionsList[index][userProfile.questionIndex][objKey]}`);
   }
-  // add event listener for the options
   $(".option").on("click", () => $modalFinalAnswer($(event.currentTarget).attr("id")));
 };
 
-// display scoreboard
+// Display scoreboard
 const $displayScoreboard = () => {
-  // play music
+  // Play music - play main theme when scoreboard is triggered from menu else play full main theme when game ended
   if ($("#music").attr("src") !== mainTheme && $("#music").attr("src") !== fullMainTheme) {
     $playSound(fullMainTheme)
   }
-  // Hide all the game objects
-  $(".startmenu").hide();
-  $("#logo").hide()
-  $(".timerbank").remove();
-  $(".lifeline").remove();
-  $(".qn").remove();
-  $(".opt").remove();
-  // store high score array index instead of actual score, lesser data manipulation
-  // create high score array index if it does not exist in local storage, else retrieve it from local storage
-  let wwbmScore = ""
+  // Hide the menu and question screen
+  $hideMenuAndQuestionScreen()
+  // Local storage for high score - store high score array index instead of actual score, lesser data manipulation
+  // Create high score array index if it does not exist in local storage, else retrieve it from local storage
+  let wwbmScore = null
   if (localStorage.getItem("wwbmscore") === null) {
     wwbmScore = []
   } else if (localStorage.getItem("wwbmscore") !== null) {
     wwbmScore = JSON.parse(localStorage.getItem("wwbmscore"))
   }
-  // push the score index to the array if it is not default
-  if (userProfile.score !== 0) {
+  // Push the score index to the array if current score is not default
+  if (userProfile.score !== null) {
     wwbmScore.push(gameObject.prizeLadder.indexOf(userProfile.score))
     wwbmScore.sort(function(a, b) { return b - a})
-    // limit the array to top 5 scores
+    // Limit the array to top 5 scores
     if (wwbmScore.length > 5) {
       wwbmScore.pop()
     }
-    // set high score into local storage
+    // Set high score into local storage
     localStorage.setItem("wwbmscore", JSON.stringify(wwbmScore))
   }
-  // Create the final score board
+  // Create the final score board - current score and high score board
+  // Current score - create div and insert text
   $generateHTMLElement("div", 1, "class", "scoreboard container", "#overall-footer-container", "append");
-  // generate div for current score and add text to the div
   if (userProfile.score !== null) {
     $generateHTMLElement("div", 1, "class", "currentscore", ".scoreboard", "append");
     $(".currentscore").text(`Current Score: ${userProfile.score}`);  
   }
-  // generate div and add text for the scoreboard header
+  // High score board Header - create div and insert text
   $generateHTMLElement("div", 1, "class", "scoreheader", ".scoreboard", "append");
   if (wwbmScore.length === 0) {
     $(".scoreheader").text(`No High Score`);
   } else {
     $(".scoreheader").text(`High Score Board`);
   }
-  // generate divs for the high score details
+  // High score board details - create div and insert text
   $generateHTMLElement("div", wwbmScore.length, "class", "scoredetails", ".scoreboard", "append");
-  // loop the high score into the divs
-  // when the scoreboard is viewed from the main screen no current score
-  if (userProfile.score === 0) {
+  // To highlight current score in green when it appears in high score board after game ended
+  // No highlight of current score when viewing from main menu
+  if (userProfile.score === null) {
     for (let i = 0; i < wwbmScore.length; i++) {
       // $0 is not in the prizeladder
       if (gameObject.prizeLadder[wwbmScore[i]] === undefined) {
@@ -336,8 +332,8 @@ const $displayScoreboard = () => {
         $(".scoredetails").eq(i).text(`${i + 1}. ${gameObject.prizeLadder[wwbmScore[i]]}`)
       }
     }
-    // when the scoreboard is after a game to highlight the current score if it appear in high score board
   } else {
+    // Highlight of current score if it appears on High score board after game ends
     const currentScoreIndex = gameObject.prizeLadder.indexOf(userProfile.score)
     const currentScoreExists = wwbmScore.lastIndexOf(currentScoreIndex)
     for (let i = 0; i < wwbmScore.length; i++) {
@@ -353,39 +349,37 @@ const $displayScoreboard = () => {
       }
     }
   }
-  // generate div for button
+  // Create sub div for back to menu button, text and event listener
   $generateHTMLElement("div", 1, "class", "menu-container", ".scoreboard", "append");
   $generateHTMLElement("div", 1, "class", "button", ".menu-container", "append");
-  $(".button").text("Menu");
-  // add event listener for resetting the game
-  $(".button").on("click", $restartGame);
+  $(".button").eq(0).text("Menu");
+  $(".button").eq(0).on("click", $backtoMenu);
 }
 
 // Game question screen event listeners
-// display modal for welcome screen, to tell user game is better with sound and trigger music
+// Display modal for welcome screen, to tell user game is better with sound and trigger music
 const $modalWelcome = () => {
-  // turn on modal
+  // Turn on and clear modal
   $(".modal").css("display", "block");
-  // clear modal
   $clearModal()
-  // insert header text
+  // Insert header, response text and ok button
   $(".modalheader").text("Welcome to Who wants to be a Millionaire!");
-  // insert response text
   $(".modalresponse").text("Please turn on the volume for better game experience.");
-  // create the response html element
   $okButtonModal()
-  // turn off modal
+  // Turn off modal and play music
   $(".modal").on("click", () => {$(".modal").css("display", "none");
   $playSound(mainTheme)})
 }
 
-// timer
-// function to run and stop the round timer
+// Timer
+// Function to run and stop the round timer
 const $timer = () => {
   if (gameObject.time > 5) {
+    // Orange font for timer when > 5s
     $(".text").eq(0).css("color", "#FF8326").text(`${gameObject.time}`);
     gameObject.time--;
   } else if (gameObject.time > -1) {
+    // Red font for timer when < 5s
     $(".text").eq(0).css("color", "red").text(`${gameObject.time}`);
     gameObject.time--;
   } else if (gameObject.time === -1) {
@@ -394,42 +388,38 @@ const $timer = () => {
   }
 };
 
-// display modal when time is up
+// Display modal when time is up
 const $modalTimesUp = () => {
-  // play music
+  // Play music
   $playSound(timeUpTheme)
-  // turn on modal
+  // Turn on and clear modal
   $(".modal").css("display", "block");
-  // clear modal
   $clearModal()
-  // insert header text
+  // Insert header text and ok button
   $(".modalheader").text("Time's up!");
-  // create the response html element
   $okButtonModal()
-  // turn off modal
+  // Turn off modal and reveal answer
   $(".modal").on("click", () => {$(".modal").css("display", "none");
   $timesUpRevealAns()})
 }
 
-// walk away
-// display modal for walk away
+// Walk away
+// Display modal for walk away
 const $modalWalkAway = () => {
-  // turn on modal
+  // Turn on and clear modal
   $(".modal").css("display", "block");
-  // clear modal
   $clearModal()
-  // insert header text
+  // Insert header and reponse text and Yes No button
   $(".modalheader").text(`Walk away with ${userProfile.score}?`);
-  // create the response html element
   $yesNoButtonModal()
   $(".yesno").eq(0).text("Yes").on("click", $walkAway)
   $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
-  // turn off modal
+  // Turn off modal
   $(".modal").on("click", () => {$(".modal").css("display", "none");});
 }
 
-// lifelines 
-// function for audience lifeline
+// Lifelines 
+// Function for audience lifeline
 const $audienceLifeline = () => {
   // play additional sound effect
   $("#music2").attr("src", askAudienceTheme)
@@ -713,8 +703,8 @@ const $endGame = () => {
   $displayScoreboard()
 };
 
-// function to restart game
-const $restartGame = () => {
+// function to go back to menu
+const $backtoMenu = () => {
   // hide the final score screen
   $(".scoreboard").remove();
   $(".reset").remove();
