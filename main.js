@@ -147,10 +147,10 @@ const $displayRules = () => {
   // Insert winnings svg, text for winnings header and explanation
   $(".walkawaysvgimg").attr("src", gameObject.display.moneybag)
   $(".walkawaysvglabel").text("Winnings");
-  $(".walkawayexplainer").text("The contestant will also be able to choose to walk away with any existing winnings prior to answering the next question.")
+  $(".walkawayexplainer").text("The contestant will also be able to choose to walk away with any existing winnings instead of answering the current question.")
   // Insert text for the lifelines header, explanation and create a sub div for lifelines explanation
   $(".details").eq(6).addClass("header").text("Lifelines");
-  $(".details").eq(7).addClass("body").text("The contestant has access to the three lifelines which each can be used only once per game. More than one lifeline can be used on a single question. The three lifelines are as follows:");
+  $(".details").eq(7).addClass("body").text("The contestant has access to three lifelines which each can be used only once per game. More than one lifeline can be used on a single question. The three lifelines are as follows:");
   $(".details").eq(8).addClass("lifelines-container");
   // Create sub divs for lifeline items
   $generateHTMLElement("div", 3, "class", "lifeline-container", ".lifelines-container", "append");
@@ -188,31 +188,32 @@ const $displayMenu = () => {
 const $displayPrizeLadder = () => {
   // Play music
   $playSound(prizeTheme)
-  // hide header, logo and menu div
+  // Hide the menu screen
   $("#header").hide();
   $("#logo").hide();
   $(".startmenu").hide();
+  // Hide the question screen
   $(".timerbank").remove();
   $(".lifeline").remove();
   $(".qn").remove();
   $(".opt").remove();
-  // create the divs for the ladder
+  // Create divs for the prizeladder
   $generateHTMLElement("div", 1, "class", "ladder container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 15, "class", "prize", ".ladder", "append");
-  // insert prize ladder text into divs
+  // Insert prize ladder text into divs
   for (let i = 0; i < gameObject.prizeLadder.length; i++) {
     let prizeNum = gameObject.prizeLadder.length - 1 - i;
     let prizeQuestionIndex = gameObject.prizeLadder.length - i;
     $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - ${gameObject.prizeLadder[prizeNum]}`);
   }
-  // change the css of current level
+  // Change CSS to reflect the current level
   let prizeQuestionIndex = gameObject.prizeLadder.length - userProfile.Progress - 1;
   $(".prize").eq(prizeQuestionIndex).css("background-color", "#FF8326").addClass("blink");
 };
 
-// display question
+// Display question
 const $displayQuestion = (index) => {
-  // play music
+  // Play music
   $playSound(questionTheme)
   // hide prize ladder div
   $("#header").show();
