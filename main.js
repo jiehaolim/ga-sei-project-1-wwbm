@@ -60,10 +60,10 @@ const $generateHTMLElement = (htmlElement, numOfDiv, attrName, attrValue, parent
 };
 
 // function to enable or disable buttons for an array of buttons
-const $enableOrDisableDiv = (arrayOfButtonsId, addClassOrRemove, enabledOrDisabled) => {
+const $enableOrDisableDiv = (arrayOfButtonsId, addClassOrRemove) => {
   // disable all other options button via loop
   for (const element of arrayOfButtonsId) {
-    $(`#${element}`)[addClassOrRemove]("disabled-div").prop(enabledOrDisabled, true);
+    $(`#${element}`)[addClassOrRemove]("disabled-div");
   }
 };
 
@@ -93,9 +93,9 @@ const $clearModal = () => {
 
 // function to disable event listener on question screen
 const $disableButton = () => {
-  $enableOrDisableDiv(gameObject.options, "addClass", "enabled");
-  $enableOrDisableDiv(gameObject.lifelinesId, "addClass", "enabled");
-  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass", "enabled");
+  $enableOrDisableDiv(gameObject.options, "addClass");
+  $enableOrDisableDiv(gameObject.lifelinesId, "addClass");
+  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass");
 }
 
 // function to play sound effect
@@ -248,7 +248,7 @@ const $displayQuestion = (index) => {
   for (let i = 0; i < userProfile.lifelines.length; i++) {
     if (userProfile.lifelines[i] === 0)
       $(".lifelineimg").eq(i).attr("src", gameObject.lifelinesImg[i]).attr("id", gameObject.lifelinesId[i])
-        .css("opacity", "0.3").addClass("disabled-div").prop("enabled", true);
+        .css("opacity", "0.3").addClass("disabled-div");
   }
   // add life line event listener for audience lifeline
   $(".lifelineimg").eq(0).on("click", $audienceLifeline);
@@ -510,7 +510,7 @@ const $audienceLifeline = () => {
   {$("#music2").get(0).pause();
   $(".modal").css("display", "none");});
   // remove the audience life line
-  $("#audience").css("opacity", "0.3").addClass("disabled-div").prop("enabled", true);
+  $("#audience").css("opacity", "0.3").addClass("disabled-div");
   // update user profile
   userProfile.lifelines[0] = 0;
 };
@@ -548,7 +548,7 @@ const $friendLifeline = () => {
     $("#music2").get(0).pause()
     $(".modal").css("display", "none");});
   // remove the friend life lines
-  $("#friend").css("opacity", "0.3").addClass("disabled-div").prop("enabled", true);
+  $("#friend").css("opacity", "0.3").addClass("disabled-div");
   // update user profile
   userProfile.lifelines[1] = 0;
 };
@@ -578,9 +578,9 @@ const $fiftyfiftyLifeline = () => {
   userProfile.currentOptions = userProfile.currentOptions.filter((element) => 
   answerToBeEliminated.includes(element) === false);
   // disable the 2 options eliminated options button
-  $enableOrDisableDiv(answerToBeEliminated, "addClass", "enabled");
+  $enableOrDisableDiv(answerToBeEliminated, "addClass");
   // remove the fifty fifty life lines
-  $("#fifty-fifty").css("opacity", "0.3").addClass("disabled-div").prop("enabled", true);
+  $("#fifty-fifty").css("opacity", "0.3").addClass("disabled-div");
   // update user profile
   userProfile.lifelines[2] = 0;
 };
