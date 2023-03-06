@@ -409,7 +409,7 @@ const $modalWalkAway = () => {
   // Turn on and clear modal
   $(".modal").css("display", "block");
   $clearModal()
-  // Insert header and reponse text and Yes No button
+  // Insert header and reponse text and yes no button
   $(".modalheader").text(`Walk away with ${userProfile.score}?`);
   $yesNoButtonModal()
   $(".yesno").eq(0).text("Yes").on("click", $walkAway)
@@ -421,18 +421,17 @@ const $modalWalkAway = () => {
 // Lifelines 
 // Function for audience lifeline
 const $audienceLifeline = () => {
-  // play additional sound effect
+  // Play additional sound effect
   $("#music2").attr("src", askAudienceTheme)
   $("#music2").get(0).play()
-  // turn on modal
+  // Turn on and clear modal
   $(".modal").css("display", "block");
-  // clear modal
   $clearModal()
-  // Insert header words for modal
+  // Insert header text
   $(".modalheader").text("Audience");
-  // create the canvas html element
+  // Create the canvas html element in response text
   $generateHTMLElement("canvas", 1, "id", "myChart", ".modalresponse", "append");
-  // random generate percentages
+  // Random generate percentages
   const randomNumberArray = [];
   let randomTotal = 0;
   for (let i = 0; i < userProfile.currentOptions.length; i++) {
@@ -446,7 +445,7 @@ const $audienceLifeline = () => {
   // Step 4: Multiply by 100, and round to the nearest integer.
   const randomPercentage = randomNumberArray.map((element) => Math.round((element / randomTotal) * 100));
   // Align the percentage with the options to reflect the correct answer and with 90% chance of getting right
-  // take out the highest percent to insert into the correct answer index
+  // Take out the highest percent to insert into the correct answer index
   let maxPercent = randomPercentage.reduce(function (a, b) { return Math.max(a, b);});
   const chartPercentage = randomPercentage.filter((element) => element !== maxPercent);
   let randomIndex1 = Math.random();
@@ -498,31 +497,30 @@ const $audienceLifeline = () => {
       },
     },
   });
-  // create the response html element
+  // Insert ok button
   $okButtonModal()
-  // turn off modal
+  // Turn off modal
   $(".modal").on("click", () => 
   {$("#music2").get(0).pause();
   $(".modal").css("display", "none");});
-  // remove the audience life line
+  // Disable the audience life line and update user profile
   $("#audience").css("opacity", "0.3").addClass("disabled-div");
-  // update user profile
   userProfile.lifelines[0] = 0;
 };
 
-// function for friend lifeline
+// Function for friend lifeline
 const $friendLifeline = () => {
-  // play additional sound effect
+  // Play additional sound effect
   $("#music2").attr("src", phoneAFriendTheme)
   $("#music2").get(0).play()
-  // turn on modal
+  // Turn on and clear modal
   $(".modal").css("display", "block");
-  // clear modal
   $clearModal()
-  // insert random friend into modal header
+  // Insert header and response text and ok button
+  // Insert random friend into modal header
   let randomIndex = Math.floor(Math.random() * gameObject.friend.length);
   $(".modalheader").text(gameObject.friend[randomIndex]);
-  // generate 70% chance of getting getting the right answer
+  // Generate 70% chance of getting getting the right answer
   let randomIndex1 = Math.random();
   let friendAnswer = null;
   if (randomIndex1 <= 0.3) {
@@ -533,119 +531,109 @@ const $friendLifeline = () => {
   } else {
     friendAnswer = questionsList[userProfile.Progress][userProfile.questionIndex].key;
   }
-  // insert random response into modal body
+  // Insert random response into modal body
   let randomIndex3 = Math.floor(Math.random() * gameObject.friendResponse.length);
   $(".modalresponse").text(`${gameObject.friendResponse[randomIndex3]} ${friendAnswer}.`);
-  // create the response html element
+  // Insert ok button
   $okButtonModal()
-  // turn off modal
+  // Turn off modal
   $(".modal").on("click", () => {
     $("#music2").get(0).pause()
     $(".modal").css("display", "none");});
-  // remove the friend life lines
+  // Disable the friend life lines and update user profile
   $("#friend").css("opacity", "0.3").addClass("disabled-div");
-  // update user profile
   userProfile.lifelines[1] = 0;
 };
 
-// function for 50-50 lifeline
+// Function for 50-50 lifeline
 const $fiftyfiftyLifeline = () => {
-  // play additional sound effect
+  // Play additional sound effect
   $("#music2").attr("src", fiftyFiftyTheme)
   $("#music2").get(0).play()
-  // create an array that does not contains the answer
+  // Create an array that does not contains the answer
   const wrongAnswer = userProfile.currentOptions.filter((element) => 
   element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
-  // to randomly generate 2 different wrong answers to be eliminated
+  // To randomly generate 2 different wrong answers to be eliminated
   const answerToBeEliminated = [];
   while (answerToBeEliminated.length < 2) {
     let randomIndex = Math.floor(Math.random() * wrongAnswer.length);
-    // only pushes the random index if it does not exist
+    // Only pushes the random index if it does not exist
     if (answerToBeEliminated.indexOf(wrongAnswer[randomIndex]) === -1) {
       answerToBeEliminated.push(wrongAnswer[randomIndex]);
     }
   }
-  // remove the text of the 2 eliminated options
+  // Remove the text of the 2 eliminated options
   for (const element of answerToBeEliminated) {
     $(`#${element}`).text("");
   }
-  // update the remaining options available incase other lifelines are utilized
+  // Update the remaining options available incase other lifelines are utilized
   userProfile.currentOptions = userProfile.currentOptions.filter((element) => 
   answerToBeEliminated.includes(element) === false);
-  // disable the 2 options eliminated options button
+  // Disable the 2 options eliminated options button
   $disableDiv(answerToBeEliminated);
-  // remove the fifty fifty life lines
+  // Remove the fifty fifty life lines and update user profile
   $("#fifty-fifty").css("opacity", "0.3").addClass("disabled-div");
-  // update user profile
   userProfile.lifelines[2] = 0;
 };
 
-// answering the question
-// display modal for final answer
+// Answering the question
+// Display modal for final answer
 const $modalFinalAnswer = (id) => {
-  // turn on modal
+  // Turn on and clear modal
   $(".modal").css("display", "block");
-  // clear modal
   $clearModal()
-  // insert header text
+  // Insert header text and yes no button
   $(".modalheader").text("Final answer?");
-  // create the response html element
   $yesNoButtonModal()
   $(".yesno").eq(0).text("Yes").on("click", () => {$checkAnsAndRevealAns(id)})
   $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
-  // turn off modal
+  // Turn off modal
   $(".modal").on("click", () => {$(".modal").css("display", "none");});
 }
 
-// Game updating function!
-// Main game function!
+// Game updating function
+// Main game function
 const $startGame = () => {
-  // play music
   $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 3000);
 };
 
-// function to reveal answer after time is up
+// Function to reveal answer after time is up
 const $timesUpRevealAns = () => {
-  // clear timer
+  // Clear timer and disable button
   clearInterval(gameObject.roundTimer);
-  // disable button
   $disableButton()
-  // show correct answer as green after 2s
+  // Show correct answer as green after 2s
   setTimeout(() => 
   {$playSound(wrongTheme); 
   $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")
   }, 2000); 
-  // end the game after 5s after revealing the answer
+  // End the game after 5s after revealing the answer
   setTimeout(() => {$endGame()}, 7000);     
 }
 
-// function for walkaway
+// Function for walkaway
 const $walkAway = () => {
-  // stop timer
+  // Clear timer and disable button
   clearInterval(gameObject.roundTimer);
-  // disable button
-  $disableButton()
-  // show correct answer as green after 2s
+  // Show correct answer as green after 2s
   setTimeout(() => 
   {$playSound(wrongTheme); 
   $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")
   }, 2000); 
-  // go to scoreboard screen after 5s after revealing the answer
+  // Go to scoreboard screen after 5s after revealing the answer
   setTimeout(() => {$displayScoreboard()}, 7000);   
 }
 
-// function to set delay to create suspense then turn the answer green
+// Function to set delay to create suspense then turn the answer green
 const $checkAnsAndRevealAns = (id) => {
-  // play music
+  // Play music, clear timer and disable button
   $playSound(finalAnswerTheme)
-  // clear timer
   clearInterval(gameObject.roundTimer);
-  // disable button
   $disableButton()
-  // reflect selected answer as orange
+  // Reflect selected answer as orange
   $(`#${id}`).css("background-color", "#FF8326");
-  // show correct answer as green after 5s
+  // Show correct answer as green after 5s and play the correct/wrong answer theme accordingly
   setTimeout(() => 
   {if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
     $playSound(correctTheme)
@@ -654,41 +642,40 @@ const $checkAnsAndRevealAns = (id) => {
   }
   $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")
   }, 5000);
-  // proceed with the game
+  // Proceed with the game after 5s
   setTimeout(() => {
-    // last question
+    // Last question
     if (userProfile.Progress + 1 === gameObject.prizeLadder.length && 
       id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
       updateRoundScore();
       $displayScoreboard();
-      // normal round
+      // Normal round
     } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
       updateRoundScore();
       $continueGame();
     } else {
-      // wrong answer
+      // Wrong answer
       $endGame();
     }
   },10000)
 };
 
-// function to update the user's score
+// Function to update the user's score
 const updateRoundScore = () => {
   // Update progress
   userProfile.Progress += 1;
   userProfile.score = gameObject.prizeLadder[userProfile.Progress - 1];
 };
 
-// function to continue game
+// Function to continue game
 const $continueGame = () => {
-  // Hide the question div
   $displayPrizeLadder();
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 3000);
 };
 
-// function to end game
+// Function to end game
 const $endGame = () => {
-  // update final score per safe heaven
+  // Update final score per safe heaven
   if (gameObject.prizeLadder.indexOf(userProfile.score) === gameObject.prizeLadder.indexOf("$1,000,000")) {
     userProfile.score = "$1,000,000";
   } else if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("$32,000")) {
@@ -699,23 +686,22 @@ const $endGame = () => {
   } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("$1,000")) {
     userProfile.score = "$0";
   }
-  // go to scoreboard screen
+  // Go to scoreboard screen
   $displayScoreboard()
 };
 
-// function to go back to menu
+// Function to go back to menu
 const $backtoMenu = () => {
-  // hide the final score screen
+  // Hide the final score screen
   $(".scoreboard").remove();
   $(".reset").remove();
   $(".menu-container").remove()
-  // reset the game
+  // Reset the game
   userProfile.Progress = 0,
   userProfile.score = null,
   userProfile.lifelines = [1, 1, 1],
-  // clear modal
+  // Clear modal and show the menu
   $clearModal()
-  // show the menu
   $(".startmenu").show();
   $("#logo").show()
 };
