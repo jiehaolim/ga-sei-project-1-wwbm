@@ -23,9 +23,9 @@ import askAudienceTheme from "./sound/68-Ask-The-Audience-Cut.mp3";
 import phoneAFriendTheme from "./sound/66-Phone-A-Friend-Cut.mp3";
 import fiftyFiftyTheme from "./sound/67-50-50-Cut.mp3";
 
-// Game and user objects!
+// Game and user objects
 // Game object
-// line lifes picture - https://imgur.com/sQvoOhJ
+// Line lifes picture - https://imgur.com/sQvoOhJ
 const gameObject = {
   prizeLadder: ["$100","$200","$300","$500","$1,000",
   "$2,000","$4,000","$8,000","$16,000","$32,000",
@@ -43,20 +43,20 @@ const gameObject = {
 };
 
 // User profile
+// Reset at end of game
 const userProfile = {
-  // reset at end of game
-  // correspond to the game object lifelines Id
+  // Correspond to the game object lifelines Id - 1st Audience, 2nd Phone a Friend, 3rd 50:50
   lifelines: [1, 1, 1],
-  Progress: 0,
-  // 0 is just a placeholder for game not started.
-  score: 0,
-  // reset every new question
-  questionIndex: 0,
+  // Reset at the beginning of each round
+  questionIndex: null,
   currentOptions: ["A", "B", "C", "D"],
+  // Update after question is answered 
+  Progress: 0,
+  score: null,
 };
 
-// General functions to shorten the code!
-// function to create html element
+// General functions to shorten the code
+// Function to create html element
 const $generateHTMLElement = (htmlElement, numOfDiv, attrName, attrValue, parent, appendOrPrepend) => {
   for (let i = 1; i <= numOfDiv; i++) {
     const $htmlElement = $(`<${htmlElement}>`).attr(attrName, attrValue);
@@ -64,105 +64,101 @@ const $generateHTMLElement = (htmlElement, numOfDiv, attrName, attrValue, parent
   }
 };
 
-// function to enable or disable buttons for an array of buttons
-const $enableOrDisableDiv = (arrayOfButtonsId, addClassOrRemove) => {
-  // disable all other options button via loop
+// Function to enable or disable buttons for an array of buttons
+const $disableDiv = (arrayOfButtonsId) => {
   for (const element of arrayOfButtonsId) {
-    $(`#${element}`)[addClassOrRemove]("disabled-div");
+    $(`#${element}`).addClass("disabled-div");
   }
 };
 
-// function to create ok button in modal
+// Function to create ok button in modal
 const $okButtonModal = () => {
   $generateHTMLElement("div", 1, "class", "okbutton container", ".modal-body", "append");
   $generateHTMLElement("div", 1, "class", "ok button", ".okbutton", "append");
   $(".ok").text("ok").on("click", () => {$(".modal").css("display", "none")})
 }
 
-// function to create yes no button in modal
+// Function to create yes no button in modal
 const $yesNoButtonModal = () => {
   $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
   $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
 }
 
-// function to clear modal
+// Function to clear modal
 const $clearModal = () => {
+  // Clear modal text
   $(".modalheader").text("");
   $(".modalresponse").text("");
+  // Remove divs in modal
   $("#myChart").remove();
-  $(".yesnobutton").remove()
-  $(".okbutton").remove()
-  // remove event listener from .modal
-  $(".modal").off()
+  $(".yesnobutton").remove();
+  $(".okbutton").remove();
+  // Remove event listener from modal
+  $(".modal").off();
 }
 
-// function to disable event listener on question screen
+// Function to disable event listener on question screen
 const $disableButton = () => {
-  $enableOrDisableDiv(gameObject.options, "addClass");
-  $enableOrDisableDiv(gameObject.lifelinesId, "addClass");
-  $enableOrDisableDiv(["walkAwayDisplay","walkAwayText"], "addClass");
+  $disableDiv(gameObject.options);
+  $disableDiv(gameObject.lifelinesId);
+  $disableDiv(["walkAwayDisplay","walkAwayText"]);
 }
 
-// function to play sound effect
+// Function to play sound effect
 const $playSound = (theme) => {
   $("#music").attr("src", theme)
   $("#music").get(0).play()
 }
 
-// function to return the sound attr for checking
-const $soundSRC = () => {
-  return $("#music").attr("src")
-}
-
-// Game function!
-// Game display function!
-// Rules!
+// Game function
+// Game display function
+// Display rules
 const $displayRules = () => {
-  // hide the menu screen
+  // Hide the menu screen
   $(".logo").hide();
   $(".startmenu").hide();
-  // Create the divs for rules
+  // Create the main divs for rules
   $generateHTMLElement("div", 1, "class", "rules container", "#overall-body-container", "append");
-  $generateHTMLElement("div", 10, "class", "details", ".rules", "append");
-  $generateHTMLElement("div", 1, "class", "back", ".rules", "append");
-  // add text to the divs
+  $generateHTMLElement("div", 11, "class", "details", ".rules", "append");
+  // Insert text for the rules header, introduction and create a sub div for timer explanation
   $(".details").eq(0).addClass("header").text("Rules of the Game");
   $(".details").eq(1).addClass("body").text(`Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.`);
   $(".details").eq(2).addClass("timers-container")
-  // Create the divs for walkaway svg
+  // Create sub divs for timer svg, header and explanation
   $generateHTMLElement("div", 1, "class", "timer-container", ".timers-container", "append");
   $generateHTMLElement("div", 1, "class", "timersvgicon", ".timer-container", "append");
   $generateHTMLElement("img", 1, "class", "timersvgimg", ".timersvgicon", "append");
   $generateHTMLElement("div", 1, "class", "timersvglabel", ".timersvgicon", "append");
   $generateHTMLElement("div", 1, "class", "timerexplainer body", ".timer-container", "append");
-  // add text for timer svg and text
+  // Insert timer svg, text for timer header and explanation
   $(".timersvgimg").attr("src", gameObject.display.timer)
   $(".timersvglabel").text("Timer");
   $(".timerexplainer").text("Each question needs to be answered in the duration of 25 seconds.")
-  // Create the divs for timer svg
+  // Insert text for the safe haven header, explanation and create a sub div for walkaway explainer
   $(".details").eq(3).addClass("header").text("Safe Havens");
   $(".details").eq(4).addClass("body").text("There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.");
   $(".details").eq(5).addClass("walkaways-container")
-  // Create the divs for walkaway svg
+  // Create sub divs for walkaway svg, header and explanation
   $generateHTMLElement("div", 1, "class", "walkaway-container", ".walkaways-container", "append");
   $generateHTMLElement("div", 1, "class", "walkawaysvgicon", ".walkaway-container", "append");
   $generateHTMLElement("img", 1, "class", "walkawaysvgimg", ".walkawaysvgicon", "append");
   $generateHTMLElement("div", 1, "class", "walkawaysvglabel", ".walkawaysvgicon", "append");
   $generateHTMLElement("div", 1, "class", "walkawayexplainer body", ".walkaway-container", "append");  
-  // add text for walkaway svg and text
+  // Insert winnings svg, text for winnings header and explanation
   $(".walkawaysvgimg").attr("src", gameObject.display.moneybag)
   $(".walkawaysvglabel").text("Winnings");
   $(".walkawayexplainer").text("The contestant will also be able to choose to walk away with any existing winnings prior to answering the next question.")
-  // add text to the divs for life lines
+  // Insert text for the lifelines header, explanation and create a sub div for lifelines explanation
   $(".details").eq(6).addClass("header").text("Lifelines");
-  $(".details").eq(7).addClass("lifelines-container");
-  // Create the divs for lifeline items
+  $(".details").eq(7).addClass("body").text("The contestant has access to the three lifelines which each can be used only once per game. More than one lifeline can be used on a single question. The three lifelines are as follows:");
+  $(".details").eq(8).addClass("lifelines-container");
+  // Create sub divs for lifeline items
   $generateHTMLElement("div", 3, "class", "lifeline-container", ".lifelines-container", "append");
   $generateHTMLElement("div", 1, "class", "lifelineicon", ".lifeline-container", "append");
   $generateHTMLElement("img", 1, "class", "iconimg", ".lifelineicon", "append");
   $generateHTMLElement("div", 1, "class", "iconlabel", ".lifelineicon", "append");
   $generateHTMLElement("div", 1, "class", "lifelineexplainer body", ".lifeline-container", "append");
-  // lifeline image and text
+  // Insert lifeline images, text for lifelines header and explanation
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
     $(".iconimg").eq(i).attr("src", gameObject.lifelinesImg[i]);
   }
@@ -172,24 +168,25 @@ const $displayRules = () => {
   $(".lifelineexplainer").eq(1).text("Contestant will be allowed to randomly phone a friend or family member and ask for the answer to the question. The answer provided will have an accuracy of 70%.");
   $(".iconlabel").eq(2).text("Fifty fifty");
   $(".lifelineexplainer").eq(2).text("This eliminates two incorrect answers from the four answers.");
-  // copyright text
-  $(".details").eq(8).addClass("header").text("Copyrights");
-  $(".details").eq(9).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.");
+  // Insert copyright header and text
+  $(".details").eq(9).addClass("header").text("Copyrights");
+  $(".details").eq(10).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.");
+  // Create sub div for back to menu button, text and event listener
+  $generateHTMLElement("div", 1, "class", "back", ".rules", "append");
   $(".back").text("Menu");
-  // add life line event listener for resetting the game
   $(".back").on("click", $displayMenu);
 };
 
-// Back to Menu!
+// Back to Menu
 const $displayMenu = () => {
   $(".rules").remove();
   $(".logo").show();
   $(".startmenu").show();
 };
 
-// display the prize ladder
+// Display the prize ladder
 const $displayPrizeLadder = () => {
-  // play music
+  // Play music
   $playSound(prizeTheme)
   // hide header, logo and menu div
   $("#header").hide();
@@ -241,7 +238,7 @@ const $displayQuestion = (index) => {
   gameObject.time = 25;
   gameObject.roundTimer = setInterval($timer, 1000);
   // winnings svg and event listener to walk away after question 1
-  if (userProfile.score === 0) {
+  if (userProfile.score === null) {
     $(".displaytimebank").eq(1).remove()
   } else {
     $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", $modalWalkAway).attr("id", "walkAwayDisplay")
@@ -282,7 +279,7 @@ const $displayQuestion = (index) => {
 // display scoreboard
 const $displayScoreboard = () => {
   // play music
-  if ($soundSRC() !== mainTheme && $soundSRC() !== fullMainTheme) {
+  if ($("#music").attr("src") !== mainTheme && $("#music").attr("src") !== fullMainTheme) {
     $playSound(fullMainTheme)
   }
   // Hide all the game objects
@@ -314,7 +311,7 @@ const $displayScoreboard = () => {
   // Create the final score board
   $generateHTMLElement("div", 1, "class", "scoreboard container", "#overall-footer-container", "append");
   // generate div for current score and add text to the div
-  if (userProfile.score !== 0) {
+  if (userProfile.score !== null) {
     $generateHTMLElement("div", 1, "class", "currentscore", ".scoreboard", "append");
     $(".currentscore").text(`Current Score: ${userProfile.score}`);  
   }
@@ -585,7 +582,7 @@ const $fiftyfiftyLifeline = () => {
   userProfile.currentOptions = userProfile.currentOptions.filter((element) => 
   answerToBeEliminated.includes(element) === false);
   // disable the 2 options eliminated options button
-  $enableOrDisableDiv(answerToBeEliminated, "addClass");
+  $disableDiv(answerToBeEliminated);
   // remove the fifty fifty life lines
   $("#fifty-fifty").css("opacity", "0.3").addClass("disabled-div");
   // update user profile
@@ -723,7 +720,7 @@ const $restartGame = () => {
   $(".menu-container").remove()
   // reset the game
   userProfile.Progress = 0,
-  userProfile.score = 0,
+  userProfile.score = null,
   userProfile.lifelines = [1, 1, 1],
   // clear modal
   $clearModal()
