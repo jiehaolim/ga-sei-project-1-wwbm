@@ -609,6 +609,19 @@ const $modalFinalAnswer = (id) => {
   $(".modal").on("click", () => {$(".modal").css("display", "none")});
 }
 
+// Game over modal
+const $modalGameOver = () => {
+  // Turn on and clear modal
+  $(".modal").css("display", "block");
+  $clearModal()
+  // Insert header text and ok button
+  $(".modalheader").text("Game Over");
+  $okButtonModal()
+  // Turn off modal and go to score board
+  $(".modal").on("click", () => {$(".modal").css("display", "none");
+  $displayScoreboard()});
+}
+
 // Million dollars modal
 const $modalMillionDollars = () => {
   // Play music
@@ -655,7 +668,7 @@ const $walkAway = () => {
   $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")
   }, 2000); 
   // Go to scoreboard screen after 5s after revealing the answer
-  setTimeout(() => {$displayScoreboard()}, 7000);   
+  setTimeout(() => {$modalGameOver()}, 7000);   
 }
 
 // Function to set delay to create suspense then turn the answer green
@@ -720,7 +733,7 @@ const $endGame = () => {
     userProfile.score = "$0";
   }
   // Go to scoreboard screen
-  $displayScoreboard()
+  $modalGameOver()
 };
 
 // document ready!
