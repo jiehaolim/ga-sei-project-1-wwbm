@@ -13,6 +13,7 @@ import fiftyfiftyImg from "./img/game/50-50.png";
 // Import sound clips for Vercel
 import mainTheme from "./sound/01-Main-Theme-Cut.mp3";
 import fullMainTheme from "./sound/01-Main-Theme-Org.mp3";
+import rulesTheme from "./sound/03-Explain-The-Rules-Cut.mp3";
 import prizeTheme from "./sound/10-Let's-Play-Prize.mp3";
 import questionTheme from "./sound/11-$100-$1,000-Questions.mp3";
 import finalAnswerTheme from "./sound/15-$2,000-Final Answer-Cut.mp3"
@@ -125,8 +126,10 @@ const $playSound = (theme) => {
 // Game display function
 // Display rules
 const $displayRules = () => {
+  // Play music
+  $playSound(rulesTheme)
   // Hide the menu screen
-  $(".logo").hide();
+  $("#logo").hide();
   $(".startmenu").hide();
   // Create the main divs for rules
   $generateHTMLElement("div", 1, "class", "rules container", "#overall-body-container", "append");
@@ -190,9 +193,24 @@ const $displayRules = () => {
 
 // Back to Menu
 const $displayMenu = () => {
+  // Play music - play main theme when scoreboard is triggered from menu else play full main theme when game ended
+  if ($("#music").attr("src") !== mainTheme && $("#music").attr("src") !== fullMainTheme) {
+    $playSound(mainTheme)
+  }
+  // Hide rules screen
   $(".rules").remove();
-  $(".logo").show();
+  // Hide the final score screen
+  $(".scoreboard").remove();
+  $(".reset").remove();
+  $(".menu-container").remove()
+  // Reset the game
+  userProfile.Progress = 0,
+  userProfile.score = null,
+  userProfile.lifelines = [1, 1, 1],
+  // Clear modal and show the menu
+  $clearModal()
   $(".startmenu").show();
+  $("#logo").show();
 };
 
 // Display the prize ladder
@@ -353,7 +371,7 @@ const $displayScoreboard = () => {
   $generateHTMLElement("div", 1, "class", "menu-container", ".scoreboard", "append");
   $generateHTMLElement("div", 1, "class", "button", ".menu-container", "append");
   $(".button").eq(0).text("Menu");
-  $(".button").eq(0).on("click", $backtoMenu);
+  $(".button").eq(0).on("click", $displayMenu);
 }
 
 // Game question screen event listeners
@@ -598,7 +616,7 @@ const $modalMillionDollars = () => {
   // Turn on and clear modal
   $(".modal").css("display", "block");
   $clearModal()
-  // Insert header and response text and ok button
+  // Insert header text and ok button
   $(".modalheader").addClass("rainbow").text("Congrations! You won a million dollars!");
   $okButtonModal()
   // Turn off modal and go to score board
@@ -703,22 +721,6 @@ const $endGame = () => {
   }
   // Go to scoreboard screen
   $displayScoreboard()
-};
-
-// Function to go back to menu
-const $backtoMenu = () => {
-  // Hide the final score screen
-  $(".scoreboard").remove();
-  $(".reset").remove();
-  $(".menu-container").remove()
-  // Reset the game
-  userProfile.Progress = 0,
-  userProfile.score = null,
-  userProfile.lifelines = [1, 1, 1],
-  // Clear modal and show the menu
-  $clearModal()
-  $(".startmenu").show();
-  $("#logo").show()
 };
 
 // document ready!
