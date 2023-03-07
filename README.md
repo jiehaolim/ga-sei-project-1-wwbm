@@ -53,7 +53,7 @@ View [flowchart at Miro.](https://miro.com/app/board/uXjVPccHgUw=/?share_link_id
 ## Javascript and jQuery Code Organisation
 The code is organised into the five categories as follows:
 1. Objects to track game items and user's progress
-2. General functions for functions that are repeatedly used in other functions
+2. General functions that are repeatedly used in other functions
 3. Display functions to generate different screens
 4. Event listener functions on game screens
 5. Game flow functions to update the game progress
