@@ -150,7 +150,7 @@ const $displayRules = () => {
   $(".timerexplainer").text("Each question needs to be answered in the duration of 25 seconds.")
   // Insert text for the safe haven header, explanation and create a sub div for walkaway explainer
   $(".details").eq(3).addClass("header").text("Safe Havens");
-  $(".details").eq(4).addClass("body").text("There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.");
+  $(".details").eq(4).addClass("body").text("There are two ‘safe havens’ in the question structure (Q5 - $1,000 and Q10 - $32,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.");
   $(".details").eq(5).addClass("walkaways-container")
   // Create sub divs for walkaway svg, header and explanation
   $generateHTMLElement("div", 1, "class", "walkaway-container", ".walkaways-container", "append");
