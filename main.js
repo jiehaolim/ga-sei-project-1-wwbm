@@ -193,10 +193,8 @@ const $displayRules = () => {
 
 // Back to Menu
 const $displayMenu = () => {
-  // Play music - play main theme when scoreboard is triggered from menu else play full main theme when game ended
-  if ($("#music").attr("src") !== mainTheme && $("#music").attr("src") !== fullMainTheme) {
-    $playSound(mainTheme)
-  }
+  // Play music
+  $playSound(mainTheme)
   // Hide rules screen
   $(".rules").remove();
   // Hide the final score screen
@@ -298,10 +296,8 @@ const $displayQuestion = (index) => {
 
 // Display scoreboard
 const $displayScoreboard = () => {
-  // Play music - play main theme when scoreboard is triggered from menu else play full main theme when game ended
-  if ($("#music").attr("src") !== mainTheme && $("#music").attr("src") !== fullMainTheme) {
-    $playSound(fullMainTheme)
-  }
+  // Play music
+  $playSound(fullMainTheme)
   // Hide the menu and question screen
   $hideMenuAndQuestionScreen()
   // Local storage for high score - store high score array index instead of actual score, lesser data manipulation
