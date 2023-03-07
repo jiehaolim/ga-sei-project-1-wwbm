@@ -10,7 +10,7 @@ The game app needs to:
 # Who wants to be a Millionaire ("WWBM")
 <img src="./img/readme/wwbm-wallpaper.jpeg"/>
 
-This game is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 3 questions with three lifelines to stand a chance to win a million dollars.
+This game is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.
 
 ## Where to Play
 Play [Who Wants to be a Millionaire.](https://wwbm.vercel.app/)
@@ -18,7 +18,7 @@ Play [Who Wants to be a Millionaire.](https://wwbm.vercel.app/)
 ## Rules
 - The contestant will have to answer 15 random questions and climb up the prize ladder to win the a million dollars. A total of 150 questions have been set into the game with 10 different question type per level.
 - The contestant is given 25 seconds to answer each question per round.
-- There are three ‘safe havens’ in the question structure (Q5 - $1,000, Q10 - $32,000 and Q15 - $1,000,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.
+- There are three ‘safe havens’ in the question structure (Q5 - $1,000 and Q10 - $32,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.
 - The contestant will also have the choice to walk away with any existing winnings prior to answering the next question.
 - The contestant is given 3 lifelines "ask the audience", "phone a friend" and "fifty fifty".
 - For "ask the audience", a poll will be conducted with the audience and the results will be shown in a chart. The answer provided will have an accuracy of 90%.
@@ -76,8 +76,11 @@ Most of the codes are structured in the following manner with the exception of c
 6. Game can have more CSS animation to make the game even more "alive".
 
 ## References and Inspirations
-- [W3 school for the modal](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2)
-- [Imgur for lifelines icons picture](https://imgur.com/sQvoOhJ)
+- [W3Schools for the modal](https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal2)
 - [Codegrepper for the blinking CSS effect](https://www.codegrepper.com/code-examples/css/how+to+make+a+box+blink+in+css)
-- [Guardian.com for trial question list](https://www.theguardian.com/tv-and-radio/ng-interactive/2020/sep/12/who-wants-to-be-a-millionaire-jackpot-questions-quiz-yourself)
-- [Trivia API for the list of questions](https://the-trivia-api.com/search/)
+- [Code Boxx for rainbow CSS effect](https://code-boxx.com/create-rainbow-text-pure-css-js/)
+- [Deviant Art for the WWBM logo](https://www.deviantart.com/zackthetimelordrblx/art/Who-Wants-To-Be-a-Millionaire-UK-2018-logo-remake-762595559)
+- [Imgur for lifelines icons picture](https://imgur.com/sQvoOhJ)
+- [Khinsider for the WWBM soundtrack](https://downloads.khinsider.com/game-soundtracks/album/who-wants-to-be-a-millionaire-the-album)
+- [TheGuardian.com for trial question list](https://www.theguardian.com/tv-and-radio/ng-interactive/2020/sep/12/who-wants-to-be-a-millionaire-jackpot-questions-quiz-yourself)
+- [The Trivia API for the list of questions](https://the-trivia-api.com/search/)
