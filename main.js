@@ -75,7 +75,7 @@ const $disableDiv = (arrayOfButtonsId) => {
 const $hideMenuAndQuestionScreen = () => {
   // Hide the menu screen
   $(".startmenu").hide();
-  $("#logo").hide();
+  $(".logo").hide();
   // Hide the question screen
   $(".timerbank").remove();
   $(".lifeline").remove();
@@ -129,7 +129,7 @@ const $displayRules = () => {
   // Play music
   $playSound(rulesTheme)
   // Hide the menu screen
-  $("#logo").hide();
+  $(".logo").hide();
   $(".startmenu").hide();
   // Create the main divs for rules
   $generateHTMLElement("div", 1, "class", "rules container", "#overall-body-container", "append");
@@ -210,7 +210,7 @@ const $displayMenu = () => {
   // Clear modal and show the menu
   $clearModal()
   $(".startmenu").show();
-  $("#logo").show();
+  $(".logo").show();
 };
 
 // Display the prize ladder
@@ -242,7 +242,7 @@ const $displayQuestion = (index) => {
   // Hide the prize ladder screen
   $("#header").show();
   $(".ladder").remove();
-  $("#logo").show();
+  $(".logo").show();
   // Create divs for timer and winnings value
   $generateHTMLElement("div", 1, "class", "timerbank container", "#overall-body-container", "prepend");
   $generateHTMLElement("div", 2, "class", "displaytimebank container", ".timerbank", "append");
