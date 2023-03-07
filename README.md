@@ -18,7 +18,7 @@ Play [Who Wants to be a Millionaire.](https://wwbm.vercel.app/)
 ## Rules
 - The contestant will have to answer 15 random questions and climb up the prize ladder to win the a million dollars. A total of 150 questions have been set into the game with 10 different question type per level.
 - The contestant is given 25 seconds to answer each question per round.
-- There are three ‘safe havens’ in the question structure (Q5 - $1,000 and Q10 - $32,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.
+- There are two ‘safe havens’ in the question structure (Q5 - $1,000 and Q10 - $32,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.
 - The contestant will also have the choice to walk away with any existing winnings prior to answering the next question.
 - The contestant is given 3 lifelines "ask the audience", "phone a friend" and "fifty fifty".
 - For "ask the audience", a poll will be conducted with the audience and the results will be shown in a chart. The answer provided will have an accuracy of 90%.
