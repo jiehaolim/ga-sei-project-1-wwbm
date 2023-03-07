@@ -722,9 +722,7 @@ const $continueGame = () => {
 // Function to end game
 const $endGame = () => {
   // Update final score per safe heaven
-  if (gameObject.prizeLadder.indexOf(userProfile.score) === gameObject.prizeLadder.indexOf("$1,000,000")) {
-    userProfile.score = "$1,000,000";
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("$32,000")) {
+  if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("$32,000")) {
     userProfile.score = "$32,000";
   } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("$32,000") && 
   gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("$1,000")) {
