@@ -333,17 +333,19 @@ const $displayScoreboard = () => {
   } else {
     $(".scoreheader").text(`Top 5 High Scores`);
   }
-  const ranking = ["1st", "2nd", "3rd", "4th", "5th"]
+  // Ensure the number of divs generated is based on the actual number of score generated
+  const wwbmScoreLength = wwbmScore.length > 5 ? 5 : wwbmScore.length
   // High score board details - create div and insert text
   $generateHTMLElement("div", 1, "class", "score-container", ".scoreboard", "append");
   $generateHTMLElement("div", 1, "class", "scorerank-container", ".score-container", "append");
   $generateHTMLElement("div", 1, "class", "scoredetails-container", ".score-container", "append");
-  $generateHTMLElement("div", ranking.length, "class", "scorerank", ".scorerank-container", "append");
-  $generateHTMLElement("div", ranking.length, "class", "scoredetails", ".scoredetails-container", "append");
+  $generateHTMLElement("div", wwbmScoreLength, "class", "scorerank", ".scorerank-container", "append");
+  $generateHTMLElement("div", wwbmScoreLength, "class", "scoredetails", ".scoredetails-container", "append");
   // To highlight current score in green when it appears in high score board after game ended
   // No highlight of current score when viewing from main menu
+  const ranking = ["1st", "2nd", "3rd", "4th", "5th"]
   if (userProfile.score === null) {
-    for (let i = 0; i < ranking.length; i++) {
+    for (let i = 0; i < wwbmScoreLength; i++) {
       // $0 is not in the prizeladder
       // Generate the rank then actual score
       $(".scorerank").eq(i).text(`${ranking[i]}`)
@@ -357,7 +359,7 @@ const $displayScoreboard = () => {
     // Highlight of current score if it appears on High score board after game ends
     const currentScoreIndex = gameObject.prizeLadder.indexOf(userProfile.score)
     const currentScoreExists = wwbmScore.lastIndexOf(currentScoreIndex)
-    for (let i = 0; i < ranking.length; i++) {
+    for (let i = 0; i < wwbmScoreLength; i++) {
       $(".scorerank").eq(i).text(`${ranking[i]}`)
       // $0 is not in the prizeladder
       if (gameObject.prizeLadder[wwbmScore[i]] === undefined && currentScoreExists === i) {
