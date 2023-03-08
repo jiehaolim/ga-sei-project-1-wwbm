@@ -312,8 +312,8 @@ const $displayScoreboard = () => {
   if (userProfile.score !== null) {
     wwbmScore.push(gameObject.prizeLadder.indexOf(userProfile.score))
     wwbmScore.sort(function(a, b) { return b - a})
-    // Limit the array to top 5 scores
-    if (wwbmScore.length > 5) {
+    // Limit the array to top 6 scores, the sixth score will not be reflected as green in high score baord if player has six same score. 
+    if (wwbmScore.length > 6) {
       wwbmScore.pop()
     }
     // Set high score into local storage
@@ -331,19 +331,19 @@ const $displayScoreboard = () => {
   if (wwbmScore.length === 0) {
     $(".scoreheader").text(`No High Score`);
   } else {
-    $(".scoreheader").text(`Top 5 High Score Board`);
+    $(".scoreheader").text(`Top 5 High Scores`);
   }
+  const ranking = ["1st", "2nd", "3rd", "4th", "5th"]
   // High score board details - create div and insert text
   $generateHTMLElement("div", 1, "class", "score-container", ".scoreboard", "append");
   $generateHTMLElement("div", 1, "class", "scorerank-container", ".score-container", "append");
   $generateHTMLElement("div", 1, "class", "scoredetails-container", ".score-container", "append");
-  $generateHTMLElement("div", wwbmScore.length, "class", "scorerank", ".scorerank-container", "append");
-  $generateHTMLElement("div", wwbmScore.length, "class", "scoredetails", ".scoredetails-container", "append");
+  $generateHTMLElement("div", ranking.length, "class", "scorerank", ".scorerank-container", "append");
+  $generateHTMLElement("div", ranking.length, "class", "scoredetails", ".scoredetails-container", "append");
   // To highlight current score in green when it appears in high score board after game ended
   // No highlight of current score when viewing from main menu
-  const ranking = ["1st", "2nd", "3rd", "4th", "5th"]
   if (userProfile.score === null) {
-    for (let i = 0; i < wwbmScore.length; i++) {
+    for (let i = 0; i < ranking.length; i++) {
       // $0 is not in the prizeladder
       // Generate the rank then actual score
       $(".scorerank").eq(i).text(`${ranking[i]}`)
@@ -357,7 +357,7 @@ const $displayScoreboard = () => {
     // Highlight of current score if it appears on High score board after game ends
     const currentScoreIndex = gameObject.prizeLadder.indexOf(userProfile.score)
     const currentScoreExists = wwbmScore.lastIndexOf(currentScoreIndex)
-    for (let i = 0; i < wwbmScore.length; i++) {
+    for (let i = 0; i < ranking.length; i++) {
       $(".scorerank").eq(i).text(`${ranking[i]}`)
       // $0 is not in the prizeladder
       if (gameObject.prizeLadder[wwbmScore[i]] === undefined && currentScoreExists === i) {
