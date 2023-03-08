@@ -670,6 +670,7 @@ const $timesUpRevealAns = () => {
 const $walkAway = () => {
   // Clear timer and disable button
   clearInterval(gameObject.roundTimer);
+  $disableButton()
   // Show correct answer as green after 2s
   setTimeout(() => 
   {$playSound(wrongTheme); 
