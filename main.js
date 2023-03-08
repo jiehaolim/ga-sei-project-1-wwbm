@@ -426,7 +426,7 @@ const $modalTimesUp = () => {
   $okButtonModal()
   // Turn off modal and reveal answer
   $(".modal").on("click", () => {$(".modal").css("display", "none");
-  $timesUpRevealAns()})
+  $revealAnsAndProceed("timesup")})
 }
 
 // Walk away
@@ -438,7 +438,7 @@ const $modalWalkAway = () => {
   // Insert header and reponse text and yes no button
   $(".modalheader").text(`Walk away with $${userProfile.score}?`);
   $yesNoButtonModal()
-  $(".yesno").eq(0).text("Yes").on("click", $walkAway)
+  $(".yesno").eq(0).text("Yes").on("click", $revealAnsAndProceed("walkaway"))
   $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
   // Turn off modal
   $(".modal").on("click", () => {$(".modal").css("display", "none");});
@@ -611,7 +611,7 @@ const $modalFinalAnswer = (id) => {
   // Insert header text and yes no button
   $(".modalheader").text("Final answer?");
   $yesNoButtonModal()
-  $(".yesno").eq(0).text("Yes").on("click", () => {$checkAnsAndRevealAns(id)})
+  $(".yesno").eq(0).text("Yes").on("click", () => {$revealAnsAndProceed(id)})
   $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
   // Turn off modal
   $(".modal").on("click", () => {$(".modal").css("display", "none")});
@@ -652,67 +652,51 @@ const $startGame = () => {
   setTimeout(() => {$displayQuestion(userProfile.Progress);}, 3000);
 };
 
-// Function to reveal answer after time is up
-const $timesUpRevealAns = () => {
-  // Clear timer and disable button
-  clearInterval(gameObject.roundTimer);
-  $disableButton()
-  // Show correct answer as green after 2s
-  setTimeout(() => 
-  {$playSound(wrongTheme); 
-  $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")
-  }, 2000); 
-  // End the game after 5s after revealing the answer
-  setTimeout(() => {$endGame()}, 7000);     
-}
-
-// Function for walkaway
-const $walkAway = () => {
-  // Clear timer and disable button
-  clearInterval(gameObject.roundTimer);
-  $disableButton()
-  // Show correct answer as green after 2s
-  setTimeout(() => 
-  {$playSound(wrongTheme); 
-  $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")
-  }, 2000); 
-  // Go to scoreboard screen after 5s after revealing the answer
-  setTimeout(() => {$modalGameOver()}, 7000);   
-}
-
 // Function to set delay to create suspense then turn the answer green
-const $checkAnsAndRevealAns = (id) => {
-  // Play music, clear timer and disable button
-  $playSound(finalAnswerTheme)
+const $revealAnsAndProceed = (id) => {
+  // Clear timer and disable button
   clearInterval(gameObject.roundTimer);
-  $disableButton()
-  // Reflect selected answer as orange
-  $(`#${id}`).css("background-color", "#FF8326");
-  // Show correct answer as green after 5s and play the correct/wrong answer theme accordingly
-  setTimeout(() => 
-  {if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
-    $playSound(correctTheme)
+  $disableButton();
+  // 1st scenario - player answers the question
+  if (id !== "timesup" && id !== "walkaway") {
+    // Play music and reflect selected answer as orange
+    $playSound(finalAnswerTheme);
+    $(`#${id}`).css("background-color", "#FF8326");
+    // Show correct answer as green after 5s and play the correct/wrong answer theme accordingly
+    setTimeout(() => {if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
+        $playSound(correctTheme);
+      } else {
+        $playSound(wrongTheme);
+      }
+      $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 5000);
+    // Proceed with the game after 5s
+    setTimeout(() => {
+      // Last question
+      if (userProfile.Progress + 1 === gameObject.prizeLadder.length && id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
+        updateRoundScore();
+        $modalMillionDollars();
+        // Normal round
+      } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
+        updateRoundScore();
+        $continueGame();
+      } else {
+        // Wrong answer
+        $endGame();
+      }}, 10000);
   } else {
-    $playSound(wrongTheme)
-  }
-  $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")
-  }, 5000);
-  // Proceed with the game after 5s
-  setTimeout(() => {
-    // Last question
-    if (userProfile.Progress + 1 === gameObject.prizeLadder.length && 
-      id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
-      updateRoundScore();
-      $modalMillionDollars();
-      // Normal round
-    } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
-      updateRoundScore();
-      $continueGame();
-    } else {
-      // Wrong answer
-      $endGame();
+    // Else when 2nd scenario time's up or 3rd scenario player chooses to walk away
+    setTimeout(() => {
+      // Reveal answer
+      $playSound(wrongTheme);
+      $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")}, 2000);
+    if (id === "timesup") {
+      // 2nd Scenario - when time's up, pass through safe haven then Game over modal
+      setTimeout(() => {$endGame()}, 7000);
+    } else if (id === "walkaway") {
+      // 3rd Scenario - walkaway, go to Game over modal
+      setTimeout(() => {$modalGameOver()}, 7000);
     }
-  },10000)
+  }
 };
 
 // Function to update the user's score
