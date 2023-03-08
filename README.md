@@ -40,7 +40,7 @@ Play [Who Wants to be a Millionaire.](https://wwbm.vercel.app/)
 ## Game Flow
 View [flowchart at Miro.](https://miro.com/app/board/uXjVPccHgUw=/?share_link_id=161052720807)
 
-<img src="./img/readme/wwbm-flowchart.jpeg"/>
+<img src="./img/readme/wwbm-flowchart.png"/>
 
 ## HTML Structure
 <img src="./img/readme/html-structure-1.png"/>
