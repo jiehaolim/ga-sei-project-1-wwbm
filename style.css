@@ -27,6 +27,7 @@ h1 {
 .menu-container,
 .walkaways-container,
 .timers-container,
+.score-container,
 .container {
   display: flex;
   justify-content: center;
@@ -122,13 +123,21 @@ h1 {
 }
 
 .header,
-.scoreheader {
+.scoreheader,
+.scorerank,
+.scoredetails {
   font-size: 1.5em;
 }
 
+.scorerank-container,
+.scoredetails-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
 .body,
-.currentscore,
-.scoredetails {
+.currentscore {
   text-align: justify;
   font-family: Arial, Helvetica, sans-serif;
   text-transform: none;
@@ -136,11 +145,14 @@ h1 {
   width: 100%;
 }
 
-.currentscore,
-.scoredetails {
+.currentscore {
   font-family: Copperplate, "Copperplate Gothic Light";
   font-size: 1.5em;
   text-align: center;
+}
+
+.scoredetails {
+  text-align: right;
 }
 
 .walkaway-container,

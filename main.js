@@ -28,9 +28,9 @@ import fiftyFiftyTheme from "./sound/67-50-50-Cut.mp3";
 // Game object
 // Lifelines picture - https://imgur.com/sQvoOhJ
 const gameObject = {
-  prizeLadder: ["$100","$200","$300","$500","$1,000",
-  "$2,000","$4,000","$8,000","$16,000","$32,000",
-  "$64,000","$125,000","$250,000","$500,000","$1,000,000"],
+  prizeLadder: ["100","200","300","500","1,000",
+  "2,000","4,000","8,000","16,000","32,000",
+  "64,000","125,000","250,000","500,000","1,000,000"],
   options: ["A", "B", "C", "D"],
   time: 25,
   roundTimer: null,
@@ -226,7 +226,7 @@ const $displayPrizeLadder = () => {
   for (let i = 0; i < gameObject.prizeLadder.length; i++) {
     let prizeNum = gameObject.prizeLadder.length - 1 - i;
     let prizeQuestionIndex = gameObject.prizeLadder.length - i;
-    $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - ${gameObject.prizeLadder[prizeNum]}`);
+    $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - $${gameObject.prizeLadder[prizeNum]}`);
   }
   // Add CSS effect to reflect the current level
   let prizeQuestionIndex = gameObject.prizeLadder.length - userProfile.Progress - 1;
@@ -265,7 +265,7 @@ const $displayQuestion = (index) => {
     $(".displaytimebank").eq(1).remove()
   } else {
     $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", $modalWalkAway).attr("id", "walkAwayDisplay")
-    $(".text").eq(1).text(`${userProfile.score}`).css("color", "#37CD3B").on("click", $modalWalkAway).attr("id", "walkAwayText")
+    $(".text").eq(1).text(`$${userProfile.score}`).css("color", "#37CD3B").on("click", $modalWalkAway).attr("id", "walkAwayText")
   }
   // Lifelines - Insert image and event listener
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
@@ -324,7 +324,7 @@ const $displayScoreboard = () => {
   $generateHTMLElement("div", 1, "class", "scoreboard container", "#overall-footer-container", "append");
   if (userProfile.score !== null) {
     $generateHTMLElement("div", 1, "class", "currentscore", ".scoreboard", "append");
-    $(".currentscore").text(`Current Score: ${userProfile.score}`);  
+    $(".currentscore").text(`Current Score: $${userProfile.score}`);  
   }
   // High score board Header - create div and insert text
   $generateHTMLElement("div", 1, "class", "scoreheader", ".scoreboard", "append");
@@ -334,16 +334,22 @@ const $displayScoreboard = () => {
     $(".scoreheader").text(`High Score Board`);
   }
   // High score board details - create div and insert text
-  $generateHTMLElement("div", wwbmScore.length, "class", "scoredetails", ".scoreboard", "append");
+  $generateHTMLElement("div", 1, "class", "score-container", ".scoreboard", "append");
+  $generateHTMLElement("div", 1, "class", "scorerank-container", ".score-container", "append");
+  $generateHTMLElement("div", 1, "class", "scoredetails-container", ".score-container", "append");
+  $generateHTMLElement("div", wwbmScore.length, "class", "scorerank", ".scorerank-container", "append");
+  $generateHTMLElement("div", wwbmScore.length, "class", "scoredetails", ".scoredetails-container", "append");
   // To highlight current score in green when it appears in high score board after game ended
   // No highlight of current score when viewing from main menu
   if (userProfile.score === null) {
     for (let i = 0; i < wwbmScore.length; i++) {
       // $0 is not in the prizeladder
+      // Generate the rank then actual score
+      $(".scorerank").eq(i).text(`${i + 1}. $`)
       if (gameObject.prizeLadder[wwbmScore[i]] === undefined) {
-        $(".scoredetails").eq(i).text(`${i + 1}. $0`)
+        $(".scoredetails").eq(i).text(`0`)
       } else {
-        $(".scoredetails").eq(i).text(`${i + 1}. ${gameObject.prizeLadder[wwbmScore[i]]}`)
+        $(".scoredetails").eq(i).text(`${gameObject.prizeLadder[wwbmScore[i]]}`)
       }
     }
   } else {
@@ -351,15 +357,18 @@ const $displayScoreboard = () => {
     const currentScoreIndex = gameObject.prizeLadder.indexOf(userProfile.score)
     const currentScoreExists = wwbmScore.lastIndexOf(currentScoreIndex)
     for (let i = 0; i < wwbmScore.length; i++) {
+      $(".scorerank").eq(i).text(`${i + 1}. $`)
       // $0 is not in the prizeladder
       if (gameObject.prizeLadder[wwbmScore[i]] === undefined && currentScoreExists === i) {
-        $(".scoredetails").eq(i).text(`${i + 1}. $0`).css("color", "#37CD3B")
+        $(".scorerank").eq(i).css("color", "#37CD3B")
+        $(".scoredetails").eq(i).text(`0`).css("color", "#37CD3B")
       } else if (gameObject.prizeLadder[wwbmScore[i]] === undefined) {
-        $(".scoredetails").eq(i).text(`${i + 1}. $0`)
+        $(".scoredetails").eq(i).text(`0`)
       } else if (currentScoreExists === i) {
-        $(".scoredetails").eq(i).text(`${i + 1}. ${gameObject.prizeLadder[wwbmScore[i]]}`).css("color", "#37CD3B")
+        $(".scorerank").eq(i).css("color", "#37CD3B")
+        $(".scoredetails").eq(i).text(`${gameObject.prizeLadder[wwbmScore[i]]}`).css("color", "#37CD3B")
       } else {
-        $(".scoredetails").eq(i).text(`${i + 1}. ${gameObject.prizeLadder[wwbmScore[i]]}`)
+        $(".scoredetails").eq(i).text(`${gameObject.prizeLadder[wwbmScore[i]]}`)
       }
     }
   }
@@ -424,7 +433,7 @@ const $modalWalkAway = () => {
   $(".modal").css("display", "block");
   $clearModal()
   // Insert header and reponse text and yes no button
-  $(".modalheader").text(`Walk away with ${userProfile.score}?`);
+  $(".modalheader").text(`Walk away with $${userProfile.score}?`);
   $yesNoButtonModal()
   $(".yesno").eq(0).text("Yes").on("click", $walkAway)
   $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
@@ -718,13 +727,13 @@ const $continueGame = () => {
 // Function to end game
 const $endGame = () => {
   // Update final score per safe heaven
-  if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("$32,000")) {
-    userProfile.score = "$32,000";
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("$32,000") && 
-  gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("$1,000")) {
-    userProfile.score = "$1,000";
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("$1,000")) {
-    userProfile.score = "$0";
+  if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("32,000")) {
+    userProfile.score = "32,000";
+  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("32,000") && 
+  gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("1,000")) {
+    userProfile.score = "1,000";
+  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("1,000")) {
+    userProfile.score = "0";
   }
   // Go to scoreboard screen
   $modalGameOver()
