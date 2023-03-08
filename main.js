@@ -324,14 +324,14 @@ const $displayScoreboard = () => {
   $generateHTMLElement("div", 1, "class", "scoreboard container", "#overall-footer-container", "append");
   if (userProfile.score !== null) {
     $generateHTMLElement("div", 1, "class", "currentscore", ".scoreboard", "append");
-    $(".currentscore").text(`Current Score: $${userProfile.score}`);  
+    $(".currentscore").text(`Current Score: $${userProfile.score}`).css("color", "#37CD3B");  
   }
   // High score board Header - create div and insert text
   $generateHTMLElement("div", 1, "class", "scoreheader", ".scoreboard", "append");
   if (wwbmScore.length === 0) {
     $(".scoreheader").text(`No High Score`);
   } else {
-    $(".scoreheader").text(`High Score Board`);
+    $(".scoreheader").text(`Top 5 High Score Board`);
   }
   // High score board details - create div and insert text
   $generateHTMLElement("div", 1, "class", "score-container", ".scoreboard", "append");
@@ -341,15 +341,16 @@ const $displayScoreboard = () => {
   $generateHTMLElement("div", wwbmScore.length, "class", "scoredetails", ".scoredetails-container", "append");
   // To highlight current score in green when it appears in high score board after game ended
   // No highlight of current score when viewing from main menu
+  const ranking = ["1st", "2nd", "3rd", "4th", "5th"]
   if (userProfile.score === null) {
     for (let i = 0; i < wwbmScore.length; i++) {
       // $0 is not in the prizeladder
       // Generate the rank then actual score
-      $(".scorerank").eq(i).text(`${i + 1}. $`)
+      $(".scorerank").eq(i).text(`${ranking[i]}`)
       if (gameObject.prizeLadder[wwbmScore[i]] === undefined) {
-        $(".scoredetails").eq(i).text(`0`)
+        $(".scoredetails").eq(i).text(`$0`)
       } else {
-        $(".scoredetails").eq(i).text(`${gameObject.prizeLadder[wwbmScore[i]]}`)
+        $(".scoredetails").eq(i).text(`$${gameObject.prizeLadder[wwbmScore[i]]}`)
       }
     }
   } else {
@@ -357,18 +358,18 @@ const $displayScoreboard = () => {
     const currentScoreIndex = gameObject.prizeLadder.indexOf(userProfile.score)
     const currentScoreExists = wwbmScore.lastIndexOf(currentScoreIndex)
     for (let i = 0; i < wwbmScore.length; i++) {
-      $(".scorerank").eq(i).text(`${i + 1}. $`)
+      $(".scorerank").eq(i).text(`${ranking[i]}`)
       // $0 is not in the prizeladder
       if (gameObject.prizeLadder[wwbmScore[i]] === undefined && currentScoreExists === i) {
         $(".scorerank").eq(i).css("color", "#37CD3B")
-        $(".scoredetails").eq(i).text(`0`).css("color", "#37CD3B")
+        $(".scoredetails").eq(i).text(`$0`).css("color", "#37CD3B")
       } else if (gameObject.prizeLadder[wwbmScore[i]] === undefined) {
-        $(".scoredetails").eq(i).text(`0`)
+        $(".scoredetails").eq(i).text(`$0`)
       } else if (currentScoreExists === i) {
         $(".scorerank").eq(i).css("color", "#37CD3B")
-        $(".scoredetails").eq(i).text(`${gameObject.prizeLadder[wwbmScore[i]]}`).css("color", "#37CD3B")
+        $(".scoredetails").eq(i).text(`$${gameObject.prizeLadder[wwbmScore[i]]}`).css("color", "#37CD3B")
       } else {
-        $(".scoredetails").eq(i).text(`${gameObject.prizeLadder[wwbmScore[i]]}`)
+        $(".scoredetails").eq(i).text(`$${gameObject.prizeLadder[wwbmScore[i]]}`)
       }
     }
   }

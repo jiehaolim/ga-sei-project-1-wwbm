@@ -151,6 +151,11 @@ h1 {
   text-align: center;
 }
 
+.score-container {
+  column-gap: 15px;
+  justify-content: center;
+}
+
 .scoredetails {
   text-align: right;
 }
