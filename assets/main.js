@@ -4,11 +4,11 @@ import $ from "jquery";
 import questionsList from "./questions";
 
 // Import images, SVG for Vercel
-import moneybagSvg from "./img/game/money-bag.svg";
-import timerSvg from "./img/game/timer.svg";
-import audienceImg from "./img/game/audience.png";
-import friendImg from "./img/game/friend.png";
-import fiftyfiftyImg from "./img/game/50-50.png";
+import moneybagSvg from "./img/money-bag.svg";
+import timerSvg from "./img/timer.svg";
+import audienceImg from "./img/audience.png";
+import friendImg from "./img/friend.png";
+import fiftyfiftyImg from "./img/50-50.png";
 
 // Import sound clips for Vercel
 import mainTheme from "./sound/01-Main-Theme-Cut.mp3";

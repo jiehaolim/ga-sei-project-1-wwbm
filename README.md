@@ -1,4 +1,4 @@
-# ![](./img/readme/ga_logo.svg) Project #1: The Game
+# ![](./documentation/ga_logo.svg) Project #1: The Game
 
 ## Technical Requirements
 The game app needs to:
@@ -8,7 +8,7 @@ The game app needs to:
 - Use Javascript for DOM manipulation that is triggered by a browser event
 
 # Who wants to be a Millionaire ("WWBM")
-<img src="./img/readme/wwbm-wallpaper.jpeg"/>
+<img src="./documentation/wwbm-wallpaper.jpeg"/>
 
 This game is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.
 
@@ -40,15 +40,15 @@ Play [Who Wants to be a Millionaire.](https://wwbm.vercel.app/)
 ## Game Flow
 View [flowchart at Miro.](https://miro.com/app/board/uXjVPccHgUw=/?share_link_id=161052720807)
 
-<img src="./img/readme/wwbm-flowchart.png"/>
+<img src="./documentation/wwbm-flowchart.png"/>
 
 ## HTML Structure
-<img src="./img/readme/html-structure-1.png"/>
-<img src="./img/readme/html-structure-2.png"/>
+<img src="./documentation/html-structure-1.png"/>
+<img src="./documentation/html-structure-2.png"/>
 
 ## CSS Properties
-<img src="./img/readme/css-1.png"/>
-<img src="./img/readme/css-2.png"/>
+<img src="./documentation/css-1.png"/>
+<img src="./documentation/css-2.png"/>
 
 ## Javascript and jQuery Code Organisation
 The code is organised into the five categories as follows:
@@ -60,15 +60,15 @@ The code is organised into the five categories as follows:
 
 ## Javascript and jQuery Code Structure
 Most of the codes are structured in the following manner with the exception of customized code required in different screens/modals/event listeners:
-<p align="left"><img src="./img/readme/js-structure-1.png"/></p>
-<p align="left"><img src="./img/readme/js-structure-2.png"/></p>
+<p align="left"><img src="./documentation/js-structure-1.png"/></p>
+<p align="left"><img src="./documentation/js-structure-2.png"/></p>
 
 ## Learning and Improvement Points
 1. Learned and discovered that general functions can be written to shorten code. For example, the $generateHTMLElement function allows me to generate HTML element more efficiently instead of coding jQuery line by line.
-<p align="left"><img src="./img/readme/generalhtmlelement.png"/></p>
+<p align="left"><img src="./documentation/generalhtmlelement.png"/></p>
 
 2. Learned how to use local storage to store high scores.
-<p align="left"><img src="./img/readme/local-storage.png"/></p>
+<p align="left"><img src="./documentation/local-storage.png"/></p>
 
 3. CSS class and id naming convention can be confusing. This causes time to be wasted when coding and can be improved with better planning.
 4. Current app is mostly responsive to other screen size, but it can be even more responsive since some of the CSS properties are in px instead of em/rem.
