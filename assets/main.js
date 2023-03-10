@@ -37,10 +37,9 @@ const gameObject = {
   display: { moneybag: moneybagSvg, timer: timerSvg },
   lifelinesImg: [audienceImg, friendImg, fiftyfiftyImg],
   lifelinesId: ["audience", "friend", "fifty-fifty"],
-  friend: ["Dad","Mum","Brother","Sister","Girlfriend",
-  "Boyfriend","Tom","Dick","Harry","Lucas"],
-  friendResponse: ["I think it is","I read it on the internet, it is",
-  "I read this on the newspaper yesterday, it is","I know this one. It is","I am guessing it is"],
+  friend: ["Dad","Mum","Brother","Sister","Girlfriend","Boyfriend","Tom","Dick","Harry","Lucas"],
+  friendResponse: ["I think it is","I read it on the internet, it is","I read this on the newspaper yesterday, it is",
+  "I know this one. It is","I am guessing it is"],
 };
 
 // User profile
@@ -72,6 +71,7 @@ const $disableDiv = (arrayOfButtonsId) => {
   }
 };
 
+// Function to hide menu and question screen
 const $hideMenuAndQuestionScreen = () => {
   // Hide the menu screen
   $(".startmenu").hide();
@@ -107,13 +107,6 @@ const $clearModal = () => {
   $(".okbutton").remove();
   // Remove event listener from modal
   $(".modal").off();
-}
-
-// Function to disable event listener on question screen
-const $disableButton = () => {
-  $disableDiv(gameObject.options);
-  $disableDiv(gameObject.lifelinesId);
-  $disableDiv(["walkAwayDisplay","walkAwayText"]);
 }
 
 // Function to play sound effect
@@ -656,7 +649,10 @@ const $startGame = () => {
 const $revealAnsAndProceed = (id) => {
   // Clear timer and disable button
   clearInterval(gameObject.roundTimer);
-  $disableButton();
+  // Disable all event listener and buttons
+  $disableDiv(gameObject.options);
+  $disableDiv(gameObject.lifelinesId);
+  $disableDiv(["walkAwayDisplay","walkAwayText"]);
   // 1st scenario - player answers the question
   if (id !== "timesup" && id !== "walkaway") {
     // Play music and reflect selected answer as orange
@@ -727,7 +723,7 @@ const $endGame = () => {
   $modalGameOver()
 };
 
-// document ready!
+// Document ready!
 $(() => {
   $modalWelcome()
   $(".menu").eq(0).on("click", $startGame);
