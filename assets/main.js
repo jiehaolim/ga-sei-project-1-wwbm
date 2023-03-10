@@ -429,7 +429,7 @@ const $modalWalkAway = () => {
   // Insert header and reponse text and yes no button
   $(".modalheader").text(`Walk away with $${userProfile.score}?`);
   $yesNoButtonModal()
-  $(".yesno").eq(0).text("Yes").on("click", $revealAnsAndProceed("walkaway"))
+  $(".yesno").eq(0).text("Yes").on("click", () => {$revealAnsAndProceed("walkaway")})
   $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
   // Turn off modal
   $(".modal").on("click", () => {$(".modal").css("display", "none");});
