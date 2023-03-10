@@ -24,8 +24,7 @@ import askAudienceTheme from "./sound/68-Ask-The-Audience-Cut.mp3";
 import phoneAFriendTheme from "./sound/66-Phone-A-Friend-Cut.mp3";
 import fiftyFiftyTheme from "./sound/67-50-50-Cut.mp3";
 
-// Game and user objects
-// Game object
+// Objects - Game and user objects
 // Lifelines picture - https://imgur.com/sQvoOhJ
 const gameObject = {
   prizeLadder: ["100","200","300","500","1,000",
@@ -55,7 +54,7 @@ const userProfile = {
   score: null,
 };
 
-// General functions to shorten the code
+// General functions for repeatedly used functions and shorten the code
 // Function to create html element
 const $generateHTMLElement = (htmlElement, numOfDiv, attrName, attrValue, parent, appendOrPrepend) => {
   for (let i = 1; i <= numOfDiv; i++) {
@@ -115,8 +114,7 @@ const $playSound = (theme) => {
   $("#music").get(0).play()
 }
 
-// Game function
-// Game display function
+// Display function
 // Display rules
 const $displayRules = () => {
   // Play music
@@ -375,7 +373,7 @@ const $displayScoreboard = () => {
   $(".button").eq(0).on("click", $displayMenu);
 }
 
-// Game question screen event listeners
+// Event listeners on game screen
 // Display modal for welcome screen, to tell user game is better with sound and trigger music
 const $modalWelcome = () => {
   // Turn on and clear modal
@@ -638,7 +636,7 @@ const $modalMillionDollars = () => {
   $displayScoreboard()});
 }
 
-// Game updating function
+// Game flow function to update game progress
 // Main game function
 const $startGame = () => {
   $displayPrizeLadder();
