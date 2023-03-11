@@ -71,7 +71,7 @@ const questionsList = [
     },
     {
       question:
-        "What do people mean when type the letters 'SMH' in a message on the internet?",
+        "What do people mean when typing the letters 'SMH' in a message on the internet?",
       optionA: "Shaking My Head",
       optionB: "Sometimes Men Hate",
       optionC: "Special Man, Him",
