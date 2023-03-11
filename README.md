@@ -20,10 +20,10 @@ Play [Who Wants to be a Millionaire.](https://wwbm.vercel.app/)
 - The contestant will be given 25 seconds to answer each question per round.
 - There are two ‘safe havens’ in the question structure (Q5 - $1,000 and Q10 - $32,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.
 - The contestant will also have the choice to walk away with any existing winnings before answering the next question.
-- The contestant will be 3 lifelines "ask the audience", "phone a friend" and "fifty-fifty".
+- The contestant will be given 3 lifelines "ask the audience", "phone a friend" and "fifty-fifty".
 - For "ask the audience", a poll will be conducted with the audience and the results will be shown in a chart. The answer provided will have an accuracy of 90%.
 - For "phone a friend", a random phone call to a friend or family member will be generated. The answer provided will have an accuracy of 70%.
-- For "fifty-fifty, two incorrect answers will be eliminated for the existing four answers.
+- For "fifty-fifty", two incorrect answers will be eliminated for the existing four answers.
 
 ## Copyrights
 - All rights belong directly to their rightful owners. No copyright infringement intended.
