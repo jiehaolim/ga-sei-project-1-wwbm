@@ -22,7 +22,7 @@ const questionsList = [
     },
     {
       question:
-        "What do people mean when type the letters 'IRL' in a message on the internet?",
+        "What do people mean when typing the letters 'IRL' in a message on the internet?",
       optionA: "I Remember Losing",
       optionB: "Idiots Receive Laughter",
       optionC: "In Real Life",

@@ -138,7 +138,7 @@ const $displayRules = () => {
   // Insert timer svg, text for timer header and explanation
   $(".timersvgimg").attr("src", gameObject.display.timer)
   $(".timersvglabel").text("Timer");
-  $(".timerexplainer").text("Each question needs to be answered in the duration of 25 seconds.")
+  $(".timerexplainer").text("Each question needs to be answered in a duration of 25 seconds.")
   // Insert text for the safe haven header, explanation and create a sub div for walkaway explainer
   $(".details").eq(3).addClass("header").text("Safe Havens");
   $(".details").eq(4).addClass("body").text("There are two ‘safe havens’ in the question structure (Q5 - $1,000 and Q10 - $32,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.");
@@ -155,7 +155,7 @@ const $displayRules = () => {
   $(".walkawayexplainer").text("The contestant will also be able to choose to walk away with any existing winnings instead of answering the current question.")
   // Insert text for the lifelines header, explanation and create a sub div for lifelines explanation
   $(".details").eq(6).addClass("header").text("Lifelines");
-  $(".details").eq(7).addClass("body").text("The contestant has access to three lifelines which each can be used only once per game. More than one lifeline can be used on a single question. The three lifelines are as follows:");
+  $(".details").eq(7).addClass("body").text("The contestant has access to three lifelines which can be used only once per game. More than one lifeline can be used on a single question. The three lifelines are as follows:");
   $(".details").eq(8).addClass("lifelines-container");
   // Create sub divs for lifeline items
   $generateHTMLElement("div", 3, "class", "lifeline-container", ".lifelines-container", "append");
@@ -170,8 +170,8 @@ const $displayRules = () => {
   $(".iconlabel").eq(0).text("Ask the audience");
   $(".lifelineexplainer").eq(0).text("A poll will be conducted with the audience and the results will be shown in a chart. The answer provided will have an accuracy of 90%.");
   $(".iconlabel").eq(1).text("Phone a friend");
-  $(".lifelineexplainer").eq(1).text("Contestant will be allowed to randomly phone a friend or family member and ask for the answer to the question. The answer provided will have an accuracy of 70%.");
-  $(".iconlabel").eq(2).text("Fifty fifty");
+  $(".lifelineexplainer").eq(1).text("The contestant will be allowed to randomly phone a friend or family member and ask for the answer to the question. The answer provided will have an accuracy of 70%.");
+  $(".iconlabel").eq(2).text("Fifty-fifty");
   $(".lifelineexplainer").eq(2).text("This eliminates two incorrect answers from the four answers.");
   // Insert copyright header and text
   $(".details").eq(9).addClass("header").text("Copyrights");
