@@ -965,10 +965,8 @@ const questionsList = [
   ],
   // question 12 - Geography
   [
-    
     {
-      question:
-        "Lviv is a city in which country?",
+      question: "Lviv is a city in which country?",
       optionA: "Ukraine",
       optionB: "Azerbaijan",
       optionC: "Pakistan",
@@ -976,8 +974,7 @@ const questionsList = [
       key: "A",
     },
     {
-      question:
-        "Which of these cities is in Bangladesh?",
+      question: "Which of these cities is in Bangladesh?",
       optionA: "Busan",
       optionB: "Dhaka",
       optionC: "Petaling Jaya",
@@ -985,8 +982,7 @@ const questionsList = [
       key: "B",
     },
     {
-      question:
-        "In which country is the city of Alexandria?",
+      question: "In which country is the city of Alexandria?",
       optionA: "Qatar",
       optionB: "Lebanon",
       optionC: "Egypt",
@@ -994,8 +990,7 @@ const questionsList = [
       key: "C",
     },
     {
-      question:
-        "Where would you find the city of Hanoi?",
+      question: "Where would you find the city of Hanoi?",
       optionA: "Bangladesh",
       optionB: "Cambodia",
       optionC: "South Korea",
@@ -1003,8 +998,7 @@ const questionsList = [
       key: "D",
     },
     {
-      question:
-        "In which country is the city of Guadalajara?",
+      question: "In which country is the city of Guadalajara?",
       optionA: "Mexico",
       optionB: "Cuba",
       optionC: "Paraguay",
@@ -1012,8 +1006,7 @@ const questionsList = [
       key: "A",
     },
     {
-      question:
-        "In which country is the city of Jeddah?",
+      question: "In which country is the city of Jeddah?",
       optionA: "Turkey",
       optionB: "Saudi Arabia",
       optionC: "Qatar",
@@ -1021,8 +1014,7 @@ const questionsList = [
       key: "B",
     },
     {
-      question:
-        "Which of these cities is in Taiwan?",
+      question: "Which of these cities is in Taiwan?",
       optionA: "Wellington",
       optionB: "Busan",
       optionC: "Taichung",
@@ -1030,8 +1022,7 @@ const questionsList = [
       key: "C",
     },
     {
-      question:
-        "Which of these cities is in Vietnam?",
+      question: "Which of these cities is in Vietnam?",
       optionA: "Yangon",
       optionB: "Jakarta",
       optionC: "Chittagong",
@@ -1039,8 +1030,7 @@ const questionsList = [
       key: "D",
     },
     {
-      question:
-        "Haifa is a city in which country?",
+      question: "Haifa is a city in which country?",
       optionA: "Qatar",
       optionB: "Bahrain",
       optionC: "Israel",
@@ -1048,8 +1038,7 @@ const questionsList = [
       key: "C",
     },
     {
-      question:
-        "Which of these cities is in India?",
+      question: "Which of these cities is in India?",
       optionA: "Canberra",
       optionB: "Taipei",
       optionC: "Melbourne",
@@ -1060,8 +1049,7 @@ const questionsList = [
   // question 13 - Sports & Leisure
   [
     {
-      question:
-        "In a nine-ball pool set what colour is the number 2 ball?",
+      question: "In a nine-ball pool set what colour is the number 2 ball?",
       optionA: "Blue",
       optionB: "Yellow",
       optionC: "Purple",
@@ -1078,8 +1066,7 @@ const questionsList = [
       key: "B",
     },
     {
-      question:
-        "What word is used for a score of 0 in a game of tennis?",
+      question: "What word is used for a score of 0 in a game of tennis?",
       optionA: "Egg",
       optionB: "Zilch",
       optionC: "Love",
@@ -1096,8 +1083,7 @@ const questionsList = [
       key: "D",
     },
     {
-      question:
-        "Which country developed Tae-Kwan-Do?",
+      question: "Which country developed Tae-Kwan-Do?",
       optionA: "Korea",
       optionB: "Japan",
       optionC: "China",
@@ -1114,8 +1100,7 @@ const questionsList = [
       key: "B",
     },
     {
-      question:
-        "If you're killing a goomba, what game are you playing?",
+      question: "If you're killing a goomba, what game are you playing?",
       optionA: "Zelda",
       optionB: "Call of Duty",
       optionC: "Super Mario Bros",
@@ -1123,8 +1108,7 @@ const questionsList = [
       key: "C",
     },
     {
-      question:
-        `What does the acronym "NES" stand for?`,
+      question: `What does the acronym "NES" stand for?`,
       optionA: "Natural Emitting Screen",
       optionB: "Near Energy Source",
       optionC: "Nebulous Endocrine Station",
@@ -1153,8 +1137,7 @@ const questionsList = [
   // question 14 - Music
   [
     {
-      question:
-        "Which British rock band released the song 'I Want It All'?",
+      question: "Which British rock band released the song 'I Want It All'?",
       optionA: "Queen",
       optionB: "Level 42",
       optionC: "Deep Purple",
@@ -1162,8 +1145,7 @@ const questionsList = [
       key: "A",
     },
     {
-      question:
-        "Which of these is a stringed instrument?",
+      question: "Which of these is a stringed instrument?",
       optionA: "Ocarina",
       optionB: "Ukelele",
       optionC: "Clarinet",
@@ -1171,8 +1153,7 @@ const questionsList = [
       key: "B",
     },
     {
-      question:
-        "Who had a hit in 1985 with Take on Me?",
+      question: "Who had a hit in 1985 with Take on Me?",
       optionA: "Haddaway",
       optionB: "Biz Markie",
       optionC: "a-ha",
@@ -1180,8 +1161,7 @@ const questionsList = [
       key: "C",
     },
     {
-      question:
-        "'Mickey' was a one hit wonder in 1982 by which artist?",
+      question: "'Mickey' was a one hit wonder in 1982 by which artist?",
       optionA: "Wild Cherry",
       optionB: "Edwyn Collins",
       optionC: "Terry Jacks",
@@ -1198,8 +1178,7 @@ const questionsList = [
       key: "A",
     },
     {
-      question:
-        "Which band includes 'Anni-Frid Lyngstad'?",
+      question: "Which band includes 'Anni-Frid Lyngstad'?",
       optionA: "In Flames",
       optionB: "ABBA",
       optionC: "HammerFall",
@@ -1207,8 +1186,7 @@ const questionsList = [
       key: "B",
     },
     {
-      question:
-        "Which band includes 'John Lennon'?",
+      question: "Which band includes 'John Lennon'?",
       optionA: "Deep Purple",
       optionB: "Feeder",
       optionC: "The Beatles",
@@ -1216,8 +1194,7 @@ const questionsList = [
       key: "C",
     },
     {
-      question:
-        "Which English rock band released the song 'Come Together'?",
+      question: "Which English rock band released the song 'Come Together'?",
       optionA: "Deep Purple",
       optionB: "Feeder",
       optionC: "Uriah Heep",
@@ -1225,8 +1202,7 @@ const questionsList = [
       key: "D",
     },
     {
-      question:
-        "Which band includes 'Lemmy'?",
+      question: "Which band includes 'Lemmy'?",
       optionA: "Deep Purple",
       optionB: "Feeder",
       optionC: "Motörhead",
@@ -1234,8 +1210,7 @@ const questionsList = [
       key: "C",
     },
     {
-      question:
-        "Which American rock band released the song 'God Only Knows'?",
+      question: "Which American rock band released the song 'God Only Knows'?",
       optionA: "Swans",
       optionB: "Three 6 Mafia",
       optionC: "The Velvet Underground",
@@ -1246,8 +1221,7 @@ const questionsList = [
   // question 15 - History
   [
     {
-      question:
-        "In which year was the first video uploaded to YouTube?",
+      question: "In which year was the first video uploaded to YouTube?",
       optionA: "2005",
       optionB: "2004",
       optionC: "2003",
@@ -1255,8 +1229,7 @@ const questionsList = [
       key: "A",
     },
     {
-      question:
-        "In which year was the Compact Disc invented?",
+      question: "In which year was the Compact Disc invented?",
       optionA: "1975",
       optionB: "1980",
       optionC: "1985",
@@ -1264,8 +1237,7 @@ const questionsList = [
       key: "B",
     },
     {
-      question:
-        "When was the first movie with sound?",
+      question: "When was the first movie with sound?",
       optionA: "1918",
       optionB: "1923",
       optionC: "1927",
@@ -1273,8 +1245,7 @@ const questionsList = [
       key: "C",
     },
     {
-      question:
-        "In which year was the first commercial jet flight?",
+      question: "In which year was the first commercial jet flight?",
       optionA: "1928",
       optionB: "1936",
       optionC: "1944",
@@ -1282,8 +1253,7 @@ const questionsList = [
       key: "D",
     },
     {
-      question:
-        "When was the Live Aid concert?",
+      question: "When was the Live Aid concert?",
       optionA: "1985",
       optionB: "1986",
       optionC: "1987",
@@ -1291,8 +1261,7 @@ const questionsList = [
       key: "A",
     },
     {
-      question:
-        "In which year was the digital camera invented?",
+      question: "In which year was the digital camera invented?",
       optionA: "1957",
       optionB: "1975",
       optionC: "1969",
@@ -1300,8 +1269,7 @@ const questionsList = [
       key: "B",
     },
     {
-      question:
-        "When was the first SMS message sent?",
+      question: "When was the first SMS message sent?",
       optionA: "1987",
       optionB: "1990",
       optionC: "1992",
@@ -1309,8 +1277,7 @@ const questionsList = [
       key: "C",
     },
     {
-      question:
-        "In which year was GPS invented?",
+      question: "In which year was GPS invented?",
       optionA: "1956",
       optionB: "1962",
       optionC: "1968",
@@ -1318,8 +1285,7 @@ const questionsList = [
       key: "D",
     },
     {
-      question:
-        "When was the first email sent?",
+      question: "When was the first email sent?",
       optionA: "1971",
       optionB: "1964",
       optionC: "1978",
@@ -1327,8 +1293,7 @@ const questionsList = [
       key: "A",
     },
     {
-      question:
-        "When was the first mobile phone conversation?",
+      question: "When was the first mobile phone conversation?",
       optionA: "1984",
       optionB: "1973",
       optionC: "1963",

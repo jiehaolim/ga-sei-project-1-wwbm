@@ -1,4 +1,4 @@
-// Import CSS, jQuery, question list 
+// Import CSS, jQuery, question list
 import "./style.css";
 import $ from "jquery";
 import questionsList from "./questions";
@@ -16,7 +16,7 @@ import fullMainTheme from "./sound/01-Main-Theme-Org.mp3";
 import rulesTheme from "./sound/03-Explain-The-Rules-Cut.mp3";
 import prizeTheme from "./sound/10-Let's-Play-Prize.mp3";
 import questionTheme from "./sound/11-$100-$1,000-Questions.mp3";
-import finalAnswerTheme from "./sound/15-$2,000-Final Answer-Cut.mp3"
+import finalAnswerTheme from "./sound/15-$2,000-Final Answer-Cut.mp3";
 import correctTheme from "./sound/17-$2,000-Win.mp3";
 import wrongTheme from "./sound/16-$2,000-Lose.mp3";
 import timeUpTheme from "./sound/72-Time's-Up.mp3";
@@ -27,18 +27,26 @@ import fiftyFiftyTheme from "./sound/67-50-50-Cut.mp3";
 // Objects - Game and user objects
 // Lifelines picture - https://imgur.com/sQvoOhJ
 const gameObject = {
-  prizeLadder: ["100","200","300","500","1,000",
-  "2,000","4,000","8,000","16,000","32,000",
-  "64,000","125,000","250,000","500,000","1,000,000"],
+  prizeLadder: [
+    "100", "200", "300", "500", "1,000",
+    "2,000", "4,000", "8,000", "16,000", "32,000",
+    "64,000", "125,000", "250,000", "500,000", "1,000,000",
+  ],
   options: ["A", "B", "C", "D"],
   time: 25,
   roundTimer: null,
   display: { moneybag: moneybagSvg, timer: timerSvg },
   lifelinesImg: [audienceImg, friendImg, fiftyfiftyImg],
   lifelinesId: ["audience", "friend", "fifty-fifty"],
-  friend: ["Dad","Mum","Brother","Sister","Girlfriend","Boyfriend","Tom","Dick","Harry","Lucas"],
-  friendResponse: ["I think it is","I read it on the internet, it is","I read this on the newspaper yesterday, it is",
-  "I know this one. It is","I am guessing it is"],
+  friend: [
+    "Dad", "Mum", "Brother", "Sister", "Girlfriend",
+    "Boyfriend", "Tom", "Dick", "Harry", "Lucas",
+  ],
+  friendResponse: [
+    "I think it is", "I read it on the internet, it is",
+    "I read this on the newspaper yesterday, it is",
+    "I know this one. It is", "I am guessing it is",
+  ],
 };
 
 // User profile
@@ -49,7 +57,7 @@ const userProfile = {
   // Reset at the beginning of each round
   questionIndex: null,
   currentOptions: ["A", "B", "C", "D"],
-  // Update after question is answered 
+  // Update after question is answered
   Progress: 0,
   score: null,
 };
@@ -80,20 +88,24 @@ const $hideMenuAndQuestionScreen = () => {
   $(".lifeline").remove();
   $(".qn").remove();
   $(".opt").remove();
-}
+};
 
 // Function to create ok button in modal
 const $okButtonModal = () => {
   $generateHTMLElement("div", 1, "class", "okbutton container", ".modal-body", "append");
   $generateHTMLElement("div", 1, "class", "ok button", ".okbutton", "append");
-  $(".ok").text("ok").on("click", () => {$(".modal").css("display", "none")})
-}
+  $(".ok")
+    .text("ok")
+    .on("click", () => {
+      $(".modal").css("display", "none");
+    });
+};
 
 // Function to create yes no button in modal
 const $yesNoButtonModal = () => {
   $generateHTMLElement("div", 1, "class", "yesnobutton container", ".modalresponse", "append");
   $generateHTMLElement("div", 2, "class", "yesno button", ".yesnobutton", "append");
-}
+};
 
 // Function to clear modal
 const $clearModal = () => {
@@ -106,19 +118,19 @@ const $clearModal = () => {
   $(".okbutton").remove();
   // Remove event listener from modal
   $(".modal").off();
-}
+};
 
 // Function to play sound effect
 const $playSound = (theme) => {
-  $("#music").attr("src", theme)
-  $("#music").get(0).play()
-}
+  $("#music").attr("src", theme);
+  $("#music").get(0).play();
+};
 
 // Display function
 // Display rules
 const $displayRules = () => {
   // Play music
-  $playSound(rulesTheme)
+  $playSound(rulesTheme);
   // Hide the menu screen
   $(".logo").hide();
   $(".startmenu").hide();
@@ -127,8 +139,13 @@ const $displayRules = () => {
   $generateHTMLElement("div", 11, "class", "details", ".rules", "append");
   // Insert text for the rules header, introduction and create a sub div for timer explanation
   $(".details").eq(0).addClass("header").text("Rules of the Game");
-  $(".details").eq(1).addClass("body").text(`Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.`);
-  $(".details").eq(2).addClass("timers-container")
+  $(".details")
+    .eq(1)
+    .addClass("body")
+    .text(
+      `Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.`
+    );
+  $(".details").eq(2).addClass("timers-container");
   // Create sub divs for timer svg, header and explanation
   $generateHTMLElement("div", 1, "class", "timer-container", ".timers-container", "append");
   $generateHTMLElement("div", 1, "class", "timersvgicon", ".timer-container", "append");
@@ -136,26 +153,40 @@ const $displayRules = () => {
   $generateHTMLElement("div", 1, "class", "timersvglabel", ".timersvgicon", "append");
   $generateHTMLElement("div", 1, "class", "timerexplainer body", ".timer-container", "append");
   // Insert timer svg, text for timer header and explanation
-  $(".timersvgimg").attr("src", gameObject.display.timer)
+  $(".timersvgimg").attr("src", gameObject.display.timer);
   $(".timersvglabel").text("Timer");
-  $(".timerexplainer").text("Each question needs to be answered in a duration of 25 seconds.")
+  $(".timerexplainer").text(
+    "Each question needs to be answered in a duration of 25 seconds."
+  );
   // Insert text for the safe haven header, explanation and create a sub div for walkaway explainer
   $(".details").eq(3).addClass("header").text("Safe Havens");
-  $(".details").eq(4).addClass("body").text("There are two ‘safe havens’ in the question structure (Q5 - $1,000 and Q10 - $32,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer.");
-  $(".details").eq(5).addClass("walkaways-container")
+  $(".details")
+    .eq(4)
+    .addClass("body")
+    .text(
+      "There are two ‘safe havens’ in the question structure (Q5 - $1,000 and Q10 - $32,000). Before reaching the first safe haven on question 5, the contestant will lose all their winnings when giving an incorrect answer. Upon reaching any safe haven, the contestant will be able to retain their winnings at the amount of the last safe haven when giving an incorrect answer."
+    );
+  $(".details").eq(5).addClass("walkaways-container");
   // Create sub divs for walkaway svg, header and explanation
   $generateHTMLElement("div", 1, "class", "walkaway-container", ".walkaways-container", "append");
   $generateHTMLElement("div", 1, "class", "walkawaysvgicon", ".walkaway-container", "append");
   $generateHTMLElement("img", 1, "class", "walkawaysvgimg", ".walkawaysvgicon", "append");
   $generateHTMLElement("div", 1, "class", "walkawaysvglabel", ".walkawaysvgicon", "append");
-  $generateHTMLElement("div", 1, "class", "walkawayexplainer body", ".walkaway-container", "append");  
+  $generateHTMLElement("div", 1, "class", "walkawayexplainer body", ".walkaway-container", "append");
   // Insert winnings svg, text for winnings header and explanation
-  $(".walkawaysvgimg").attr("src", gameObject.display.moneybag)
+  $(".walkawaysvgimg").attr("src", gameObject.display.moneybag);
   $(".walkawaysvglabel").text("Winnings");
-  $(".walkawayexplainer").text("The contestant will also be able to choose to walk away with any existing winnings instead of answering the current question.")
+  $(".walkawayexplainer").text(
+    "The contestant will also be able to choose to walk away with any existing winnings instead of answering the current question."
+  );
   // Insert text for the lifelines header, explanation and create a sub div for lifelines explanation
   $(".details").eq(6).addClass("header").text("Lifelines");
-  $(".details").eq(7).addClass("body").text("The contestant has access to three lifelines which can be used only once per game. More than one lifeline can be used on a single question. The three lifelines are as follows:");
+  $(".details")
+    .eq(7)
+    .addClass("body")
+    .text(
+      "The contestant has access to three lifelines which can be used only once per game. More than one lifeline can be used on a single question. The three lifelines are as follows:"
+    );
   $(".details").eq(8).addClass("lifelines-container");
   // Create sub divs for lifeline items
   $generateHTMLElement("div", 3, "class", "lifeline-container", ".lifelines-container", "append");
@@ -168,14 +199,29 @@ const $displayRules = () => {
     $(".iconimg").eq(i).attr("src", gameObject.lifelinesImg[i]);
   }
   $(".iconlabel").eq(0).text("Ask the audience");
-  $(".lifelineexplainer").eq(0).text("A poll will be conducted with the audience and the results will be shown in a chart. The answer provided will have an accuracy of 90%.");
+  $(".lifelineexplainer")
+    .eq(0)
+    .text(
+      "A poll will be conducted with the audience and the results will be shown in a chart. The answer provided will have an accuracy of 90%."
+    );
   $(".iconlabel").eq(1).text("Phone a friend");
-  $(".lifelineexplainer").eq(1).text("The contestant will be allowed to randomly phone a friend or family member and ask for the answer to the question. The answer provided will have an accuracy of 70%.");
+  $(".lifelineexplainer")
+    .eq(1)
+    .text(
+      "The contestant will be allowed to randomly phone a friend or family member and ask for the answer to the question. The answer provided will have an accuracy of 70%."
+    );
   $(".iconlabel").eq(2).text("Fifty-fifty");
-  $(".lifelineexplainer").eq(2).text("This eliminates two incorrect answers from the four answers.");
+  $(".lifelineexplainer")
+    .eq(2)
+    .text("This eliminates two incorrect answers from the four answers.");
   // Insert copyright header and text
   $(".details").eq(9).addClass("header").text("Copyrights");
-  $(".details").eq(10).addClass("body").text("All rights belong directly to their rightful owners. No copyright infringement intended.");
+  $(".details")
+    .eq(10)
+    .addClass("body")
+    .text(
+      "All rights belong directly to their rightful owners. No copyright infringement intended."
+    );
   // Create sub div for back to menu button, text and event listener
   $generateHTMLElement("div", 1, "class", "back", ".rules", "append");
   $(".back").text("Menu");
@@ -185,19 +231,19 @@ const $displayRules = () => {
 // Back to Menu
 const $displayMenu = () => {
   // Play music
-  $playSound(mainTheme)
+  $playSound(mainTheme);
   // Hide rules screen
   $(".rules").remove();
   // Hide the final score screen
   $(".scoreboard").remove();
   $(".reset").remove();
-  $(".menu-container").remove()
+  $(".menu-container").remove();
   // Reset the game
-  userProfile.Progress = 0,
-  userProfile.score = null,
-  userProfile.lifelines = [1, 1, 1],
+  (userProfile.Progress = 0),
+  (userProfile.score = null),
+  (userProfile.lifelines = [1, 1, 1]),
   // Clear modal and show the menu
-  $clearModal()
+  $clearModal();
   $(".startmenu").show();
   $(".logo").show();
 };
@@ -205,11 +251,11 @@ const $displayMenu = () => {
 // Display the prize ladder
 const $displayPrizeLadder = () => {
   // Play music
-  $playSound(prizeTheme)
+  $playSound(prizeTheme);
   // Hide the WWBM header
   $("#header").hide();
   // Hide the menu and question screen
-  $hideMenuAndQuestionScreen()
+  $hideMenuAndQuestionScreen();
   // Create divs for the prize ladder
   $generateHTMLElement("div", 1, "class", "ladder container", "#overall-footer-container", "append");
   $generateHTMLElement("div", 15, "class", "prize", ".ladder", "append");
@@ -217,17 +263,23 @@ const $displayPrizeLadder = () => {
   for (let i = 0; i < gameObject.prizeLadder.length; i++) {
     let prizeNum = gameObject.prizeLadder.length - 1 - i;
     let prizeQuestionIndex = gameObject.prizeLadder.length - i;
-    $(".prize").eq(i).text(`Q${[prizeQuestionIndex]} - $${gameObject.prizeLadder[prizeNum]}`);
+    $(".prize")
+      .eq(i)
+      .text(`Q${[prizeQuestionIndex]} - $${gameObject.prizeLadder[prizeNum]}`);
   }
   // Add CSS effect to reflect the current level
-  let prizeQuestionIndex = gameObject.prizeLadder.length - userProfile.Progress - 1;
-  $(".prize").eq(prizeQuestionIndex).css("background-color", "#FF8326").addClass("blink");
+  let prizeQuestionIndex =
+    gameObject.prizeLadder.length - userProfile.Progress - 1;
+  $(".prize")
+    .eq(prizeQuestionIndex)
+    .addClass("blink")
+    .css("background-color", "#FF8326");
 };
 
 // Display question
 const $displayQuestion = (index) => {
   // Play music
-  $playSound(questionTheme)
+  $playSound(questionTheme);
   // Hide the prize ladder screen
   $("#header").show();
   $(".ladder").remove();
@@ -249,24 +301,40 @@ const $displayQuestion = (index) => {
   // Reset timer
   gameObject.time = 25;
   gameObject.roundTimer = setInterval($timer, 1000);
-  $(".display").eq(0).attr("src", `${gameObject.display.timer}`)
+  $(".display").eq(0).attr("src", `${gameObject.display.timer}`);
   $("text").eq(0).text(`${gameObject.time}`);
   // Winnings SVG to appear after question 1 when there are winnings
   if (userProfile.score === null) {
-    $(".displaytimebank").eq(1).remove()
+    $(".displaytimebank").eq(1).remove();
   } else {
-    $(".display").eq(1).attr("src", `${gameObject.display.moneybag}`).on("click", $modalWalkAway).attr("id", "walkAwayDisplay")
-    $(".text").eq(1).text(`$${userProfile.score}`).css("color", "#37CD3B").on("click", $modalWalkAway).attr("id", "walkAwayText")
+    $(".display")
+      .eq(1)
+      .attr("id", "walkAwayDisplay")
+      .attr("src", `${gameObject.display.moneybag}`)
+      .on("click", $modalWalkAway);
+    $(".text")
+      .eq(1)
+      .attr("id", "walkAwayText")
+      .css("color", "#37CD3B")
+      .text(`$${userProfile.score}`)
+      .on("click", $modalWalkAway);
   }
   // Lifelines - Insert image and event listener
   for (let i = 0; i < gameObject.lifelinesId.length; i++) {
-    $(".lifelineimg").eq(i).attr("src", gameObject.lifelinesImg[i]).attr("id", gameObject.lifelinesId[i]);
+    $(".lifelineimg")
+      .eq(i)
+      .attr("id", gameObject.lifelinesId[i])
+      .attr("src", gameObject.lifelinesImg[i]);
   }
   // Disabled lifelines that are used up
   for (let i = 0; i < userProfile.lifelines.length; i++) {
     if (userProfile.lifelines[i] === 0)
-      $(".lifelineimg").eq(i).attr("src", gameObject.lifelinesImg[i]).attr("id", gameObject.lifelinesId[i])
-        .css("opacity", "0.3").addClass("disabled-div");
+      $(".lifelineimg")
+        .eq(i)
+        .addClass("disabled-div")
+        .attr("id", gameObject.lifelinesId[i])
+        .attr("src", gameObject.lifelinesImg[i])
+        .css("opacity", "0.3");
   }
   $(".lifelineimg").eq(0).on("click", $audienceLifeline);
   $(".lifelineimg").eq(1).on("click", $friendLifeline);
@@ -275,47 +343,63 @@ const $displayQuestion = (index) => {
   // Reset options for users
   userProfile.currentOptions = gameObject.options;
   // Generate a random index for the question in each level
-  userProfile.questionIndex = Math.floor(Math.random() * questionsList[index].length);
-  $("#question").text(`${questionsList[index][userProfile.questionIndex].question}`);
+  userProfile.questionIndex = Math.floor(
+    Math.random() * questionsList[index].length
+  );
+  $("#question").text(
+    `${questionsList[index][userProfile.questionIndex].question}`
+  );
   for (let i = 0; i < gameObject.options.length; i++) {
     let objKey = "option" + gameObject.options[i];
     $(".option").eq(i).attr("id", gameObject.options[i]);
-    $(".option").eq(i).text(`${gameObject.options[i]}. ${questionsList[index][userProfile.questionIndex][objKey]}`);
+    $(".option")
+      .eq(i)
+      .text(
+        `${gameObject.options[i]}. ${
+          questionsList[index][userProfile.questionIndex][objKey]
+        }`
+      );
   }
-  $(".option").on("click", () => $modalFinalAnswer($(event.currentTarget).attr("id")));
+  $(".option").on("click", () =>
+    $modalFinalAnswer($(event.currentTarget).attr("id"))
+  );
 };
 
 // Display scoreboard
 const $displayScoreboard = () => {
   // Play music
-  $playSound(fullMainTheme)
+  $playSound(fullMainTheme);
   // Hide the menu and question screen
-  $hideMenuAndQuestionScreen()
+  $hideMenuAndQuestionScreen();
   // Local storage for high score - store high score array index instead of actual score, lesser data manipulation
   // Create high score array index if it does not exist in local storage, else retrieve it from local storage
-  let wwbmScore = null
+  let wwbmScore = null;
   if (localStorage.getItem("wwbmscore") === null) {
-    wwbmScore = []
+    wwbmScore = [];
   } else if (localStorage.getItem("wwbmscore") !== null) {
-    wwbmScore = JSON.parse(localStorage.getItem("wwbmscore"))
+    wwbmScore = JSON.parse(localStorage.getItem("wwbmscore"));
   }
   // Push the score index to the array if current score is not default
   if (userProfile.score !== null) {
-    wwbmScore.push(gameObject.prizeLadder.indexOf(userProfile.score))
-    wwbmScore.sort(function(a, b) { return b - a})
-    // Limit the array to top 6 scores, the sixth score will not be reflected as green in high score baord if player has six same score. 
+    wwbmScore.push(gameObject.prizeLadder.indexOf(userProfile.score));
+    wwbmScore.sort(function (a, b) {
+      return b - a;
+    });
+    // Limit the array to top 6 scores, the sixth score will not be reflected as green in high score baord if player has six same score.
     if (wwbmScore.length > 6) {
-      wwbmScore.pop()
+      wwbmScore.pop();
     }
     // Set high score into local storage
-    localStorage.setItem("wwbmscore", JSON.stringify(wwbmScore))
+    localStorage.setItem("wwbmscore", JSON.stringify(wwbmScore));
   }
   // Create the final score board - current score and high score board
   // Current score - create div and insert text
   $generateHTMLElement("div", 1, "class", "scoreboard container", "#overall-footer-container", "append");
   if (userProfile.score !== null) {
     $generateHTMLElement("div", 1, "class", "currentscore", ".scoreboard", "append");
-    $(".currentscore").text(`Current Score: $${userProfile.score}`).css("color", "#37CD3B");  
+    $(".currentscore")
+      .css("color", "#37CD3B")
+      .text(`Current Score: $${userProfile.score}`);
   }
   // High score board Header - create div and insert text
   $generateHTMLElement("div", 1, "class", "scoreheader", ".scoreboard", "append");
@@ -325,7 +409,7 @@ const $displayScoreboard = () => {
     $(".scoreheader").text(`Top 5 High Scores`);
   }
   // Ensure the number of divs generated is based on the actual number of score generated
-  const wwbmScoreLength = wwbmScore.length > 5 ? 5 : wwbmScore.length
+  const wwbmScoreLength = wwbmScore.length > 5 ? 5 : wwbmScore.length;
   // High score board details - create div and insert text
   $generateHTMLElement("div", 1, "class", "score-container", ".scoreboard", "append");
   $generateHTMLElement("div", 1, "class", "scorerank-container", ".score-container", "append");
@@ -334,35 +418,45 @@ const $displayScoreboard = () => {
   $generateHTMLElement("div", wwbmScoreLength, "class", "scoredetails", ".scoredetails-container", "append");
   // To highlight current score in green when it appears in high score board after game ended
   // No highlight of current score when viewing from main menu
-  const ranking = ["1st", "2nd", "3rd", "4th", "5th"]
+  const ranking = ["1st", "2nd", "3rd", "4th", "5th"];
   if (userProfile.score === null) {
     for (let i = 0; i < wwbmScoreLength; i++) {
       // $0 is not in the prizeladder
       // Generate the rank then actual score
-      $(".scorerank").eq(i).text(`${ranking[i]}`)
+      $(".scorerank").eq(i).text(`${ranking[i]}`);
       if (gameObject.prizeLadder[wwbmScore[i]] === undefined) {
-        $(".scoredetails").eq(i).text(`$0`)
+        $(".scoredetails").eq(i).text(`$0`);
       } else {
-        $(".scoredetails").eq(i).text(`$${gameObject.prizeLadder[wwbmScore[i]]}`)
+        $(".scoredetails")
+          .eq(i)
+          .text(`$${gameObject.prizeLadder[wwbmScore[i]]}`);
       }
     }
   } else {
     // Highlight of current score if it appears on High score board after game ends
-    const currentScoreIndex = gameObject.prizeLadder.indexOf(userProfile.score)
-    const currentScoreExists = wwbmScore.lastIndexOf(currentScoreIndex)
+    const currentScoreIndex = gameObject.prizeLadder.indexOf(userProfile.score);
+    const currentScoreExists = wwbmScore.lastIndexOf(currentScoreIndex);
     for (let i = 0; i < wwbmScoreLength; i++) {
-      $(".scorerank").eq(i).text(`${ranking[i]}`)
+      $(".scorerank").eq(i).text(`${ranking[i]}`);
       // $0 is not in the prizeladder
-      if (gameObject.prizeLadder[wwbmScore[i]] === undefined && currentScoreExists === i) {
-        $(".scorerank").eq(i).css("color", "#37CD3B")
-        $(".scoredetails").eq(i).text(`$0`).css("color", "#37CD3B")
+      if (
+        gameObject.prizeLadder[wwbmScore[i]] === undefined &&
+        currentScoreExists === i
+      ) {
+        $(".scorerank").eq(i).css("color", "#37CD3B");
+        $(".scoredetails").eq(i).text(`$0`).css("color", "#37CD3B");
       } else if (gameObject.prizeLadder[wwbmScore[i]] === undefined) {
-        $(".scoredetails").eq(i).text(`$0`)
+        $(".scoredetails").eq(i).text(`$0`);
       } else if (currentScoreExists === i) {
-        $(".scorerank").eq(i).css("color", "#37CD3B")
-        $(".scoredetails").eq(i).text(`$${gameObject.prizeLadder[wwbmScore[i]]}`).css("color", "#37CD3B")
+        $(".scorerank").eq(i).css("color", "#37CD3B");
+        $(".scoredetails")
+          .eq(i)
+          .css("color", "#37CD3B")
+          .text(`$${gameObject.prizeLadder[wwbmScore[i]]}`);
       } else {
-        $(".scoredetails").eq(i).text(`$${gameObject.prizeLadder[wwbmScore[i]]}`)
+        $(".scoredetails")
+          .eq(i)
+          .text(`$${gameObject.prizeLadder[wwbmScore[i]]}`);
       }
     }
   }
@@ -371,22 +465,26 @@ const $displayScoreboard = () => {
   $generateHTMLElement("div", 1, "class", "button", ".menu-container", "append");
   $(".button").eq(0).text("Menu");
   $(".button").eq(0).on("click", $displayMenu);
-}
+};
 
 // Event listeners on game screen
 // Display modal for welcome screen, to tell user game is better with sound and trigger music
 const $modalWelcome = () => {
   // Turn on and clear modal
   $(".modal").css("display", "block");
-  $clearModal()
+  $clearModal();
   // Insert header, response text and ok button
   $(".modalheader").text("Welcome to Who wants to be a Millionaire!");
-  $(".modalresponse").text("Please turn on the volume for better game experience.");
-  $okButtonModal()
+  $(".modalresponse").text(
+    "Please turn on the volume for better game experience."
+  );
+  $okButtonModal();
   // Turn off modal and play music
-  $(".modal").on("click", () => {$(".modal").css("display", "none");
-  $playSound(mainTheme)})
-}
+  $(".modal").on("click", () => {
+    $(".modal").css("display", "none");
+    $playSound(mainTheme);
+  });
+};
 
 // Timer
 // Function to run and stop the round timer
@@ -401,49 +499,63 @@ const $timer = () => {
     gameObject.time--;
   } else if (gameObject.time === -1) {
     gameObject.time = -2;
-    $modalTimesUp()
+    $modalTimesUp();
   }
 };
 
 // Display modal when time is up
 const $modalTimesUp = () => {
   // Play music
-  $playSound(timeUpTheme)
+  $playSound(timeUpTheme);
   // Turn on and clear modal
   $(".modal").css("display", "block");
-  $clearModal()
+  $clearModal();
   // Insert header text and ok button
   $(".modalheader").text("Time's up!");
-  $okButtonModal()
+  $okButtonModal();
   // Turn off modal and reveal answer
-  $(".modal").on("click", () => {$(".modal").css("display", "none");
-  $revealAnsAndProceed("timesup")})
-}
+  $(".modal").on("click", () => {
+    $(".modal").css("display", "none");
+    $revealAnsAndProceed("timesup");
+  });
+};
 
 // Walk away
 // Display modal for walk away
 const $modalWalkAway = () => {
   // Turn on and clear modal
   $(".modal").css("display", "block");
-  $clearModal()
+  $clearModal();
   // Insert header and reponse text and yes no button
   $(".modalheader").text(`Walk away with $${userProfile.score}?`);
-  $yesNoButtonModal()
-  $(".yesno").eq(0).text("Yes").on("click", () => {$revealAnsAndProceed("walkaway")})
-  $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
+  $yesNoButtonModal();
+  $(".yesno")
+    .eq(0)
+    .text("Yes")
+    .on("click", () => {
+      $revealAnsAndProceed("walkaway");
+    });
+  $(".yesno")
+    .eq(1)
+    .text("No")
+    .on("click", () => {
+      $(".modal").css("display", "none");
+    });
   // Turn off modal
-  $(".modal").on("click", () => {$(".modal").css("display", "none");});
-}
+  $(".modal").on("click", () => {
+    $(".modal").css("display", "none");
+  });
+};
 
-// Lifelines 
+// Lifelines
 // Function for audience lifeline
 const $audienceLifeline = () => {
   // Play additional sound effect
-  $("#music2").attr("src", askAudienceTheme)
-  $("#music2").get(0).play()
+  $("#music2").attr("src", askAudienceTheme);
+  $("#music2").get(0).play();
   // Turn on and clear modal
   $(".modal").css("display", "block");
-  $clearModal()
+  $clearModal();
   // Insert header text
   $(".modalheader").text("Audience");
   // Create the canvas html element in response text
@@ -460,13 +572,21 @@ const $audienceLifeline = () => {
   }
   // Step 3: Divide each of the numbers by the sum,
   // Step 4: Multiply by 100, and round to the nearest integer.
-  const randomPercentage = randomNumberArray.map((element) => Math.round((element / randomTotal) * 100));
+  const randomPercentage = randomNumberArray.map((element) =>
+    Math.round((element / randomTotal) * 100)
+  );
   // Align the percentage with the options to reflect the correct answer and with 90% chance of getting right
   // Take out the highest percent to insert into the correct answer index
-  let maxPercent = randomPercentage.reduce(function (a, b) { return Math.max(a, b);});
-  const chartPercentage = randomPercentage.filter((element) => element !== maxPercent);
+  let maxPercent = randomPercentage.reduce(function (a, b) {
+    return Math.max(a, b);
+  });
+  const chartPercentage = randomPercentage.filter(
+    (element) => element !== maxPercent
+  );
   let randomIndex1 = Math.random();
-  const correctAnsIndex = userProfile.currentOptions.indexOf(questionsList[userProfile.Progress][userProfile.questionIndex].key);
+  const correctAnsIndex = userProfile.currentOptions.indexOf(
+    questionsList[userProfile.Progress][userProfile.questionIndex].key
+  );
   let randomIndex2 = 0;
   if (randomIndex1 <= 0.1) {
     do {
@@ -515,11 +635,12 @@ const $audienceLifeline = () => {
     },
   });
   // Insert ok button
-  $okButtonModal()
+  $okButtonModal();
   // Turn off modal
-  $(".modal").on("click", () => 
-  {$("#music2").get(0).pause();
-  $(".modal").css("display", "none");});
+  $(".modal").on("click", () => {
+    $("#music2").get(0).pause();
+    $(".modal").css("display", "none");
+  });
   // Disable the audience life line and update user profile
   $("#audience").css("opacity", "0.3").addClass("disabled-div");
   userProfile.lifelines[0] = 0;
@@ -528,11 +649,11 @@ const $audienceLifeline = () => {
 // Function for friend lifeline
 const $friendLifeline = () => {
   // Play additional sound effect
-  $("#music2").attr("src", phoneAFriendTheme)
-  $("#music2").get(0).play()
+  $("#music2").attr("src", phoneAFriendTheme);
+  $("#music2").get(0).play();
   // Turn on and clear modal
   $(".modal").css("display", "block");
-  $clearModal()
+  $clearModal();
   // Insert header and response text and ok button
   // Insert random friend into modal header
   let randomIndex = Math.floor(Math.random() * gameObject.friend.length);
@@ -541,22 +662,31 @@ const $friendLifeline = () => {
   let randomIndex1 = Math.random();
   let friendAnswer = null;
   if (randomIndex1 <= 0.3) {
-    const wrongAnswer = userProfile.currentOptions.filter((element) => 
-    element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
+    const wrongAnswer = userProfile.currentOptions.filter(
+      (element) =>
+        element !==
+        questionsList[userProfile.Progress][userProfile.questionIndex].key
+    );
     let randomIndex2 = Math.floor(Math.random() * wrongAnswer.length);
     friendAnswer = wrongAnswer[randomIndex2];
   } else {
-    friendAnswer = questionsList[userProfile.Progress][userProfile.questionIndex].key;
+    friendAnswer =
+      questionsList[userProfile.Progress][userProfile.questionIndex].key;
   }
   // Insert random response into modal body
-  let randomIndex3 = Math.floor(Math.random() * gameObject.friendResponse.length);
-  $(".modalresponse").text(`${gameObject.friendResponse[randomIndex3]} ${friendAnswer}.`);
+  let randomIndex3 = Math.floor(
+    Math.random() * gameObject.friendResponse.length
+  );
+  $(".modalresponse").text(
+    `${gameObject.friendResponse[randomIndex3]} ${friendAnswer}.`
+  );
   // Insert ok button
-  $okButtonModal()
+  $okButtonModal();
   // Turn off modal
   $(".modal").on("click", () => {
-    $("#music2").get(0).pause()
-    $(".modal").css("display", "none");});
+    $("#music2").get(0).pause();
+    $(".modal").css("display", "none");
+  });
   // Disable the friend life lines and update user profile
   $("#friend").css("opacity", "0.3").addClass("disabled-div");
   userProfile.lifelines[1] = 0;
@@ -565,11 +695,14 @@ const $friendLifeline = () => {
 // Function for 50-50 lifeline
 const $fiftyfiftyLifeline = () => {
   // Play additional sound effect
-  $("#music2").attr("src", fiftyFiftyTheme)
-  $("#music2").get(0).play()
+  $("#music2").attr("src", fiftyFiftyTheme);
+  $("#music2").get(0).play();
   // Create an array that does not contains the answer
-  const wrongAnswer = userProfile.currentOptions.filter((element) => 
-  element !== questionsList[userProfile.Progress][userProfile.questionIndex].key);
+  const wrongAnswer = userProfile.currentOptions.filter(
+    (element) =>
+      element !==
+      questionsList[userProfile.Progress][userProfile.questionIndex].key
+  );
   // To randomly generate 2 different wrong answers to be eliminated
   const answerToBeEliminated = [];
   while (answerToBeEliminated.length < 2) {
@@ -584,8 +717,9 @@ const $fiftyfiftyLifeline = () => {
     $(`#${element}`).text("");
   }
   // Update the remaining options available incase other lifelines are utilized
-  userProfile.currentOptions = userProfile.currentOptions.filter((element) => 
-  answerToBeEliminated.includes(element) === false);
+  userProfile.currentOptions = userProfile.currentOptions.filter(
+    (element) => answerToBeEliminated.includes(element) === false
+  );
   // Disable the 2 options eliminated options button
   $disableDiv(answerToBeEliminated);
   // Remove the fifty fifty life lines and update user profile
@@ -598,49 +732,69 @@ const $fiftyfiftyLifeline = () => {
 const $modalFinalAnswer = (id) => {
   // Turn on and clear modal
   $(".modal").css("display", "block");
-  $clearModal()
+  $clearModal();
   // Insert header text and yes no button
   $(".modalheader").text("Final answer?");
-  $yesNoButtonModal()
-  $(".yesno").eq(0).text("Yes").on("click", () => {$revealAnsAndProceed(id)})
-  $(".yesno").eq(1).text("No").on("click", () => {$(".modal").css("display", "none");});
+  $yesNoButtonModal();
+  $(".yesno")
+    .eq(0)
+    .text("Yes")
+    .on("click", () => {
+      $revealAnsAndProceed(id);
+    });
+  $(".yesno")
+    .eq(1)
+    .text("No")
+    .on("click", () => {
+      $(".modal").css("display", "none");
+    });
   // Turn off modal
-  $(".modal").on("click", () => {$(".modal").css("display", "none")});
-}
+  $(".modal").on("click", () => {
+    $(".modal").css("display", "none");
+  });
+};
 
 // Game over modal
 const $modalGameOver = () => {
   // Turn on and clear modal
   $(".modal").css("display", "block");
-  $clearModal()
+  $clearModal();
   // Insert header text and ok button
   $(".modalheader").text("Game Over");
-  $okButtonModal()
+  $okButtonModal();
   // Turn off modal and go to score board
-  $(".modal").on("click", () => {$(".modal").css("display", "none");
-  $displayScoreboard()});
-}
+  $(".modal").on("click", () => {
+    $(".modal").css("display", "none");
+    $displayScoreboard();
+  });
+};
 
 // Million dollars modal
 const $modalMillionDollars = () => {
   // Play music
-  $playSound(mainTheme)
+  $playSound(mainTheme);
   // Turn on and clear modal
   $(".modal").css("display", "block");
-  $clearModal()
+  $clearModal();
   // Insert header text and ok button
-  $(".modalheader").addClass("rainbow").text("Congrations! You won a million dollars!");
-  $okButtonModal()
+  $(".modalheader")
+    .addClass("rainbow")
+    .text("Congrations! You won a million dollars!");
+  $okButtonModal();
   // Turn off modal and go to score board
-  $(".modal").on("click", () => {$(".modal").css("display", "none");
-  $displayScoreboard()});
-}
+  $(".modal").on("click", () => {
+    $(".modal").css("display", "none");
+    $displayScoreboard();
+  });
+};
 
 // Game flow function to update game progress
 // Main game function
 const $startGame = () => {
   $displayPrizeLadder();
-  setTimeout(() => {$displayQuestion(userProfile.Progress);}, 3000);
+  setTimeout(() => {
+    $displayQuestion(userProfile.Progress);
+  }, 3000);
 };
 
 // Function to set delay to create suspense then turn the answer green
@@ -650,45 +804,67 @@ const $revealAnsAndProceed = (id) => {
   // Disable all event listener and buttons
   $disableDiv(gameObject.options);
   $disableDiv(gameObject.lifelinesId);
-  $disableDiv(["walkAwayDisplay","walkAwayText"]);
+  $disableDiv(["walkAwayDisplay", "walkAwayText"]);
   // 1st scenario - player answers the question
   if (id !== "timesup" && id !== "walkaway") {
     // Play music and reflect selected answer as orange
     $playSound(finalAnswerTheme);
     $(`#${id}`).css("background-color", "#FF8326");
     // Show correct answer as green after 5s and play the correct/wrong answer theme accordingly
-    setTimeout(() => {if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
+    setTimeout(() => {
+      if (
+        id ===
+        questionsList[userProfile.Progress][userProfile.questionIndex].key
+      ) {
         $playSound(correctTheme);
       } else {
         $playSound(wrongTheme);
       }
-      $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B");}, 5000);
+      $(
+        `#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`
+      ).css("background-color", "#37CD3B");
+    }, 5000);
     // Proceed with the game after 5s
     setTimeout(() => {
       // Last question
-      if (userProfile.Progress + 1 === gameObject.prizeLadder.length && id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
+      if (
+        userProfile.Progress + 1 === gameObject.prizeLadder.length &&
+        id ===
+          questionsList[userProfile.Progress][userProfile.questionIndex].key
+      ) {
         updateRoundScore();
         $modalMillionDollars();
         // Normal round
-      } else if (id === questionsList[userProfile.Progress][userProfile.questionIndex].key) {
+      } else if (
+        id ===
+        questionsList[userProfile.Progress][userProfile.questionIndex].key
+      ) {
         updateRoundScore();
         $continueGame();
       } else {
         // Wrong answer
         $endGame();
-      }}, 10000);
+      }
+    }, 10000);
   } else {
     // Else when 2nd scenario time's up or 3rd scenario player chooses to walk away
     setTimeout(() => {
       // Reveal answer
       $playSound(wrongTheme);
-      $(`#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`).css("background-color", "#37CD3B")}, 2000);
+      $(
+        `#${questionsList[userProfile.Progress][userProfile.questionIndex].key}`
+      ).css("background-color", "#37CD3B");
+    }, 2000);
     if (id === "timesup") {
       // 2nd Scenario - when time's up, pass through safe haven then Game over modal
-      setTimeout(() => {$endGame()}, 7000);
+      setTimeout(() => {
+        $endGame();
+      }, 7000);
     } else if (id === "walkaway") {
       // 3rd Scenario - walkaway, go to Game over modal
-      setTimeout(() => {$modalGameOver()}, 7000);
+      setTimeout(() => {
+        $modalGameOver();
+      }, 7000);
     }
   }
 };
@@ -703,27 +879,39 @@ const updateRoundScore = () => {
 // Function to continue game
 const $continueGame = () => {
   $displayPrizeLadder();
-  setTimeout(() => {$displayQuestion(userProfile.Progress);}, 3000);
+  setTimeout(() => {
+    $displayQuestion(userProfile.Progress);
+  }, 3000);
 };
 
 // Function to end game
 const $endGame = () => {
   // Update final score per safe heaven
-  if (gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("32,000")) {
+  if (
+    gameObject.prizeLadder.indexOf(userProfile.score) >=
+    gameObject.prizeLadder.indexOf("32,000")
+  ) {
     userProfile.score = "32,000";
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("32,000") && 
-  gameObject.prizeLadder.indexOf(userProfile.score) >= gameObject.prizeLadder.indexOf("1,000")) {
+  } else if (
+    gameObject.prizeLadder.indexOf(userProfile.score) <
+      gameObject.prizeLadder.indexOf("32,000") &&
+    gameObject.prizeLadder.indexOf(userProfile.score) >=
+      gameObject.prizeLadder.indexOf("1,000")
+  ) {
     userProfile.score = "1,000";
-  } else if (gameObject.prizeLadder.indexOf(userProfile.score) < gameObject.prizeLadder.indexOf("1,000")) {
+  } else if (
+    gameObject.prizeLadder.indexOf(userProfile.score) <
+    gameObject.prizeLadder.indexOf("1,000")
+  ) {
     userProfile.score = "0";
   }
   // Go to scoreboard screen
-  $modalGameOver()
+  $modalGameOver();
 };
 
 // Document ready!
 $(() => {
-  $modalWelcome()
+  $modalWelcome();
   $(".menu").eq(0).on("click", $startGame);
   $(".menu").eq(1).on("click", $displayRules);
   $(".menu").eq(2).on("click", $displayScoreboard);
