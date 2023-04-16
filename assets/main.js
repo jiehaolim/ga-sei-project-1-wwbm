@@ -790,7 +790,7 @@ const $modalMillionDollars = () => {
 
 // Game flow function to update game progress
 // Main game function
-const $startGame = () => {
+const $startAndContinueGame = () => {
   $displayPrizeLadder();
   setTimeout(() => {
     $displayQuestion(userProfile.Progress);
@@ -840,7 +840,7 @@ const $revealAnsAndProceed = (id) => {
         questionsList[userProfile.Progress][userProfile.questionIndex].key
       ) {
         updateRoundScore();
-        $continueGame();
+        $startAndContinueGame();
       } else {
         // Wrong answer
         $endGame();
@@ -876,14 +876,6 @@ const updateRoundScore = () => {
   userProfile.score = gameObject.prizeLadder[userProfile.Progress - 1];
 };
 
-// Function to continue game
-const $continueGame = () => {
-  $displayPrizeLadder();
-  setTimeout(() => {
-    $displayQuestion(userProfile.Progress);
-  }, 3000);
-};
-
 // Function to end game
 const $endGame = () => {
   // Update final score per safe heaven
@@ -912,7 +904,7 @@ const $endGame = () => {
 // Document ready!
 $(() => {
   $modalWelcome();
-  $(".menu").eq(0).on("click", $startGame);
+  $(".menu").eq(0).on("click", $startAndContinueGame);
   $(".menu").eq(1).on("click", $displayRules);
   $(".menu").eq(2).on("click", $displayScoreboard);
 });
