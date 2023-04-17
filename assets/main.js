@@ -409,11 +409,12 @@ const $displayScoreboard = () => {
     $(".scoreheader").text(`Top 5 High Scores`);
   }
   // Ensure the number of divs generated is based on the actual number of score generated
+  const highScoreExists = wwbmScore.length > 0 ? 1 : 0;
   const wwbmScoreLength = wwbmScore.length > 5 ? 5 : wwbmScore.length;
   // High score board details - create div and insert text
-  $generateHTMLElement("div", 1, "class", "score-container", ".scoreboard", "append");
-  $generateHTMLElement("div", 1, "class", "scorerank-container", ".score-container", "append");
-  $generateHTMLElement("div", 1, "class", "scoredetails-container", ".score-container", "append");
+  $generateHTMLElement("div", highScoreExists, "class", "score-container", ".scoreboard", "append");
+  $generateHTMLElement("div", highScoreExists, "class", "scorerank-container", ".score-container", "append");
+  $generateHTMLElement("div", highScoreExists, "class", "scoredetails-container", ".score-container", "append");
   $generateHTMLElement("div", wwbmScoreLength, "class", "scorerank", ".scorerank-container", "append");
   $generateHTMLElement("div", wwbmScoreLength, "class", "scoredetails", ".scoredetails-container", "append");
   // To highlight current score in green when it appears in high score board after game ended
