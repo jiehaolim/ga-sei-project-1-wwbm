@@ -143,7 +143,7 @@ const $displayRules = () => {
     .eq(1)
     .addClass("body")
     .text(
-      `Who wants to be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.`
+      `Who Wants to Be a Millionaire ("WWBM") is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.`
     );
   $(".details").eq(2).addClass("timers-container");
   // Create sub divs for timer svg, header and explanation
@@ -156,7 +156,7 @@ const $displayRules = () => {
   $(".timersvgimg").attr("src", gameObject.display.timer);
   $(".timersvglabel").text("Timer");
   $(".timerexplainer").text(
-    "Each question needs to be answered in a duration of 25 seconds."
+    "Each question needs to be answered in 25 seconds."
   );
   // Insert text for the safe haven header, explanation and create a sub div for walkaway explainer
   $(".details").eq(3).addClass("header").text("Safe Havens");
@@ -467,6 +467,11 @@ const $displayScoreboard = () => {
   $(".button").eq(0).text("Menu");
   $(".button").eq(0).on("click", $displayMenu);
 };
+
+// Open Github link
+const $openGithub = () => {
+  window.open("http://www.github.com/jiehaolim","_blank")
+}
 
 // Event listeners on game screen
 // Display modal for welcome screen, to tell user game is better with sound and trigger music
@@ -908,4 +913,5 @@ $(() => {
   $(".menu").eq(0).on("click", $startAndContinueGame);
   $(".menu").eq(1).on("click", $displayRules);
   $(".menu").eq(2).on("click", $displayScoreboard);
+  $(".menu").eq(3).on("click", $openGithub);
 });
