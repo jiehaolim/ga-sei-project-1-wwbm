@@ -100,6 +100,21 @@ h1 {
   margin-bottom: 10px;
 }
 
+.github {
+  height: 24px;
+  width: 24px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.link:visited {
+  color: inherit;
+}
+
 .rules,
 .scoreboard,
 .menu-container {
