@@ -13,7 +13,7 @@ The game app needs to:
 This game is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.
 
 ## Where to Play
-Play [Who Wants to be a Millionaire.](https://wwbm.vercel.app/)
+Play [Who Wants to Be a Millionaire.](https://wwbm.vercel.app/)
 
 ## Rules
 - The contestant will have to answer 15 random questions and climb up the prize ladder to win a million dollars. A total of 150 questions have been set into the game with 10 different question types per level.
@@ -40,7 +40,7 @@ Play [Who Wants to be a Millionaire.](https://wwbm.vercel.app/)
 ## Game Flow
 View [flowchart at Miro.](https://miro.com/app/board/uXjVPccHgUw=/?share_link_id=161052720807)
 
-<img src="./documentation/wwbm-flowchart.png"/>
+<img src="./documentation/wwbm-flowchart.jpeg"/>
 
 ## HTML Structure
 <img src="./documentation/html-structure-1.png"/>
