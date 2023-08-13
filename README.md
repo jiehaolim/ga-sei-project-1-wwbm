@@ -7,7 +7,7 @@ The game app needs to:
 - Include separate HTML / CSS / JavaScript files
 - Use Javascript for DOM manipulation that is triggered by a browser event
 
-# Who wants to be a Millionaire ("WWBM")
+# Who Wants to Be a Millionaire ("WWBM")
 <img src="./documentation/wwbm-wallpaper.jpeg"/>
 
 This game is based on the international television game show franchise of British origin created by David Briggs, Mike Whitehill and Steven Knight. The contestant will have to answer 15 questions with three lifelines to stand a chance to win a million dollars.
