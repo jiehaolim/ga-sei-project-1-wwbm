@@ -1,28 +1,28 @@
 // Import CSS, jQuery, question list
-import "./style.css";
+import "../css/style.css";
 import $ from "jquery";
 import questionsList from "./questions";
 
 // Import images, SVG for Vercel
-import moneybagSvg from "./img/money-bag.svg";
-import timerSvg from "./img/timer.svg";
-import audienceImg from "./img/audience.png";
-import friendImg from "./img/friend.png";
-import fiftyfiftyImg from "./img/50-50.png";
+import moneybagSvg from "../img/money-bag.svg";
+import timerSvg from "../img/timer.svg";
+import audienceImg from "../img/audience.png";
+import friendImg from "../img/friend.png";
+import fiftyfiftyImg from "../img/50-50.png";
 
 // Import sound clips for Vercel
-import mainTheme from "./sound/01-Main-Theme-Cut.mp3";
-import fullMainTheme from "./sound/01-Main-Theme-Org.mp3";
-import rulesTheme from "./sound/03-Explain-The-Rules-Cut.mp3";
-import prizeTheme from "./sound/10-Let's-Play-Prize.mp3";
-import questionTheme from "./sound/11-$100-$1,000-Questions.mp3";
-import finalAnswerTheme from "./sound/15-$2,000-Final Answer-Cut.mp3";
-import correctTheme from "./sound/17-$2,000-Win.mp3";
-import wrongTheme from "./sound/16-$2,000-Lose.mp3";
-import timeUpTheme from "./sound/72-Time's-Up.mp3";
-import askAudienceTheme from "./sound/68-Ask-The-Audience-Cut.mp3";
-import phoneAFriendTheme from "./sound/66-Phone-A-Friend-Cut.mp3";
-import fiftyFiftyTheme from "./sound/67-50-50-Cut.mp3";
+import mainTheme from "../sound/01-Main-Theme-Cut.mp3";
+import fullMainTheme from "../sound/01-Main-Theme-Org.mp3";
+import rulesTheme from "../sound/03-Explain-The-Rules-Cut.mp3";
+import prizeTheme from "../sound/10-Let's-Play-Prize.mp3";
+import questionTheme from "../sound/11-$100-$1,000-Questions.mp3";
+import finalAnswerTheme from "../sound/15-$2,000-Final Answer-Cut.mp3";
+import correctTheme from "../sound/17-$2,000-Win.mp3";
+import wrongTheme from "../sound/16-$2,000-Lose.mp3";
+import timeUpTheme from "../sound/72-Time's-Up.mp3";
+import askAudienceTheme from "../sound/68-Ask-The-Audience-Cut.mp3";
+import phoneAFriendTheme from "../sound/66-Phone-A-Friend-Cut.mp3";
+import fiftyFiftyTheme from "../sound/67-50-50-Cut.mp3";
 
 // Objects - Game and user objects
 // Lifelines picture - https://imgur.com/sQvoOhJ
